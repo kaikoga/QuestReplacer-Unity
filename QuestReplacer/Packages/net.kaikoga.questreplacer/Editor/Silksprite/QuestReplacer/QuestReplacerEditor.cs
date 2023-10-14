@@ -16,8 +16,8 @@ namespace Silksprite.QuestReplacer
 
         QuestStatus? _materialQuestStatus;
         QuestStatus? _meshQuestStatus;
-        QuestStatus QuestMaterialStatus => _materialQuestStatus ?? (_materialQuestStatus = _questReplacer.avatarRoot.ToQuestStatus<Material>(_questReplacer.pairs)).Value;
-        QuestStatus QuestMeshStatus => _meshQuestStatus ?? (_meshQuestStatus = _questReplacer.avatarRoot.ToQuestStatus<Mesh>(_questReplacer.pairs)).Value;
+        QuestStatus QuestMaterialStatus => _materialQuestStatus ?? (_materialQuestStatus = _questReplacer.Context().ToQuestStatus<Material>()).Value;
+        QuestStatus QuestMeshStatus => _meshQuestStatus ?? (_meshQuestStatus = _questReplacer.Context().ToQuestStatus<Mesh>()).Value;
 
         void ClearCache()
         {
@@ -146,7 +146,7 @@ namespace Silksprite.QuestReplacer
         where T : Object
         {
             var db = _questReplacer.database;
-            _questReplacer.AddEntries(_questReplacer.avatarRoot.DeepCollectReferences<T>(), db, true);
+            _questReplacer.AddEntries(_questReplacer.Context().DeepCollectReferences<Object>(), db, true);
             ClearCache();
         }
 
@@ -172,7 +172,7 @@ namespace Silksprite.QuestReplacer
         {
             var db = _questReplacer.EnsureDatabase(null); 
             _questReplacer.pairs = _questReplacer.pairs.Update(db.pairs).ToList();
-            _questReplacer.AddEntries(_questReplacer.avatarRoot.DeepCollectReferences<Object>(), db, false);
+            _questReplacer.AddEntries(_questReplacer.Context().DeepCollectReferences<Object>(), db, false);
             ClearCache();
         }
 
@@ -185,7 +185,7 @@ namespace Silksprite.QuestReplacer
 
         void Convert(bool toRight)
         {
-            _questReplacer.avatarRoot.DeepOverrideReferences<Object>(_questReplacer.pairs, toRight);
+            _questReplacer.Context().DeepOverrideReferences<Object>(toRight);
             ClearCache();
         }
     }

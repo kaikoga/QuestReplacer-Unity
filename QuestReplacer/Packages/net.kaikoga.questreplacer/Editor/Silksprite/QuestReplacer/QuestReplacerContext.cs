@@ -1,31 +1,41 @@
 using System.Collections.Generic;
 using System.Linq;
+using Silksprite.QuestReplacer.Extensions;
 using UnityEditor;
 using UnityEngine;
 
-namespace Silksprite.QuestReplacer.Extensions
+namespace Silksprite.QuestReplacer
 {
-    public static class UnityEditorExtensions
+    public class QuestReplacerContext
     {
-        public static QuestStatus ToQuestStatus<T>(this Transform transform, IEnumerable<QuestReplacement> replacements)
-        where T : Object
+        readonly Transform _target;
+        readonly List<QuestReplacement> _replacements;
+
+        public QuestReplacerContext(Transform target, List<QuestReplacement> pairs)
         {
-            return transform.DeepCollectReferences<T>()
-                .SelectMany(c => replacements.Select(r => r.GetStatus(c)).Where(s => s != QuestStatus.Unmanaged))
+            _target = target;
+            _replacements = pairs;
+        }
+
+        public QuestStatus ToQuestStatus<T>()
+            where T : Object
+        {
+            return DeepCollectReferences<T>()
+                .SelectMany(c => _replacements.Select(r => r.GetStatus(c)).Where(s => s != QuestStatus.Unmanaged))
                 .Aggregate(QuestStatus.Either, (accumulator, v) => accumulator.Merge(v));
         }
-        
-        public static IEnumerable<T> DeepCollectReferences<T>(this Transform transform)
+
+        public IEnumerable<T> DeepCollectReferences<T>()
             where T : Object
         {
-            return DeepCollectProperties<T>(transform).Select(prop => (T)prop.objectReferenceValue);
+            return DeepCollectProperties<T>().Select(prop => (T)prop.objectReferenceValue);
         }
-        
-        public static void DeepOverrideReferences<T>(this Transform transform, IEnumerable<QuestReplacement> replacements, bool toRight)
+
+        public void DeepOverrideReferences<T>(bool toRight)
             where T : Object
         {
-            var questReplacements = replacements.ToArray();
-            foreach (var prop in DeepCollectProperties<T>(transform))
+            var questReplacements = _replacements.ToArray();
+            foreach (var prop in DeepCollectProperties<T>())
             {
                 // T might be Object, so do all replacements but ignore unregistered components
                 if (toRight)
@@ -51,7 +61,9 @@ namespace Silksprite.QuestReplacer.Extensions
             }
         }
         
-        static IEnumerable<SerializedProperty> DeepCollectProperties<T>(this Transform transform)
+        IEnumerable<SerializedProperty> DeepCollectProperties<T>() where T : Object => DeepCollectProperties<T>(_target);
+
+        static IEnumerable<SerializedProperty> DeepCollectProperties<T>(Transform transform)
             where T : Object
         {
             foreach (var component in transform.GetComponents<Component>())
@@ -71,7 +83,7 @@ namespace Silksprite.QuestReplacer.Extensions
 
             foreach (Transform child in transform)
             {
-                foreach (var o in child.DeepCollectProperties<T>()) yield return o;
+                foreach (var o in DeepCollectProperties<T>(child)) yield return o;
             }
         }
     }

@@ -5,6 +5,11 @@ namespace Silksprite.QuestReplacer.Extensions
 {
     public static class QuestReplacerExtensions
     {
+        public static QuestReplacerContext Context(this QuestReplacer questReplacer)
+        {
+            return new QuestReplacerContext(questReplacer.avatarRoot, questReplacer.pairs);
+        }
+
         public static QuestReplacerDatabase EnsureDatabase(this QuestReplacer questReplacer, QuestReplacerDatabase.GenerateMode? generateMode)
         {
             if (questReplacer.database) return questReplacer.database;
