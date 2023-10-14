@@ -1,0 +1,19 @@
+{
+  "name": "net.kaikoga.questreplacer",
+  "url": "https://vpm.kaikoga.net/net.kaikoga.questreplacer/net.kaikoga.questreplacer-0.1.0.zip",
+  "displayName": "QuestReplacer",
+  "version": "0.1.0",
+  "unity": "2019.4",
+  "description": "Pseudo-non-destructive replace material and texture.",
+  "vrchatVersion": "2022.1.1",
+  "gitDependencies": {
+  },
+  "vpmDependencies": {
+  },
+  "author": {
+    "name": "kaikoga",
+    "email": "info@mail.kaikoga.net",
+    "url": "https://twitter.com/kaikoga"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,21 @@
+/*/obj
+/*/Temp
+/*/Logs
+/*/Library
+/*/*.pidb
+/*/*.csproj
+/*/*.csproj.DotSettings
+/*/*.sln
+/*/*.sln.DotSettings.user
+/*/*.userprefs
+/*/*.unityproj
+/**/*.unitypackage
+/**/*.unitypackage.meta
+/*/Assets/Plugins/Editor/JetBrains*
+
+/**/*_Private*
+
+/*/Assets/VRCSDK*
+/*/Assets/Yodokorochan*
+/*/Assets/Samples/VRChat SDK*
+/*/Thry/*

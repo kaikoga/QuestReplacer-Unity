@@ -1,0 +1,23 @@
+{
+    "name": "QuestReplacer.Editor.External",
+    "references": [
+        "lilToon.Editor"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "jp.lilxyzw.liltoon",
+            "expression": "",
+            "define": "QUESTREPLACER_LILTOON"
+        }
+    ],
+    "noEngineReferences": false
+}
