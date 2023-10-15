@@ -17,7 +17,7 @@ namespace Silksprite.QuestReplacer
 
         public QuestReplacerContext(IEnumerable<Transform> targets, IEnumerable<QuestReplacement> pairs)
         {
-            _targets = targets.ToArray();
+            _targets = targets.Where(target => target).ToArray();
             _replacements = pairs.ToArray();
         }
 
