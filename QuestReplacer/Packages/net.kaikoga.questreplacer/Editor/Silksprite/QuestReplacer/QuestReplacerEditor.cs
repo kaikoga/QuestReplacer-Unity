@@ -26,7 +26,8 @@ namespace Silksprite.QuestReplacer
         }
 
         SerializedProperty _serializedDatabase;
-        SerializedProperty _serializedAvatarRoot;
+        SerializedProperty _serializedTargets;
+        SerializedProperty _serializedTargetSceneObjects;
         QuestReplacementReorderableList _reorderablePairs;
 
         void OnEnable()
@@ -34,20 +35,27 @@ namespace Silksprite.QuestReplacer
             _questReplacer = (QuestReplacer)target;
 
             _serializedDatabase = serializedObject.FindProperty(nameof(QuestReplacer.database));
-            _serializedAvatarRoot = serializedObject.FindProperty(nameof(QuestReplacer.avatarRoot));
+            _serializedTargets = serializedObject.FindProperty(nameof(QuestReplacer.targets));
+            _serializedTargetSceneObjects = serializedObject.FindProperty(nameof(QuestReplacer.targetSceneObjects));
             _reorderablePairs = new QuestReplacementReorderableList(serializedObject, serializedObject.FindProperty(nameof(QuestReplacer.pairs)));
+            _serializedTargets.isExpanded = true;
         }
 
         public override void OnInspectorGUI()
         {
             using (var changed = new EditorGUI.ChangeCheckScope())
             {
-                EditorGUILayout.PropertyField(_serializedAvatarRoot);
+                using (new EditorGUI.DisabledScope(_serializedTargetSceneObjects.boolValue))
+                {
+                    EditorGUILayout.PropertyField(_serializedTargets);
+                }
+                EditorGUILayout.PropertyField(_serializedTargetSceneObjects);
                 _reorderablePairs.DoLayoutList();
 
                 var pairs = _questReplacer.pairs.ToArray();
                 if (_questReplacer.ManageMaterials)
                 {
+                    using (new EditorGUI.DisabledScope(!_questReplacer.HasTargets))
                     using (new EditorGUILayout.HorizontalScope())
                     {
                         EditorGUILayout.LabelField("Quest Material Status", $"{QuestMaterialStatus}");
@@ -123,7 +131,7 @@ namespace Silksprite.QuestReplacer
                 
                 using (new EditorGUILayout.HorizontalScope())
                 {
-                    using (new EditorGUI.DisabledScope(!_questReplacer.avatarRoot))
+                    using (new EditorGUI.DisabledScope(!(_questReplacer.HasTargets && pairs.Length > 0)))
                     using (new EditorGUI.DisabledScope(!(isReversible || _force)))
                     {
                         if (GUILayout.Button("To Left"))

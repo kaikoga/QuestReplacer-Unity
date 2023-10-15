@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 
 namespace Silksprite.QuestReplacer
@@ -8,7 +9,43 @@ namespace Silksprite.QuestReplacer
     public class QuestReplacer : MonoBehaviour
     {
         public QuestReplacerDatabase database;
-        public Transform avatarRoot;
+        
+        [SerializeField] internal Transform avatarRoot;
+        [SerializeField] internal List<Transform> targets = new List<Transform>();
+        [SerializeField] internal bool targetSceneObjects;
+
+        public Transform Target
+        {
+            set
+            {
+                avatarRoot = null;
+                targets.Clear();
+                if (value) targets.Add(value);
+                targetSceneObjects = false;
+            }
+        }
+
+        public IEnumerable<Transform> Targets
+        {
+            get
+            {
+                if (targetSceneObjects)
+                {
+                    return SceneManager.GetActiveScene().GetRootGameObjects().Select(root => root.transform);
+                }
+
+                if (avatarRoot)
+                {
+                    targets.Add(avatarRoot);
+                    avatarRoot = null;
+                }
+
+                return targets;
+            }
+        }
+
+        public bool HasTargets => avatarRoot || targets.Count > 0 || targetSceneObjects;
+        
         public List<QuestReplacement> pairs = new List<QuestReplacement>();
         
         // ReSharper disable SimplifyConditionalTernaryExpression

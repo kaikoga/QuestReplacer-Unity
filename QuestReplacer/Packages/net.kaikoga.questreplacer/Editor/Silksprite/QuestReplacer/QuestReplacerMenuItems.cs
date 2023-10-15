@@ -37,7 +37,7 @@ namespace Silksprite.QuestReplacer
 
             var gameObject = new GameObject(avatarRoot ? $"{generateMode}Replacer_{avatarRoot.name}" : $"{generateMode}Replacer");
             var config = gameObject.AddComponent<QuestReplacer>();
-            config.avatarRoot = avatarRoot ? avatarRoot.transform : null;
+            config.Target = avatarRoot ? avatarRoot.transform : null;
 
             config.EnsureDatabase(generateMode);
         }
