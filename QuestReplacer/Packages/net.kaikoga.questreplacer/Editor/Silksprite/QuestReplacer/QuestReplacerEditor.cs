@@ -15,7 +15,19 @@ namespace Silksprite.QuestReplacer
         bool _force;
 
         QuestReplacerContext _context;
-        QuestReplacerContext Context => _context ?? (_context = new QuestReplacerContext(_questReplacer.Targets, _questReplacer.pairs));
+        QuestReplacerContext Context
+        {
+            get
+            {
+                if (_context != null) return _context;
+
+                _context = new QuestReplacerContext(
+                    _questReplacer.Targets,
+                    _questReplacer.database != null ? _questReplacer.database.componentFilters : null,
+                    _questReplacer.pairs);
+                return _context;
+            }
+        }
 
         QuestStatus? _materialQuestStatus;
         QuestStatus? _meshQuestStatus;

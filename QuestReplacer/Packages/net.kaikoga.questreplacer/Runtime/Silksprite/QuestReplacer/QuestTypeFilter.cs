@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Silksprite.QuestReplacer
 {
@@ -11,13 +12,9 @@ namespace Silksprite.QuestReplacer
         public bool Match(Type type)
         {
             var typeFullName = type.FullName;
-            return isIncluded && !string.IsNullOrEmpty(typeFullName) && typeFullName.StartsWith(typePrefix);
+            return !string.IsNullOrEmpty(typeFullName) && typeFullName.StartsWith(typePrefix);
         }
 
-        public static QuestTypeFilter FromNamespace(string ns) => new QuestTypeFilter
-        {
-            typePrefix = ns,
-            isIncluded = !string.IsNullOrEmpty(ns) && ns != typeof(QuestReplacer).Namespace
-        };
+        public bool Includes(Type type) => isIncluded && Match(type);
     }
 }

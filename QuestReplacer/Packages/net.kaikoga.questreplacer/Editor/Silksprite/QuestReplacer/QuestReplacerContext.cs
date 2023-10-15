@@ -11,13 +11,15 @@ namespace Silksprite.QuestReplacer
     public class QuestReplacerContext
     {
         readonly Transform[] _targets;
+        readonly QuestTypeFilter[] _componentFilters;
         readonly QuestReplacement[] _replacements;
 
         readonly Dictionary<Type, SerializedProperty[]> _cachedTargetProperties = new Dictionary<Type, SerializedProperty[]>();
 
-        public QuestReplacerContext(IEnumerable<Transform> targets, IEnumerable<QuestReplacement> pairs)
+        public QuestReplacerContext(IEnumerable<Transform> targets, IEnumerable<QuestTypeFilter> componentFilters, IEnumerable<QuestReplacement> pairs)
         {
             _targets = targets.Where(target => target).ToArray();
+            _componentFilters = (componentFilters != null) ? componentFilters.Reverse().ToArray() : DeepCollectComponentTypes().ToTypeFilters().Reverse().ToArray();
             _replacements = pairs.ToArray();
         }
 
@@ -31,7 +33,7 @@ namespace Silksprite.QuestReplacer
 
         public IEnumerable<Type> DeepCollectComponentTypes()
         {
-            return DeepCollectComponents().Select(component => component.GetType()).Distinct().OrderBy(t => t.FullName);
+            return DeepCollectComponents(true).Select(component => component.GetType()).Distinct().OrderBy(t => t.FullName);
         }
 
         public IEnumerable<T> DeepCollectReferences<T>()
@@ -74,10 +76,14 @@ namespace Silksprite.QuestReplacer
             }
         }
 
-        IEnumerable<Component> DeepCollectComponents() => _targets.SelectMany(target =>
+        IEnumerable<Component> DeepCollectComponents(bool ignoreFilters) => _targets.SelectMany(target =>
         {
             return target.GetComponentsInChildren<Component>(true)
-                .Where(component => component); // Missing Script
+                .Where(component =>
+                    {
+                        return component // Missing Script
+                               && (ignoreFilters || _componentFilters.Any(componentFilter => componentFilter.Includes(component.GetType()))); // exclude QuestReplacer itself (and else)
+                    });
         });
 
         IEnumerable<SerializedProperty> DeepCollectProperties<T>()
@@ -85,7 +91,7 @@ namespace Silksprite.QuestReplacer
         {
             if (_cachedTargetProperties.TryGetValue(typeof(T), out var properties)) return properties;
 
-            return _cachedTargetProperties[typeof(T)] = DeepCollectComponents().SelectMany(CollectProperties<T>).ToArray();
+            return _cachedTargetProperties[typeof(T)] = DeepCollectComponents(false).SelectMany(CollectProperties<T>).ToArray();
         }
 
         static IEnumerable<SerializedProperty> CollectProperties<T>(Component component)

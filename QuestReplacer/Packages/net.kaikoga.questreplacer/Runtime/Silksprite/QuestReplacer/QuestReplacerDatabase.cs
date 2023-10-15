@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Silksprite.QuestReplacer.Extensions;
 using UnityEngine;
 
 namespace Silksprite.QuestReplacer
@@ -34,14 +35,7 @@ namespace Silksprite.QuestReplacer
 
         public void RegisterTypeFilters(IEnumerable<Type> types)
         {
-            componentFilters = componentFilters.Concat(types
-                    .Where(type => componentFilters.All(typeFilter => !typeFilter.Match(type)))
-                    .Select(type => type.Namespace)
-                    .Distinct()
-                    .Select(QuestTypeFilter.FromNamespace))
-                .Where(typeFilter => !string.IsNullOrWhiteSpace(typeFilter.typePrefix))
-                .OrderBy(typeFilter => typeFilter.typePrefix)
-                .ToList();
+            componentFilters = componentFilters.Merge(types).ToList();
         }
     }
 }
