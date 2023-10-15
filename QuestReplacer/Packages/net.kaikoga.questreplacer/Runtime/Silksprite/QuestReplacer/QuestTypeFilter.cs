@@ -11,8 +11,7 @@ namespace Silksprite.QuestReplacer
 
         public bool Match(Type type)
         {
-            var typeFullName = type.FullName;
-            return !string.IsNullOrEmpty(typeFullName) && typeFullName.StartsWith(typePrefix);
+            return !string.IsNullOrEmpty(type.FullName) && type.FullName.StartsWith(typePrefix);
         }
 
         public bool Includes(Type type) => isIncluded && Match(type);

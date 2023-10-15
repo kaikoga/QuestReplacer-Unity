@@ -21,7 +21,7 @@ namespace Silksprite.QuestReplacer.Extensions
                 .Distinct()
                 .Select(ns => new QuestTypeFilter
                 {
-                    typePrefix = ns,
+                    typePrefix = ns + ".",
                     isIncluded = !string.IsNullOrEmpty(ns) && ns != typeof(QuestReplacer).Namespace
                 });
         }
