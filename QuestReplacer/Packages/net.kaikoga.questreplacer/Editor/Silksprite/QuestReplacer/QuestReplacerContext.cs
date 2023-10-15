@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Silksprite.QuestReplacer.Extensions;
 using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Silksprite.QuestReplacer
 {
@@ -10,6 +12,8 @@ namespace Silksprite.QuestReplacer
     {
         readonly Transform[] _targets;
         readonly QuestReplacement[] _replacements;
+
+        readonly Dictionary<Type, SerializedProperty[]> _cachedTargetProperties = new Dictionary<Type, SerializedProperty[]>();
 
         public QuestReplacerContext(IEnumerable<Transform> targets, IEnumerable<QuestReplacement> pairs)
         {
@@ -34,33 +38,44 @@ namespace Silksprite.QuestReplacer
         public void DeepOverrideReferences<T>(bool toRight)
             where T : Object
         {
+            var serializedObjects = new HashSet<SerializedObject>(); 
             foreach (var prop in DeepCollectProperties<T>())
             {
                 // T might be Object, so do all replacements but ignore unregistered components
                 if (toRight)
                 {
                     var replacement = _replacements.FirstOrDefault(r => r.left == prop.objectReferenceValue);
-                    if (replacement != null)
-                    {
-                        prop.objectReferenceValue = replacement.right;
-                    }
+                    if (replacement == null) continue;
+
+                    prop.objectReferenceValue = replacement.right;
+                    serializedObjects.Add(prop.serializedObject);
                 }
                 else
                 {
                     var replacement = _replacements.FirstOrDefault(r => r.right == prop.objectReferenceValue);
-                    if (replacement != null)
-                    {
-                        prop.objectReferenceValue = replacement.left;
-                    }
+                    if (replacement == null) continue;
+
+                    prop.objectReferenceValue = replacement.left;
+                    serializedObjects.Add(prop.serializedObject);
                 }
 
-                Undo.RecordObject(prop.serializedObject.targetObject, "Quest Replacer");
-                prop.serializedObject.ApplyModifiedProperties();
-                EditorUtility.SetDirty(prop.serializedObject.targetObject);
+            }
+
+            foreach (var serializedObject in serializedObjects)
+            {
+                Undo.RecordObject(serializedObject.targetObject, "Quest Replacer");
+                serializedObject.ApplyModifiedProperties();
+                EditorUtility.SetDirty(serializedObject.targetObject);
             }
         }
         
-        IEnumerable<SerializedProperty> DeepCollectProperties<T>() where T : Object => _targets.SelectMany(DeepCollectProperties<T>);
+        IEnumerable<SerializedProperty> DeepCollectProperties<T>()
+            where T : Object
+        {
+            if (_cachedTargetProperties.TryGetValue(typeof(T), out var properties)) return properties;
+
+            return _cachedTargetProperties[typeof(T)] = _targets.SelectMany(DeepCollectProperties<T>).ToArray();
+        }
 
         static IEnumerable<SerializedProperty> DeepCollectProperties<T>(Transform transform)
             where T : Object
