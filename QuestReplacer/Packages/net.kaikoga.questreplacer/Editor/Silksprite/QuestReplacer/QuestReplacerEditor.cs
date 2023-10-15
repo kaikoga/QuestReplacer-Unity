@@ -14,13 +14,18 @@ namespace Silksprite.QuestReplacer
         QuestReplacer _questReplacer;
         bool _force;
 
+        QuestReplacerContext _context;
+        QuestReplacerContext Context => _context ?? (_context = new QuestReplacerContext(_questReplacer.Targets, _questReplacer.pairs));
+
         QuestStatus? _materialQuestStatus;
         QuestStatus? _meshQuestStatus;
-        QuestStatus QuestMaterialStatus => _materialQuestStatus ?? (_materialQuestStatus = _questReplacer.Context().ToQuestStatus<Material>()).Value;
-        QuestStatus QuestMeshStatus => _meshQuestStatus ?? (_meshQuestStatus = _questReplacer.Context().ToQuestStatus<Mesh>()).Value;
+        QuestStatus QuestMaterialStatus => _materialQuestStatus ?? (_materialQuestStatus = Context.ToQuestStatus<Material>()).Value;
+        QuestStatus QuestMeshStatus => _meshQuestStatus ?? (_meshQuestStatus = Context.ToQuestStatus<Mesh>()).Value;
+
 
         void ClearCache()
         {
+            _context = null;
             _materialQuestStatus = null;
             _meshQuestStatus = null;
         }
@@ -151,7 +156,7 @@ namespace Silksprite.QuestReplacer
         where T : Object
         {
             var db = _questReplacer.database;
-            _questReplacer.AddEntries(_questReplacer.Context().DeepCollectReferences<T>(), db, true);
+            _questReplacer.AddEntries(Context.DeepCollectReferences<T>(), db, true);
             ClearCache();
         }
 
@@ -177,7 +182,7 @@ namespace Silksprite.QuestReplacer
         {
             var db = _questReplacer.EnsureDatabase(null); 
             _questReplacer.pairs = _questReplacer.pairs.Update(db.pairs).ToList();
-            _questReplacer.AddEntries(_questReplacer.Context().DeepCollectReferences<Object>(), db, false);
+            _questReplacer.AddEntries(Context.DeepCollectReferences<Object>(), db, false);
             ClearCache();
         }
 
@@ -190,7 +195,7 @@ namespace Silksprite.QuestReplacer
 
         void Convert(bool toRight)
         {
-            _questReplacer.Context().DeepOverrideReferences<Object>(toRight);
+            Context.DeepOverrideReferences<Object>(toRight);
             ClearCache();
         }
     }
