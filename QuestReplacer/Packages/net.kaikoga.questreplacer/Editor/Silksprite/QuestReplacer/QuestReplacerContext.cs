@@ -80,7 +80,7 @@ namespace Silksprite.QuestReplacer
         static IEnumerable<SerializedProperty> DeepCollectProperties<T>(Transform transform)
             where T : Object
         {
-            foreach (var component in transform.GetComponents<Component>())
+            foreach (var component in transform.GetComponentsInChildren<Component>(true))
             {
                 if (component == null) continue; // Missing Script
                 var serializedObj = new SerializedObject(component);
@@ -93,11 +93,6 @@ namespace Silksprite.QuestReplacer
                         yield return it.Copy();
                     }
                 }
-            }
-
-            foreach (Transform child in transform)
-            {
-                foreach (var o in DeepCollectProperties<T>(child)) yield return o;
             }
         }
     }
