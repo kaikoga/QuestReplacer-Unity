@@ -34,7 +34,8 @@
       }
     },
     "com.vrchat.base": {
-      "version": "3.4.0"
+      "version": "3.4.0",
+      "dependencies": {}
     },
     "jp.lilxyzw.liltoon": {
       "version": "1.4.1",
