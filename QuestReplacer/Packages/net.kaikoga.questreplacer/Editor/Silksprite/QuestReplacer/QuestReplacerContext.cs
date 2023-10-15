@@ -29,6 +29,11 @@ namespace Silksprite.QuestReplacer
                 .Aggregate(QuestStatus.Either, (accumulator, v) => accumulator.Merge(v));
         }
 
+        public IEnumerable<Type> DeepCollectComponentTypes()
+        {
+            return DeepCollectComponents().Select(component => component.GetType()).Distinct().OrderBy(t => t.FullName);
+        }
+
         public IEnumerable<T> DeepCollectReferences<T>()
             where T : Object
         {
@@ -68,30 +73,32 @@ namespace Silksprite.QuestReplacer
                 EditorUtility.SetDirty(serializedObject.targetObject);
             }
         }
-        
+
+        IEnumerable<Component> DeepCollectComponents() => _targets.SelectMany(target =>
+        {
+            return target.GetComponentsInChildren<Component>(true)
+                .Where(component => component); // Missing Script
+        });
+
         IEnumerable<SerializedProperty> DeepCollectProperties<T>()
             where T : Object
         {
             if (_cachedTargetProperties.TryGetValue(typeof(T), out var properties)) return properties;
 
-            return _cachedTargetProperties[typeof(T)] = _targets.SelectMany(DeepCollectProperties<T>).ToArray();
+            return _cachedTargetProperties[typeof(T)] = DeepCollectComponents().SelectMany(CollectProperties<T>).ToArray();
         }
 
-        static IEnumerable<SerializedProperty> DeepCollectProperties<T>(Transform transform)
+        static IEnumerable<SerializedProperty> CollectProperties<T>(Component component)
             where T : Object
         {
-            foreach (var component in transform.GetComponentsInChildren<Component>(true))
+            var serializedObj = new SerializedObject(component);
+            var it = serializedObj.GetIterator();
+            while (it.Next(true))
             {
-                if (component == null) continue; // Missing Script
-                var serializedObj = new SerializedObject(component);
-                var it = serializedObj.GetIterator();
-                while (it.Next(true))
+                if (it.propertyType != SerializedPropertyType.ObjectReference) continue;
+                if (it.objectReferenceValue is T)
                 {
-                    if (it.propertyType != SerializedPropertyType.ObjectReference) continue;
-                    if (it.objectReferenceValue is T)
-                    {
-                        yield return it.Copy();
-                    }
+                    yield return it.Copy();
                 }
             }
         }

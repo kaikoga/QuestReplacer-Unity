@@ -157,12 +157,14 @@ namespace Silksprite.QuestReplacer
         {
             var db = _questReplacer.database;
             _questReplacer.AddEntries(Context.DeepCollectReferences<T>(), db, true);
+            UpdateTypeFilters();
             ClearCache();
         }
 
         void CreateDatabase()
         {
             _questReplacer.CreateDatabase(QuestReplacerDatabase.GenerateMode.Quest);
+            UpdateTypeFilters();
             ClearCache();
         }
 
@@ -175,28 +177,38 @@ namespace Silksprite.QuestReplacer
                     pair.right = duplicator.Duplicate(leftMaterial);
                 }
             }
+            UpdateTypeFilters();
             ClearCache();
         }
 
         void LoadFromDatabase()
         {
-            var db = _questReplacer.EnsureDatabase(null); 
+            var db = _questReplacer.EnsureDatabase(null);
             _questReplacer.pairs = _questReplacer.pairs.Update(db.pairs).ToList();
             _questReplacer.AddEntries(Context.DeepCollectReferences<Object>(), db, false);
+            UpdateTypeFilters();
             ClearCache();
         }
 
         void SaveToDatabase()
         {
-            var db = _questReplacer.EnsureDatabase(null); 
+            var db = _questReplacer.EnsureDatabase(null);
             db.pairs = db.pairs.Merge(_questReplacer.pairs).ToList();
+            UpdateTypeFilters();
             ClearCache();
         }
 
         void Convert(bool toRight)
         {
+            UpdateTypeFilters();
             Context.DeepOverrideReferences<Object>(toRight);
             ClearCache();
+        }
+        
+        void UpdateTypeFilters()
+        {
+            var db = _questReplacer.database; 
+            if (db) db.RegisterTypeFilters(Context.DeepCollectComponentTypes());
         }
     }
 }

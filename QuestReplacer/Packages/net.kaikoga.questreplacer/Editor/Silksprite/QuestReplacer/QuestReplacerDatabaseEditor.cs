@@ -13,11 +13,13 @@ namespace Silksprite.QuestReplacer
         SerializedProperty _serializedGeneratedFilePrefix;
         SerializedProperty _serializedGeneratedFileSuffix;
         QuestReplacementReorderableList _reorderablePairs;
+        QuestReplacementReorderableList _reorderableComponentFilters;
 
         void OnEnable()
         {
             _serializedManageMaterials = serializedObject.FindProperty(nameof(QuestReplacerDatabase.manageMaterials));
             _serializedManageMeshes = serializedObject.FindProperty(nameof(QuestReplacerDatabase.manageMeshes));
+            _reorderableComponentFilters = new QuestReplacementReorderableList(serializedObject, serializedObject.FindProperty(nameof(QuestReplacerDatabase.componentFilters)));
             _reorderablePairs = new QuestReplacementReorderableList(serializedObject, serializedObject.FindProperty(nameof(QuestReplacerDatabase.pairs)));
             _serializedGenerateMode = serializedObject.FindProperty(nameof(QuestReplacerDatabase.generateMode));
             _serializedGeneratedDirectory = serializedObject.FindProperty(nameof(QuestReplacerDatabase.generatedDirectory));
@@ -30,6 +32,7 @@ namespace Silksprite.QuestReplacer
             EditorGUILayout.PropertyField(_serializedManageMaterials);
             EditorGUILayout.PropertyField(_serializedManageMeshes);
             _reorderablePairs.DoLayoutList();
+            _reorderableComponentFilters.DoLayoutList();
             EditorGUILayout.PropertyField(_serializedGenerateMode);
             EditorGUILayout.PropertyField(_serializedGeneratedDirectory);
             EditorGUILayout.PropertyField(_serializedGeneratedFilePrefix);

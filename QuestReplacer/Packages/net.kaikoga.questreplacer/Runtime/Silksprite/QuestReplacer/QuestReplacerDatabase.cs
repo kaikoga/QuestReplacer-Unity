@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Silksprite.QuestReplacer
@@ -6,6 +8,7 @@ namespace Silksprite.QuestReplacer
     [CreateAssetMenu(fileName = "Quest Replacer Database", menuName = "Silksprite/Quest Replacer Database", order = 0)]
     public class QuestReplacerDatabase : ScriptableObject
     {
+        public List<QuestTypeFilter> componentFilters = new List<QuestTypeFilter>();
         public List<QuestReplacement> pairs = new List<QuestReplacement>();
 
         public const bool ManageMaterialsDefault = true;
@@ -27,6 +30,18 @@ namespace Silksprite.QuestReplacer
             Quest,
             VRM0,
             VRM1
+        }
+
+        public void RegisterTypeFilters(IEnumerable<Type> types)
+        {
+            componentFilters = componentFilters.Concat(types
+                    .Where(type => componentFilters.All(typeFilter => !typeFilter.Match(type)))
+                    .Select(type => type.Namespace)
+                    .Distinct()
+                    .Select(QuestTypeFilter.FromNamespace))
+                .Where(typeFilter => !string.IsNullOrWhiteSpace(typeFilter.typePrefix))
+                .OrderBy(typeFilter => typeFilter.typePrefix)
+                .ToList();
         }
     }
 }
