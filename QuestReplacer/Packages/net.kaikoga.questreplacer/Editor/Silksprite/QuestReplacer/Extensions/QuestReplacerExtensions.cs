@@ -1,5 +1,6 @@
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Silksprite.QuestReplacer.Extensions
 {
@@ -7,7 +8,9 @@ namespace Silksprite.QuestReplacer.Extensions
     {
         public static QuestReplacerContext Context(this QuestReplacer questReplacer)
         {
-            return new QuestReplacerContext(questReplacer.avatarRoot, questReplacer.pairs);
+            var avatarRoot = questReplacer.avatarRoot;
+            var targets = avatarRoot ? new[] { avatarRoot } : SceneManager.GetActiveScene().GetRootGameObjects().Select(gameObject => gameObject.transform);
+            return new QuestReplacerContext(targets, questReplacer.pairs);
         }
 
         public static QuestReplacerDatabase EnsureDatabase(this QuestReplacer questReplacer, QuestReplacerDatabase.GenerateMode? generateMode)

@@ -46,47 +46,44 @@ namespace Silksprite.QuestReplacer
                 _reorderablePairs.DoLayoutList();
 
                 var pairs = _questReplacer.pairs.ToArray();
-                if (_questReplacer.avatarRoot)
+                if (_questReplacer.ManageMaterials)
                 {
-                    if (_questReplacer.ManageMaterials)
+                    using (new EditorGUILayout.HorizontalScope())
                     {
-                        using (new EditorGUILayout.HorizontalScope())
+                        EditorGUILayout.LabelField("Quest Material Status", $"{QuestMaterialStatus}");
+                        if (GUILayout.Button("Collect"))
                         {
-                            EditorGUILayout.LabelField("Quest Material Status", $"{QuestMaterialStatus}");
-                            if (GUILayout.Button("Collect"))
-                            {
-                                Collect<Material>();
-                            }
+                            Collect<Material>();
                         }
+                    }
 
-                        if (pairs.Any(pair => pair.LikelyUnset))
+                    if (pairs.Any(pair => pair.LikelyUnset))
+                    {
+                        if (_questReplacer.database is QuestReplacerDatabase database)
                         {
-                            if (_questReplacer.database is QuestReplacerDatabase database)
+                            var hasPlatformSupport = database.HasPlatformSupport(); 
+                            if (!hasPlatformSupport)
                             {
-                                var hasPlatformSupport = database.HasPlatformSupport(); 
-                                if (!hasPlatformSupport)
+                                EditorGUILayout.HelpBox("マテリアルの自動変換に必要なライブラリがインポートされてないようです。", MessageType.Error);
+                            }
+                            using (new EditorGUI.DisabledScope(!hasPlatformSupport))
+                            {
+                                if (GUILayout.Button($"Generate {database.generateMode} Materials"))
                                 {
-                                    EditorGUILayout.HelpBox("マテリアルの自動変換に必要なライブラリがインポートされてないようです。", MessageType.Error);
-                                }
-                                using (new EditorGUI.DisabledScope(!hasPlatformSupport))
-                                {
-                                    if (GUILayout.Button($"Generate {database.generateMode} Materials"))
-                                    {
-                                        GenerateMaterials(_questReplacer.EnsureDatabase(QuestReplacerDatabase.GenerateMode.Quest).CreateMaterialDuplicator());
-                                    }
+                                    GenerateMaterials(_questReplacer.EnsureDatabase(QuestReplacerDatabase.GenerateMode.Quest).CreateMaterialDuplicator());
                                 }
                             }
                         }
                     }
-                    if (_questReplacer.ManageMeshes)
+                }
+                if (_questReplacer.ManageMeshes)
+                {
+                    using (new EditorGUILayout.HorizontalScope())
                     {
-                        using (new EditorGUILayout.HorizontalScope())
+                        EditorGUILayout.LabelField("Quest Mesh Status", $"{QuestMeshStatus}");
+                        if (GUILayout.Button("Collect"))
                         {
-                            EditorGUILayout.LabelField("Quest Mesh Status", $"{QuestMeshStatus}");
-                            if (GUILayout.Button("Collect"))
-                            {
-                                Collect<Mesh>();
-                            }
+                            Collect<Mesh>();
                         }
                     }
                 }

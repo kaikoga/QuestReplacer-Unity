@@ -8,13 +8,13 @@ namespace Silksprite.QuestReplacer
 {
     public class QuestReplacerContext
     {
-        readonly Transform _target;
-        readonly List<QuestReplacement> _replacements;
+        readonly Transform[] _targets;
+        readonly QuestReplacement[] _replacements;
 
-        public QuestReplacerContext(Transform target, List<QuestReplacement> pairs)
+        public QuestReplacerContext(IEnumerable<Transform> targets, IEnumerable<QuestReplacement> pairs)
         {
-            _target = target;
-            _replacements = pairs;
+            _targets = targets.ToArray();
+            _replacements = pairs.ToArray();
         }
 
         public QuestStatus ToQuestStatus<T>()
@@ -34,13 +34,12 @@ namespace Silksprite.QuestReplacer
         public void DeepOverrideReferences<T>(bool toRight)
             where T : Object
         {
-            var questReplacements = _replacements.ToArray();
             foreach (var prop in DeepCollectProperties<T>())
             {
                 // T might be Object, so do all replacements but ignore unregistered components
                 if (toRight)
                 {
-                    var replacement = questReplacements.FirstOrDefault(r => r.left == prop.objectReferenceValue);
+                    var replacement = _replacements.FirstOrDefault(r => r.left == prop.objectReferenceValue);
                     if (replacement != null)
                     {
                         prop.objectReferenceValue = replacement.right;
@@ -48,7 +47,7 @@ namespace Silksprite.QuestReplacer
                 }
                 else
                 {
-                    var replacement = questReplacements.FirstOrDefault(r => r.right == prop.objectReferenceValue);
+                    var replacement = _replacements.FirstOrDefault(r => r.right == prop.objectReferenceValue);
                     if (replacement != null)
                     {
                         prop.objectReferenceValue = replacement.left;
@@ -61,7 +60,7 @@ namespace Silksprite.QuestReplacer
             }
         }
         
-        IEnumerable<SerializedProperty> DeepCollectProperties<T>() where T : Object => DeepCollectProperties<T>(_target);
+        IEnumerable<SerializedProperty> DeepCollectProperties<T>() where T : Object => _targets.SelectMany(DeepCollectProperties<T>);
 
         static IEnumerable<SerializedProperty> DeepCollectProperties<T>(Transform transform)
             where T : Object
