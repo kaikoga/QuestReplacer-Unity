@@ -1,5 +1,6 @@
 {
     "name": "QuestReplacer.Editor",
+    "rootNamespace": "Silksprite.QuestReplacer",
     "references": [
         "QuestReplacer",
         "QuestReplacer.Editor.External"

@@ -1,0 +1,27 @@
+{
+    "name": "QuestReplacer.Editor.Ndmf",
+    "rootNamespace": "Silksprite.QuestReplacer.Ndmf",
+    "references": [
+        "nadena.dev.ndmf",
+        "nadena.dev.ndmf.runtime",
+        "QuestReplacer",
+        "QuestReplacer.Editor"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "nadena.dev.ndmf",
+            "expression": "[1.3.0,999.0.0)",
+            "define": "QUEST_REPLACER_NDMF_SUPPORT"
+        }
+    ],
+    "noEngineReferences": false
+}
