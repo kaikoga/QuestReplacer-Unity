@@ -25,6 +25,7 @@ namespace Silksprite.QuestReplacer
 
         public Material Duplicate(Material original, string preferredPath)
         {
+            // cannot be material variant because shader is different
             var material = new Material(original)
             {
                 shader = _shader
