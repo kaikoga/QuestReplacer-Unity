@@ -2,8 +2,10 @@
 
 using System;
 using nadena.dev.ndmf;
-using UnityEngine;
+using Silksprite.QuestReplacer.Extensions;
 using Silksprite.QuestReplacer.Ndmf;
+using UnityEngine;
+using Object = UnityEngine.Object;
 
 [assembly: ExportsPlugin(typeof(QuestReplacerPlugin))]
 
@@ -28,15 +30,38 @@ namespace Silksprite.QuestReplacer.Ndmf
 
     class QuestReplacerPass : Pass<QuestReplacerPass>
     {
+#if QUEST_REPLACER_VRM0
+        bool IsVrm0(GameObject avatarRootObject) => avatarRootObject.GetComponent<VRM.VRMMeta>();
+#else
+        bool IsVrm0(GameObject avatarRootObject) => false;
+#endif
+
+#if QUEST_REPLACER_VRM1
+        bool IsVrm1(GameObject avatarRootObject) => avatarRootObject.GetComponent<UniVRM10.Vrm10Instance>();
+#else
+        bool IsVrm1(GameObject avatarRootObject) => false;
+#endif
+
         protected override void Execute(BuildContext buildContext)
         {
-            foreach (var root in buildContext.AvatarRootTransform.GetComponentsInChildren<QuestReplacer>(true))
+#if UNITY_STANDALONE
+            var avatarRootObject = buildContext.AvatarRootObject;
+            DoExecute(buildContext, IsVrm0(avatarRootObject) || IsVrm1(avatarRootObject));
+#elif UNITY_ANDROID
+            DoExecute(buildContext, true); 
+#endif
+        }
+        
+        void DoExecute(BuildContext buildContext, bool toRight)
+        {
+            foreach (var replacer in buildContext.AvatarRootTransform.GetComponentsInChildren<QuestReplacer>(true))
             {
-                // TODO
+                replacer.ToContext().DeepOverrideReferences<Object>(toRight);
+                Object.DestroyImmediate(replacer);
             }
         }
-    }
 
+    }
 }
 
 #endif

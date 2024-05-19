@@ -4,6 +4,8 @@
     "references": [
         "nadena.dev.ndmf",
         "nadena.dev.ndmf.runtime",
+        "VRM",
+        "VRM10",
         "QuestReplacer",
         "QuestReplacer.Editor"
     ],
@@ -12,8 +14,11 @@
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "VRCSDKBase.dll",
+        "VRCSDK3A.dll"
+    ],
     "autoReferenced": false,
     "defineConstraints": [],
     "versionDefines": [
@@ -21,6 +26,16 @@
             "name": "nadena.dev.ndmf",
             "expression": "[1.3.0,999.0.0)",
             "define": "QUEST_REPLACER_NDMF_SUPPORT"
+        },
+        {
+            "name": "com.vrmc.univrm",
+            "expression": "[0.0.0,1.0.0)",
+            "define": "QUEST_REPLACER_VRM0"
+        },
+        {
+            "name": "com.vrmc.vrm",
+            "expression": "[0.0.0,1.0.0)",
+            "define": "QUEST_REPLACER_VRM1"
         }
     ],
     "noEngineReferences": false

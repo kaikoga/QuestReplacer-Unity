@@ -21,10 +21,7 @@ namespace Silksprite.QuestReplacer
             {
                 if (_context != null) return _context;
 
-                _context = new QuestReplacerContext(
-                    _questReplacer.Targets,
-                    _questReplacer.database != null ? _questReplacer.database.componentFilters : null,
-                    _questReplacer.pairs);
+                _context = _questReplacer.ToContext();
                 return _context;
             }
         }
