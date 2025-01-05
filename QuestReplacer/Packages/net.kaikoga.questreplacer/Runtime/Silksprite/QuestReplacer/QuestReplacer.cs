@@ -7,6 +7,9 @@ using Object = UnityEngine.Object;
 namespace Silksprite.QuestReplacer
 {
     public class QuestReplacer : MonoBehaviour
+#if QUESTREPLACER_VRCSDK3_AVATARS
+        , VRC.SDKBase.IEditorOnly
+#endif
     {
         public QuestReplacerDatabase database;
         
