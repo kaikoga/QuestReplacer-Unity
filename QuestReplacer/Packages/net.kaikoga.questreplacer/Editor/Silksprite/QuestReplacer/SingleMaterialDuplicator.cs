@@ -1,3 +1,4 @@
+using System.IO;
 using Silksprite.QuestReplacer.External;
 using UnityEditor;
 using UnityEngine;
@@ -52,7 +53,7 @@ namespace Silksprite.QuestReplacer
 
         public Material Duplicate(Material original, string preferredPath)
         {
-            var material = lilToonSupport.lilDuplicateMaterial(original);
+            var material = lilToonSupport.lilDuplicateMaterial(original, Path.GetDirectoryName(preferredPath));
             if (_shader) material.shader = _shader;
             if (material != original) AssetDatabase.CreateAsset(material, preferredPath);
             return material;

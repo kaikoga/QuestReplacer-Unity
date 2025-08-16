@@ -16,14 +16,14 @@ namespace Silksprite.QuestReplacer.External
 
         static bool _lilToonSupportErrorReported;
 
-        public static Material lilDuplicateMaterial(Material original)
+        public static Material lilDuplicateMaterial(Material original, string bakedAssetDirectoryPath)
         {
             try
             {
                 var materialProperties = MaterialEditor.GetMaterialProperties(new Object[] { original });
                 var inspector = new lilToonInspector();
                 inspector.InitializeInspector(materialProperties, original);
-                return inspector.CreateMToonMaterialVolatile(original);
+                return inspector.CreateMToonMaterialVolatile(original, bakedAssetDirectoryPath);
             }
             catch (Exception e)
             {

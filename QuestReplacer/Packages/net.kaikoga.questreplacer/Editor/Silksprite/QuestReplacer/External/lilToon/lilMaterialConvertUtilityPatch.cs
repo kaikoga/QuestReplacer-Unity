@@ -27,7 +27,7 @@ namespace lilToon
             LoadCustomProperties(props, material);
         }
 
-        public Material CreateMToonMaterialVolatile(Material material)
+        public Material CreateMToonMaterialVolatile(Material material, string bakedAssetDirectoryPath)
         {
             var mtoonMaterial = new Material(mtoon);
 

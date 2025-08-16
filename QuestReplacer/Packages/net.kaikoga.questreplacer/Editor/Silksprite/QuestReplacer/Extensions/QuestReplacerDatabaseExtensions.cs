@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Silksprite.QuestReplacer.Extensions
 {
@@ -23,26 +25,29 @@ namespace Silksprite.QuestReplacer.Extensions
 
         public static MaterialDuplicator CreateMaterialDuplicator(this QuestReplacerDatabase database)
         {
-            ISingleMaterialDuplicator[] processors = null;
+            IEnumerable<ISingleMaterialDuplicator> processors;
             switch (database.generateMode)
             {
                 case QuestReplacerDatabase.GenerateMode.VRChatToonLit:
-                    processors = MaterialDuplicator.VRChatToonLitMaterialProcessors;
+                    processors = MaterialDuplicator.VRChatToonLitMaterialProcessors();
                     break;
                 case QuestReplacerDatabase.GenerateMode.MToon:
-                    processors = MaterialDuplicator.MToonMaterialProcessors;
+                    processors = MaterialDuplicator.MToonMaterialProcessors(true);
                     break;
                 case QuestReplacerDatabase.GenerateMode.MToon10:
-                    processors = MaterialDuplicator.MToon10MaterialProcessors;
+                    processors = MaterialDuplicator.MToon10MaterialProcessors(true);
                     break;
                 case QuestReplacerDatabase.GenerateMode.VRChatToonStandard:
-                    processors = MaterialDuplicator.VRChatToonStandardMaterialProcessors;
+                    processors = MaterialDuplicator.VRChatToonStandardMaterialProcessors();
+                    break;
+                default:
+                    processors = Enumerable.Empty<ISingleMaterialDuplicator>();
                     break;
             }
             return new MaterialDuplicator(database.generatedDirectory,
                 database.generatedFilePrefix,
                 database.generatedFileSuffix,
-                processors);
+                processors.ToArray());
         }
 
         public static string GetDefaultSuffix(this QuestReplacerDatabase database)

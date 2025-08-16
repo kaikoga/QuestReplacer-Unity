@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEditor;
@@ -7,31 +8,31 @@ namespace Silksprite.QuestReplacer
 {
     public class MaterialDuplicator
     {
-        public static readonly ISingleMaterialDuplicator[] VRChatToonLitMaterialProcessors =
+        public static IEnumerable<ISingleMaterialDuplicator> VRChatToonLitMaterialProcessors()
         {
-            new SingleMaterialDuplicator("Standard", Shaders.VrcMobileStandardLite),
-            new SingleMaterialDuplicator("", Shaders.VrcMobileToonLit)
-        };
+            yield return new SingleMaterialDuplicator("Standard", Shaders.VrcMobileStandardLite);
+            yield return new SingleMaterialDuplicator("", Shaders.VrcMobileToonLit);
+        }
 
-        public static readonly ISingleMaterialDuplicator[] MToonMaterialProcessors =
+        public static IEnumerable<ISingleMaterialDuplicator> MToonMaterialProcessors(bool lilToonSupport)
         {
-            new lilToonToVRMMaterialDuplicator(),
-            new SingleMaterialDuplicator("Standard", Shaders.Standard),
-            new SingleMaterialDuplicator("", Shaders.VrmMToon)
-        };
+            if (lilToonSupport) yield return new lilToonToVRMMaterialDuplicator();
+            yield return new SingleMaterialDuplicator("Standard", Shaders.Standard);
+            yield return new SingleMaterialDuplicator("", Shaders.VrmMToon);
+        }
 
-        public static readonly ISingleMaterialDuplicator[] MToon10MaterialProcessors =
+        public static IEnumerable<ISingleMaterialDuplicator> MToon10MaterialProcessors(bool lilToonSupport)
         {
-            new lilToonToVRMMaterialDuplicator(Shaders.VrmMToon10),
-            new SingleMaterialDuplicator("Standard", Shaders.Standard),
-            new SingleMaterialDuplicator("", Shaders.VrmMToon10)
-        };
+            if (lilToonSupport) yield return new lilToonToVRMMaterialDuplicator(Shaders.VrmMToon10);
+            yield return new SingleMaterialDuplicator("Standard", Shaders.Standard);
+            yield return new SingleMaterialDuplicator("", Shaders.VrmMToon10);
+        }
 
-        public static readonly ISingleMaterialDuplicator[] VRChatToonStandardMaterialProcessors =
+        public static IEnumerable<ISingleMaterialDuplicator> VRChatToonStandardMaterialProcessors()
         {
-            new SingleMaterialDuplicator("Standard", Shaders.VrcMobileStandardLite),
-            new SingleMaterialDuplicator("", Shaders.VrcMobileToonStandard)
-        };
+            yield return new SingleMaterialDuplicator("Standard", Shaders.VrcMobileStandardLite);
+            yield return new SingleMaterialDuplicator("", Shaders.VrcMobileToonStandard);
+        }
 
         readonly string _directory;
         readonly string _filePrefix;
