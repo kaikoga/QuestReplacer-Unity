@@ -47,7 +47,7 @@ namespace Silksprite.QuestReplacer.Ndmf
 #if UNITY_STANDALONE
             var avatarRootObject = buildContext.AvatarRootObject;
             DoExecute(buildContext, IsVrm0(avatarRootObject) || IsVrm1(avatarRootObject));
-#elif UNITY_ANDROID
+#elif UNITY_ANDROID || UNITY_IOS
             DoExecute(buildContext, true); 
 #endif
         }
