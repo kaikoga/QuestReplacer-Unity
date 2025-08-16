@@ -81,6 +81,10 @@ namespace Silksprite.QuestReplacer.Ndmf
             }
             else if (IsVRChat(avatarRootObject))
             {
+                if (IsStandalone())
+                {
+                    platform = QuestReplacerPlatform.VRChatPC;
+                }
                 if (IsAndroid())
                 {
                     platform = QuestReplacerPlatform.VRChatAndroid;
@@ -97,8 +101,7 @@ namespace Silksprite.QuestReplacer.Ndmf
             }
             else
             {
-                platform = default;
-                return false;
+                platform = QuestReplacerPlatform.Generic;
             }
             return true;
         }
