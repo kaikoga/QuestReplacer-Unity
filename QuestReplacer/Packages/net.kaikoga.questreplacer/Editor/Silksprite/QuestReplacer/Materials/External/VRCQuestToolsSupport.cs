@@ -2,11 +2,9 @@ using System;
 using UnityEngine;
 
 #if QUESTREPLACER_VRCQUESTTOOLS
-using System.Globalization;
 using System.Reflection;
 using KRT.VRCQuestTools;
 using KRT.VRCQuestTools.Models;
-using MacUI;
 #endif
 
 namespace Silksprite.QuestReplacer.Materials.External
