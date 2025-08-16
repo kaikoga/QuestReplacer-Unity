@@ -6,17 +6,19 @@ namespace Silksprite.QuestReplacer.Extensions
 {
     public static class QuestReplacerDatabaseExtensions
     {
-        public static bool HasPlatformSupport(this QuestReplacerDatabase database)
+        public static bool HasGenerateModeSupport(this QuestReplacerDatabase database)
         {
-            switch (database.platform)
+            switch (database.generateMode)
             {
-                case QuestReplacerDatabase.Platform.VRChatMobile:
-                case QuestReplacerDatabase.Platform.VRChatAndroid:
-                case QuestReplacerDatabase.Platform.VRChatIos:
+                case QuestReplacerDatabase.GenerateMode.VRChatToonLit:
                     return Shaders.VrcMobileStandardLite && Shaders.VrcMobileToonLit;
-                case QuestReplacerDatabase.Platform.VRM0:
+                case QuestReplacerDatabase.GenerateMode.VRChatToonStandard:
+                    return Shaders.VrcMobileStandardLite && Shaders.VrcMobileToonStandard;
+                case QuestReplacerDatabase.GenerateMode.VRChatToonStandardOutline:
+                    return false;
+                case QuestReplacerDatabase.GenerateMode.MToon:
                     return Shaders.VrmMToon;
-                case QuestReplacerDatabase.Platform.VRM1:
+                case QuestReplacerDatabase.GenerateMode.MToon10:
                     return Shaders.VrmMToon && Shaders.VrmMToon10;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -31,14 +33,14 @@ namespace Silksprite.QuestReplacer.Extensions
                 case QuestReplacerDatabase.GenerateMode.VRChatToonLit:
                     processors = MaterialDuplicator.VRChatToonLitMaterialProcessors();
                     break;
+                case QuestReplacerDatabase.GenerateMode.VRChatToonStandard:
+                    processors = MaterialDuplicator.VRChatToonStandardMaterialProcessors();
+                    break;
                 case QuestReplacerDatabase.GenerateMode.MToon:
                     processors = MaterialDuplicator.MToonMaterialProcessors(true);
                     break;
                 case QuestReplacerDatabase.GenerateMode.MToon10:
                     processors = MaterialDuplicator.MToon10MaterialProcessors(true);
-                    break;
-                case QuestReplacerDatabase.GenerateMode.VRChatToonStandard:
-                    processors = MaterialDuplicator.VRChatToonStandardMaterialProcessors();
                     break;
                 default:
                     processors = Enumerable.Empty<ISingleMaterialDuplicator>();

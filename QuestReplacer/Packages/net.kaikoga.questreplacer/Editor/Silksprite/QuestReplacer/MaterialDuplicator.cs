@@ -34,6 +34,12 @@ namespace Silksprite.QuestReplacer
             yield return new SingleMaterialDuplicator("", Shaders.VrcMobileToonStandard);
         }
 
+        public static IEnumerable<ISingleMaterialDuplicator> VRChatToonStandardOutlineMaterialProcessors()
+        {
+            yield return new SingleMaterialDuplicator("Standard", Shaders.VrcMobileStandardLite);
+            yield return new SingleMaterialDuplicator("", Shaders.VrcMobileToonStandardOutline);
+        }
+
         readonly string _directory;
         readonly string _filePrefix;
         readonly string _fileSuffix;
