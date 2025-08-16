@@ -1,8 +1,10 @@
 {
-    "name": "QuestReplacer.Editor",
+    "name": "QuestReplacer.Editor.MaterialsExt",
     "rootNamespace": "Silksprite.QuestReplacer",
     "references": [
-        "QuestReplacer"
+        "QuestReplacer",
+        "QuestReplacer.Editor",
+        "QuestReplacer.Editor.MaterialsExt.Support"
     ],
     "includePlatforms": [
         "Editor"

@@ -1,5 +1,5 @@
 {
-    "name": "QuestReplacer.Editor.Materials.External",
+    "name": "QuestReplacer.Editor.MaterialsExt.Support",
     "references": [
         "lilToon.Editor",
         "VRCQuestTools-Editor",

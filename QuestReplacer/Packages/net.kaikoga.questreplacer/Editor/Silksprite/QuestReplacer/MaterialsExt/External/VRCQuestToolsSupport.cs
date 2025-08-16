@@ -7,7 +7,7 @@ using KRT.VRCQuestTools;
 using KRT.VRCQuestTools.Models;
 #endif
 
-namespace Silksprite.QuestReplacer.Materials.External
+namespace Silksprite.QuestReplacer.MaterialsExt.Support
 {
     public static class VRCQuestToolsSupport
     {

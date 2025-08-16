@@ -1,6 +1,15 @@
+QuestReplacer is licensed under MIT License, except for the following directory, which is licensed accordingly.
+The full license text for the bundled softwares are available under their responsive directories.
+
+- Editor/Silksprite/QuestReplacer/MaterialsExt/External/lilToon
+  - MIT License (lilToon)
+  - LICENSE_lilToon.md
+
+----
+
 MIT License
 
-Copyright (c) 2023 kaikoga
+Copyright (c) 2023-2025 kaikoga
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

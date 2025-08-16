@@ -8,21 +8,7 @@ namespace Silksprite.QuestReplacer.Materials
 {
     public class MaterialDuplicator
     {
-        [InitializeOnLoadMethod]
-        static void InitializeOnLoad()
-        {
-            RegisterExt(
-                QuestReplacerGenerateMode.ExtConvertMToon,
-                new lilToonToVRMMaterialDuplicator());
-            RegisterExt(
-                QuestReplacerGenerateMode.ExtConvertMToon10,
-                new lilToonToVRMMaterialDuplicator(Shaders.VrmMToon10));
-            RegisterExt(
-                QuestReplacerGenerateMode.ExtConvertVRChatToonStandard,
-                new VRCQuestToolsMaterialDuplicator());
-        }
-
-        static bool RegisterExt(QuestReplacerGenerateMode generateMode, ISingleMaterialDuplicator duplicator)
+        public static bool RegisterExt(QuestReplacerGenerateMode generateMode, ISingleMaterialDuplicator duplicator)
         {
             if (!Exts.TryGetValue(generateMode, out var list))
             {
