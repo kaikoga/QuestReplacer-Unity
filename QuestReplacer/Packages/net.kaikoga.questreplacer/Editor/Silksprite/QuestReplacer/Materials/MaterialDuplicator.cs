@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-namespace Silksprite.QuestReplacer
+namespace Silksprite.QuestReplacer.Materials
 {
     public class MaterialDuplicator
     {

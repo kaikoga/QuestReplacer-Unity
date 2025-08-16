@@ -1,5 +1,6 @@
 using System.Linq;
 using Silksprite.QuestReplacer.Extensions;
+using Silksprite.QuestReplacer.Materials;
 using Silksprite.QuestReplacer.Scopes;
 using UnityEditor;
 using UnityEngine;

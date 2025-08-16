@@ -7,7 +7,7 @@ using lilToon;
 using UnityEditor;
 #endif
 
-namespace Silksprite.QuestReplacer.External
+namespace Silksprite.QuestReplacer.Materials.External
 {
     public static class lilToonSupport
     {

@@ -3,7 +3,7 @@
     "rootNamespace": "Silksprite.QuestReplacer",
     "references": [
         "QuestReplacer",
-        "QuestReplacer.Editor.External"
+        "QuestReplacer.Editor.Materials.External"
     ],
     "includePlatforms": [
         "Editor"
