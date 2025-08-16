@@ -35,26 +35,26 @@ namespace Silksprite.QuestReplacer
         }
     }
 
-    public class lilToonMaterialDuplicator : ISingleMaterialDuplicator
+    public class lilToonToVRMMaterialDuplicator : ISingleMaterialDuplicator
     {
         readonly Shader _shader;
 
-        public lilToonMaterialDuplicator(Shader shader = null)
+        public lilToonToVRMMaterialDuplicator(Shader shader = null)
         {
             _shader = shader;
         }
 
         public bool IsTarget(Material original)
         {
-            return false; // disable because lilToonSupport is not working
-            // var originalShaderName = original.shader.name;
-            // return originalShaderName.Contains("lilToon") || originalShaderName.StartsWith("Hidden/lts");
+            var originalShaderName = original.shader.name;
+            return originalShaderName.Contains("lilToon") || originalShaderName.StartsWith("Hidden/lts");
         }
 
         public Material Duplicate(Material original, string preferredPath)
         {
             var material = lilToonSupport.lilDuplicateMaterial(original);
             if (_shader) material.shader = _shader;
+            if (material != original) AssetDatabase.CreateAsset(material, preferredPath);
             return material;
         }
     }

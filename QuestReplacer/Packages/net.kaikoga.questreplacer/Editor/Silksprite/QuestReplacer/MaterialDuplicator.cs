@@ -15,14 +15,14 @@ namespace Silksprite.QuestReplacer
 
         public static readonly ISingleMaterialDuplicator[] MToonMaterialProcessors =
         {
-            new lilToonMaterialDuplicator(),
+            new lilToonToVRMMaterialDuplicator(),
             new SingleMaterialDuplicator("Standard", Shaders.Standard),
             new SingleMaterialDuplicator("", Shaders.VrmMToon)
         };
 
         public static readonly ISingleMaterialDuplicator[] MToon10MaterialProcessors =
         {
-            new lilToonMaterialDuplicator(Shaders.VrmMToon10),
+            new lilToonToVRMMaterialDuplicator(Shaders.VrmMToon10),
             new SingleMaterialDuplicator("Standard", Shaders.Standard),
             new SingleMaterialDuplicator("", Shaders.VrmMToon10)
         };

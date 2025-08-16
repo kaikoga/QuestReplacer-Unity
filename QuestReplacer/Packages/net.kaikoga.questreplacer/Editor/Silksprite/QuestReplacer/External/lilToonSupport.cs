@@ -1,11 +1,10 @@
 using System;
-using System.Reflection;
-using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
 #if QUESTREPLACER_LILTOON
 using lilToon;
+using UnityEditor;
 #endif
 
 namespace Silksprite.QuestReplacer.External
@@ -21,22 +20,10 @@ namespace Silksprite.QuestReplacer.External
         {
             try
             {
-                var lilToonInspectorType = typeof(lilToonInspector);
-                var createMToonMaterial = lilToonInspectorType.GetMethod("CreateMToonMaterial", BindingFlags.InvokeMethod | BindingFlags.NonPublic | BindingFlags.Instance);
-
-                var lilToonInspector = new lilToonInspector();
-                var props = MaterialEditor.GetMaterialProperties(new Object[] { original });
-                try
-                {
-                    lilToonInspector.DrawAllGUI(null, props, original);                    
-                }
-                catch (Exception)
-                {
-                    // this should fail because MaterialEditor argument is null
-                }
-
-                // FIXME
-                return createMToonMaterial.Invoke(lilToonInspector, new object[] { original }) as Material;
+                var materialProperties = MaterialEditor.GetMaterialProperties(new Object[] { original });
+                var inspector = new lilToonInspector();
+                inspector.InitializeInspector(materialProperties, original);
+                return inspector.CreateMToonMaterialVolatile(original);
             }
             catch (Exception e)
             {

@@ -15,7 +15,7 @@
     "versionDefines": [
         {
             "name": "jp.lilxyzw.liltoon",
-            "expression": "",
+            "expression": "[2.0.0,999.0.0)",
             "define": "QUESTREPLACER_LILTOON"
         }
     ],
