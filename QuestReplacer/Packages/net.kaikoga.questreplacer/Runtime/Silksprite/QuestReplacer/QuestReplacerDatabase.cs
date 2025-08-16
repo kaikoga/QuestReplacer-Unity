@@ -18,6 +18,7 @@ namespace Silksprite.QuestReplacer
         public bool manageMaterials = ManageMaterialsDefault;
         public bool manageMeshes = ManageMeshesDefault;
 
+        public Platform platform = Platform.Quest;
         public GenerateMode generateMode = GenerateMode.Quest;
         public string generatedDirectory = "";
         public string generatedFilePrefix = "";
@@ -25,6 +26,13 @@ namespace Silksprite.QuestReplacer
 
         static bool _instanceFound;
         static QuestReplacerDatabase _instance;
+
+        public enum Platform
+        {
+            Quest,
+            VRM0,
+            VRM1
+        }
 
         public enum GenerateMode
         {

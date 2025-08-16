@@ -6,13 +6,13 @@ namespace Silksprite.QuestReplacer.Extensions
     {
         public static bool HasPlatformSupport(this QuestReplacerDatabase database)
         {
-            switch (database.generateMode)
+            switch (database.platform)
             {
-                case QuestReplacerDatabase.GenerateMode.Quest:
+                case QuestReplacerDatabase.Platform.Quest:
                     return Shaders.VrcMobileStandardLite && Shaders.VrcMobileToonLit;
-                case QuestReplacerDatabase.GenerateMode.VRM0:
+                case QuestReplacerDatabase.Platform.VRM0:
                     return Shaders.VrmMToon;
-                case QuestReplacerDatabase.GenerateMode.VRM1:
+                case QuestReplacerDatabase.Platform.VRM1:
                     return Shaders.VrmMToon && Shaders.VrmMToon10;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -42,16 +42,16 @@ namespace Silksprite.QuestReplacer.Extensions
 
         public static string GetDefaultSuffix(this QuestReplacerDatabase database)
         {
-            switch (database.generateMode)
+            switch (database.platform)
             {
-                case QuestReplacerDatabase.GenerateMode.Quest:
+                case QuestReplacerDatabase.Platform.Quest:
                     return "-q";
-                case QuestReplacerDatabase.GenerateMode.VRM0:
+                case QuestReplacerDatabase.Platform.VRM0:
                     return "-m";
-                case QuestReplacerDatabase.GenerateMode.VRM1:
+                case QuestReplacerDatabase.Platform.VRM1:
                     return "-m1";
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(database.generateMode), database.generateMode, null);
+                    throw new ArgumentOutOfRangeException(nameof(database.platform), database.platform, null);
             }
         }
     }
