@@ -1,18 +1,16 @@
-using System.IO;
 using Silksprite.QuestReplacer.Materials;
 using Silksprite.QuestReplacer.MaterialsExt.Support;
-using UnityEditor;
 using UnityEngine;
 
 namespace Silksprite.QuestReplacer.MaterialsExt
 {
     public class lilToonToVRMMaterialDuplicator : ISingleMaterialDuplicator
     {
-        readonly Shader _shader;
+        readonly MToonUpgrader _mToonUpgrader;
 
-        public lilToonToVRMMaterialDuplicator(Shader shader = null)
+        public lilToonToVRMMaterialDuplicator(bool isVrm1)
         {
-            _shader = shader;
+            _mToonUpgrader = isVrm1 ? new MToonUpgrader() : null; 
         }
 
         bool ISingleMaterialDuplicator.IsTarget(Material original)
@@ -21,11 +19,10 @@ namespace Silksprite.QuestReplacer.MaterialsExt
             return originalShaderName.Contains("lilToon") || originalShaderName.StartsWith("Hidden/lts");
         }
 
-        Material ISingleMaterialDuplicator.Duplicate(Material original, string preferredPath)
+        Material ISingleMaterialDuplicator.Duplicate(Material original, string bakedAssetDirectoryPath)
         {
-            var material = lilToonSupport.lilDuplicateMaterial(original, Path.GetDirectoryName(preferredPath));
-            if (_shader) material.shader = _shader;
-            if (material != original) AssetDatabase.CreateAsset(material, preferredPath);
+            var material = lilToonSupport.lilDuplicateMaterial(original, bakedAssetDirectoryPath);
+            _mToonUpgrader?.Duplicate(original, bakedAssetDirectoryPath);
             return material;
         }
     }

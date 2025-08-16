@@ -1,7 +1,5 @@
-using System.IO;
 using Silksprite.QuestReplacer.Materials;
 using Silksprite.QuestReplacer.MaterialsExt.Support;
-using UnityEditor;
 using UnityEngine;
 
 namespace Silksprite.QuestReplacer.MaterialsExt
@@ -10,10 +8,9 @@ namespace Silksprite.QuestReplacer.MaterialsExt
     {
         bool ISingleMaterialDuplicator.IsTarget(Material original) => true;
 
-        Material ISingleMaterialDuplicator.Duplicate(Material original, string preferredPath)
+        Material ISingleMaterialDuplicator.Duplicate(Material original, string bakedAssetDirectoryPath)
         {
-            var material = VRCQuestToolsSupport.ConvertSingleMaterial(original, Path.GetDirectoryName(preferredPath));
-            if (material != original) AssetDatabase.CreateAsset(material, preferredPath);
+            var material = VRCQuestToolsSupport.ConvertSingleMaterial(original, bakedAssetDirectoryPath);
             return material;
         }
     }

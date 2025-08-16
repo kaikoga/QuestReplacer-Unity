@@ -42,6 +42,7 @@ namespace Silksprite.QuestReplacer.Materials
             },
             [QuestReplacerGenerateMode.GenerateMToon10] = new ISingleMaterialDuplicator[]
             {
+                new MToonUpgrader(),
                 new SingleMaterialDuplicator("Standard", Shaders.Standard),
                 new SingleMaterialDuplicator("", Shaders.VrmMToon10)
             },
@@ -106,8 +107,13 @@ namespace Silksprite.QuestReplacer.Materials
             var existingMaterial = AssetDatabase.LoadAssetAtPath<Material>(assetPath);
             if (existingMaterial) return existingMaterial;
 
+            var bakedAssetDirectoryPath = Path.GetDirectoryName(assetPath);
             var material = _processors.First(processor => processor.IsTarget(original))
-                .Duplicate(original, assetPath);
+                .Duplicate(original, bakedAssetDirectoryPath);
+            if (material != original)
+            {
+                AssetDatabase.CreateAsset(material, assetPath);
+            }
             return material;
         }
         
