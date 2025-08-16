@@ -14,5 +14,9 @@ namespace Silksprite.QuestReplacer
         GenerateMToon = 0x200,
         [InspectorName("Generate MToon10")]
         GenerateMToon10 = 0x210,
+        [InspectorName("Ext Convert MToon")]
+        ExtConvertMToon = 0x2200,
+        [InspectorName("Ext Convert MToon10")]
+        ExtConvertMToon10 = 0x2210,
     }
 }

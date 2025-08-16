@@ -18,8 +18,10 @@ namespace Silksprite.QuestReplacer.Extensions
                 case QuestReplacerGenerateMode.GenerateVRChatToonStandardOutline:
                     return false;
                 case QuestReplacerGenerateMode.GenerateMToon:
+                case QuestReplacerGenerateMode.ExtConvertMToon:
                     return Shaders.VrmMToon;
                 case QuestReplacerGenerateMode.GenerateMToon10:
+                case QuestReplacerGenerateMode.ExtConvertMToon10:
                     return Shaders.VrmMToon && Shaders.VrmMToon10;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -41,9 +43,15 @@ namespace Silksprite.QuestReplacer.Extensions
                     processors = MaterialDuplicator.VRChatToonStandardOutlineMaterialProcessors();
                     break;
                 case QuestReplacerGenerateMode.GenerateMToon:
-                    processors = MaterialDuplicator.MToonMaterialProcessors(true);
+                    processors = MaterialDuplicator.MToonMaterialProcessors(false);
                     break;
                 case QuestReplacerGenerateMode.GenerateMToon10:
+                    processors = MaterialDuplicator.MToon10MaterialProcessors(false);
+                    break;
+                case QuestReplacerGenerateMode.ExtConvertMToon:
+                    processors = MaterialDuplicator.MToonMaterialProcessors(true);
+                    break;
+                case QuestReplacerGenerateMode.ExtConvertMToon10:
                     processors = MaterialDuplicator.MToon10MaterialProcessors(true);
                     break;
                 default:
