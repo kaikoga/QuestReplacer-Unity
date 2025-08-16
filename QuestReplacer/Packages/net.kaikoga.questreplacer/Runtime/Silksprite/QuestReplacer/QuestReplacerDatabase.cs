@@ -19,7 +19,7 @@ namespace Silksprite.QuestReplacer
         public bool manageMeshes = ManageMeshesDefault;
 
         public Platform platform = Platform.VRChatMobile;
-        public GenerateMode generateMode = GenerateMode.Quest;
+        public GenerateMode generateMode = GenerateMode.VRChatToonStandard;
         public string generatedDirectory = "";
         public string generatedFilePrefix = "";
         public string generatedFileSuffix = "-q";
@@ -38,9 +38,10 @@ namespace Silksprite.QuestReplacer
 
         public enum GenerateMode
         {
-            Quest,
+            VRChatToonLit,
             VRM0,
-            VRM1
+            VRM1,
+            VRChatToonStandard
         }
 
         public void RegisterTypeFilters(IEnumerable<Type> types)

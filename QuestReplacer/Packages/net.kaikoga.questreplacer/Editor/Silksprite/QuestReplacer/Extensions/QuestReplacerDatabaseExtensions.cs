@@ -26,14 +26,17 @@ namespace Silksprite.QuestReplacer.Extensions
             ISingleMaterialDuplicator[] processors = null;
             switch (database.generateMode)
             {
-                case QuestReplacerDatabase.GenerateMode.Quest:
-                    processors = MaterialDuplicator.QuestMaterialProcessors;
+                case QuestReplacerDatabase.GenerateMode.VRChatToonLit:
+                    processors = MaterialDuplicator.VRChatToonLitMaterialProcessors;
                     break;
                 case QuestReplacerDatabase.GenerateMode.VRM0:
                     processors = MaterialDuplicator.VRM0MaterialProcessors;
                     break;
                 case QuestReplacerDatabase.GenerateMode.VRM1:
                     processors = MaterialDuplicator.VRM1MaterialProcessors;
+                    break;
+                case QuestReplacerDatabase.GenerateMode.VRChatToonStandard:
+                    processors = MaterialDuplicator.VRChatToonStandardMaterialProcessors;
                     break;
             }
             return new MaterialDuplicator(database.generatedDirectory,

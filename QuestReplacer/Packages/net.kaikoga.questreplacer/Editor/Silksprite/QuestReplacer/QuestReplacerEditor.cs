@@ -172,7 +172,7 @@ namespace Silksprite.QuestReplacer
 
         void CreateDatabase()
         {
-            _questReplacer.CreateDatabase(QuestReplacerDatabase.Platform.VRChatMobile, QuestReplacerDatabase.GenerateMode.Quest);
+            _questReplacer.CreateDatabase(QuestReplacerDatabase.Platform.VRChatMobile, QuestReplacerDatabase.GenerateMode.VRChatToonStandard);
             UpdateTypeFilters();
             ClearCache();
         }

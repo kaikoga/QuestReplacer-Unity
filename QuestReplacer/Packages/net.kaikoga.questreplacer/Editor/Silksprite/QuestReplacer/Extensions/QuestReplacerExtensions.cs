@@ -53,7 +53,7 @@ namespace Silksprite.QuestReplacer.Extensions
             {
                 case null:
                 case QuestReplacerDatabase.Platform.VRChatMobile:
-                    questReplacer.CreateDatabase(QuestReplacerDatabase.Platform.VRChatMobile, QuestReplacerDatabase.GenerateMode.Quest);
+                    questReplacer.CreateDatabase(QuestReplacerDatabase.Platform.VRChatMobile, QuestReplacerDatabase.GenerateMode.VRChatToonStandard);
                     break;
                 case QuestReplacerDatabase.Platform.VRM0:
                     questReplacer.CreateDatabase(QuestReplacerDatabase.Platform.VRM0, QuestReplacerDatabase.GenerateMode.VRM0);
@@ -62,10 +62,10 @@ namespace Silksprite.QuestReplacer.Extensions
                     questReplacer.CreateDatabase(QuestReplacerDatabase.Platform.VRM1, QuestReplacerDatabase.GenerateMode.VRM1);
                     break;
                 case QuestReplacerDatabase.Platform.VRChatAndroid:
-                    questReplacer.CreateDatabase(QuestReplacerDatabase.Platform.VRChatAndroid, QuestReplacerDatabase.GenerateMode.Quest);
+                    questReplacer.CreateDatabase(QuestReplacerDatabase.Platform.VRChatAndroid, QuestReplacerDatabase.GenerateMode.VRChatToonStandard);
                     break;
                 case QuestReplacerDatabase.Platform.VRChatIos:
-                    questReplacer.CreateDatabase(QuestReplacerDatabase.Platform.VRChatIos, QuestReplacerDatabase.GenerateMode.Quest);
+                    questReplacer.CreateDatabase(QuestReplacerDatabase.Platform.VRChatIos, QuestReplacerDatabase.GenerateMode.VRChatToonStandard);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(platform), platform, null);

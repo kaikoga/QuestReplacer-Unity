@@ -7,7 +7,7 @@ namespace Silksprite.QuestReplacer
 {
     public class MaterialDuplicator
     {
-        public static readonly ISingleMaterialDuplicator[] QuestMaterialProcessors =
+        public static readonly ISingleMaterialDuplicator[] VRChatToonLitMaterialProcessors =
         {
             new SingleMaterialDuplicator("Standard", Shaders.VrcMobileStandardLite),
             new SingleMaterialDuplicator("", Shaders.VrcMobileToonLit)
@@ -25,6 +25,12 @@ namespace Silksprite.QuestReplacer
             new lilToonMaterialDuplicator(Shaders.VrmMToon10),
             new SingleMaterialDuplicator("Standard", Shaders.Standard),
             new SingleMaterialDuplicator("", Shaders.VrmMToon10)
+        };
+
+        public static readonly ISingleMaterialDuplicator[] VRChatToonStandardMaterialProcessors =
+        {
+            new SingleMaterialDuplicator("Standard", Shaders.VrcMobileStandardLite),
+            new SingleMaterialDuplicator("", Shaders.VrcMobileToonStandard)
         };
 
         readonly string _directory;
