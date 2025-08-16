@@ -36,6 +36,9 @@ namespace Silksprite.QuestReplacer.Extensions
                 case QuestReplacerGenerateMode.VRChatToonStandard:
                     processors = MaterialDuplicator.VRChatToonStandardMaterialProcessors();
                     break;
+                case QuestReplacerGenerateMode.VRChatToonStandardOutline:
+                    processors = MaterialDuplicator.VRChatToonStandardOutlineMaterialProcessors();
+                    break;
                 case QuestReplacerGenerateMode.MToon:
                     processors = MaterialDuplicator.MToonMaterialProcessors(true);
                     break;
