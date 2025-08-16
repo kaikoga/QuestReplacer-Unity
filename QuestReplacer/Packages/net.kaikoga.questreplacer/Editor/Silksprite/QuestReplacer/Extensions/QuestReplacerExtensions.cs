@@ -14,7 +14,7 @@ namespace Silksprite.QuestReplacer.Extensions
                 questReplacer.pairs);
         }
 
-        public static QuestReplacerDatabase EnsureDatabase(this QuestReplacer questReplacer, QuestReplacerDatabase.Platform? platform)
+        public static QuestReplacerDatabase EnsureDatabase(this QuestReplacer questReplacer, QuestReplacerPlatform? platform)
         {
             if (questReplacer.database) return questReplacer.database;
 
@@ -23,18 +23,18 @@ namespace Silksprite.QuestReplacer.Extensions
                 .ToArray();
 
             QuestReplacerDatabase database;
-            QuestReplacerDatabase GetPlatform(QuestReplacerDatabase.Platform value)
+            QuestReplacerDatabase GetPlatform(QuestReplacerPlatform value)
             {
                 return database = databases.FirstOrDefault(db => db.platform == value);
             }
 
-            if (platform is QuestReplacerDatabase.Platform value)
+            if (platform is QuestReplacerPlatform value)
             {
                 switch (value)
                 {
-                    case QuestReplacerDatabase.Platform.VRChatAndroid:
-                    case QuestReplacerDatabase.Platform.VRChatIos:
-                        var _ = GetPlatform(value) || GetPlatform(QuestReplacerDatabase.Platform.VRChatMobile);
+                    case QuestReplacerPlatform.VRChatAndroid:
+                    case QuestReplacerPlatform.VRChatIos:
+                        var _ = GetPlatform(value) || GetPlatform(QuestReplacerPlatform.VRChatMobile);
                         break;
                     default:
                         GetPlatform(value);
@@ -52,20 +52,20 @@ namespace Silksprite.QuestReplacer.Extensions
             switch (platform)
             {
                 case null:
-                case QuestReplacerDatabase.Platform.VRChatMobile:
-                    questReplacer.CreateDatabase(QuestReplacerDatabase.Platform.VRChatMobile, QuestReplacerDatabase.GenerateMode.VRChatToonStandard);
+                case QuestReplacerPlatform.VRChatMobile:
+                    questReplacer.CreateDatabase(QuestReplacerPlatform.VRChatMobile, QuestReplacerGenerateMode.VRChatToonStandard);
                     break;
-                case QuestReplacerDatabase.Platform.VRM0:
-                    questReplacer.CreateDatabase(QuestReplacerDatabase.Platform.VRM0, QuestReplacerDatabase.GenerateMode.MToon);
+                case QuestReplacerPlatform.VRM0:
+                    questReplacer.CreateDatabase(QuestReplacerPlatform.VRM0, QuestReplacerGenerateMode.MToon);
                     break;
-                case QuestReplacerDatabase.Platform.VRM1:
-                    questReplacer.CreateDatabase(QuestReplacerDatabase.Platform.VRM1, QuestReplacerDatabase.GenerateMode.MToon10);
+                case QuestReplacerPlatform.VRM1:
+                    questReplacer.CreateDatabase(QuestReplacerPlatform.VRM1, QuestReplacerGenerateMode.MToon10);
                     break;
-                case QuestReplacerDatabase.Platform.VRChatAndroid:
-                    questReplacer.CreateDatabase(QuestReplacerDatabase.Platform.VRChatAndroid, QuestReplacerDatabase.GenerateMode.VRChatToonStandard);
+                case QuestReplacerPlatform.VRChatAndroid:
+                    questReplacer.CreateDatabase(QuestReplacerPlatform.VRChatAndroid, QuestReplacerGenerateMode.VRChatToonStandard);
                     break;
-                case QuestReplacerDatabase.Platform.VRChatIos:
-                    questReplacer.CreateDatabase(QuestReplacerDatabase.Platform.VRChatIos, QuestReplacerDatabase.GenerateMode.VRChatToonStandard);
+                case QuestReplacerPlatform.VRChatIos:
+                    questReplacer.CreateDatabase(QuestReplacerPlatform.VRChatIos, QuestReplacerGenerateMode.VRChatToonStandard);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(platform), platform, null);
@@ -73,7 +73,7 @@ namespace Silksprite.QuestReplacer.Extensions
             return questReplacer.database;
         }
 
-        public static void CreateDatabase(this QuestReplacer questReplacer, QuestReplacerDatabase.Platform platform, QuestReplacerDatabase.GenerateMode generateMode)
+        public static void CreateDatabase(this QuestReplacer questReplacer, QuestReplacerPlatform platform, QuestReplacerGenerateMode generateMode)
         {
             var database = ScriptableObject.CreateInstance<QuestReplacerDatabase>();
             database.platform = platform;

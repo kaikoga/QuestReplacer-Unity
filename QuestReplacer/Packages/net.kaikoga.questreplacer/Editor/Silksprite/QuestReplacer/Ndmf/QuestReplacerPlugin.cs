@@ -67,27 +67,27 @@ namespace Silksprite.QuestReplacer.Ndmf
         bool IsIos() => false;
 #endif
 
-        bool TryGetPlatformForAvatar(BuildContext buildContext, out QuestReplacerDatabase.Platform platform)
+        bool TryGetPlatformForAvatar(BuildContext buildContext, out QuestReplacerPlatform platform)
         {
             var avatarRootObject = buildContext.AvatarRootObject;
             
             if (IsVrm0(avatarRootObject))
             {
-                platform = QuestReplacerDatabase.Platform.VRM0;
+                platform = QuestReplacerPlatform.VRM0;
             }
             else if (IsVrm1(avatarRootObject))
             {
-                platform = QuestReplacerDatabase.Platform.VRM1;
+                platform = QuestReplacerPlatform.VRM1;
             }
             else if (IsVRChat(avatarRootObject))
             {
                 if (IsAndroid())
                 {
-                    platform = QuestReplacerDatabase.Platform.VRChatAndroid;
+                    platform = QuestReplacerPlatform.VRChatAndroid;
                 }
                 else if (IsIos())
                 {
-                    platform = QuestReplacerDatabase.Platform.VRChatIos;
+                    platform = QuestReplacerPlatform.VRChatIos;
                 }
                 else
                 {
@@ -111,7 +111,7 @@ namespace Silksprite.QuestReplacer.Ndmf
             }
         }
         
-        void DoExecute(BuildContext buildContext, QuestReplacerDatabase.Platform platform)
+        void DoExecute(BuildContext buildContext, QuestReplacerPlatform platform)
         {
             var allReplacers = buildContext.AvatarRootTransform.GetComponentsInChildren<QuestReplacer>(true);
             foreach (var replacer in allReplacers.Where(replacer => replacer.database && replacer.database.platform != platform))

@@ -10,15 +10,15 @@ namespace Silksprite.QuestReplacer.Extensions
         {
             switch (database.generateMode)
             {
-                case QuestReplacerDatabase.GenerateMode.VRChatToonLit:
+                case QuestReplacerGenerateMode.VRChatToonLit:
                     return Shaders.VrcMobileStandardLite && Shaders.VrcMobileToonLit;
-                case QuestReplacerDatabase.GenerateMode.VRChatToonStandard:
+                case QuestReplacerGenerateMode.VRChatToonStandard:
                     return Shaders.VrcMobileStandardLite && Shaders.VrcMobileToonStandard;
-                case QuestReplacerDatabase.GenerateMode.VRChatToonStandardOutline:
+                case QuestReplacerGenerateMode.VRChatToonStandardOutline:
                     return false;
-                case QuestReplacerDatabase.GenerateMode.MToon:
+                case QuestReplacerGenerateMode.MToon:
                     return Shaders.VrmMToon;
-                case QuestReplacerDatabase.GenerateMode.MToon10:
+                case QuestReplacerGenerateMode.MToon10:
                     return Shaders.VrmMToon && Shaders.VrmMToon10;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -30,16 +30,16 @@ namespace Silksprite.QuestReplacer.Extensions
             IEnumerable<ISingleMaterialDuplicator> processors;
             switch (database.generateMode)
             {
-                case QuestReplacerDatabase.GenerateMode.VRChatToonLit:
+                case QuestReplacerGenerateMode.VRChatToonLit:
                     processors = MaterialDuplicator.VRChatToonLitMaterialProcessors();
                     break;
-                case QuestReplacerDatabase.GenerateMode.VRChatToonStandard:
+                case QuestReplacerGenerateMode.VRChatToonStandard:
                     processors = MaterialDuplicator.VRChatToonStandardMaterialProcessors();
                     break;
-                case QuestReplacerDatabase.GenerateMode.MToon:
+                case QuestReplacerGenerateMode.MToon:
                     processors = MaterialDuplicator.MToonMaterialProcessors(true);
                     break;
-                case QuestReplacerDatabase.GenerateMode.MToon10:
+                case QuestReplacerGenerateMode.MToon10:
                     processors = MaterialDuplicator.MToon10MaterialProcessors(true);
                     break;
                 default:
@@ -56,15 +56,15 @@ namespace Silksprite.QuestReplacer.Extensions
         {
             switch (database.platform)
             {
-                case QuestReplacerDatabase.Platform.VRChatMobile:
+                case QuestReplacerPlatform.VRChatMobile:
                     return "-m";
-                case QuestReplacerDatabase.Platform.VRM0:
+                case QuestReplacerPlatform.VRM0:
                     return "-vrm0";
-                case QuestReplacerDatabase.Platform.VRM1:
+                case QuestReplacerPlatform.VRM1:
                     return "-vrm1";
-                case QuestReplacerDatabase.Platform.VRChatAndroid:
+                case QuestReplacerPlatform.VRChatAndroid:
                     return "-a";
-                case QuestReplacerDatabase.Platform.VRChatIos:
+                case QuestReplacerPlatform.VRChatIos:
                     return "-i";
                 default:
                     throw new ArgumentOutOfRangeException(nameof(database.platform), database.platform, null);

@@ -18,40 +18,14 @@ namespace Silksprite.QuestReplacer
         public bool manageMaterials = ManageMaterialsDefault;
         public bool manageMeshes = ManageMeshesDefault;
 
-        public Platform platform = Platform.VRChatMobile;
-        public GenerateMode generateMode = GenerateMode.VRChatToonStandard;
+        public QuestReplacerPlatform platform = QuestReplacerPlatform.VRChatMobile;
+        public QuestReplacerGenerateMode generateMode = QuestReplacerGenerateMode.VRChatToonStandard;
         public string generatedDirectory = "";
         public string generatedFilePrefix = "";
         public string generatedFileSuffix = "-q";
 
         static bool _instanceFound;
         static QuestReplacerDatabase _instance;
-
-        public enum Platform
-        {
-            [InspectorName("VRChat Mobile")]
-            VRChatMobile = 0x00,
-            [InspectorName("VRChat Android")]
-            VRChatAndroid = 0x01,
-            [InspectorName("VRChat iOS")]
-            VRChatIos = 0x02,
-            VRM0 = 0x10,
-            VRM1 = 0x11,
-        }
-
-        public enum GenerateMode
-        {
-            [InspectorName("VRChat ToonLit")]
-            VRChatToonLit = 0x00,
-            [InspectorName("VRChat Toon Standard")]
-            VRChatToonStandard = 0x01,
-            [InspectorName("VRChat Toon Standard (Outline)")]
-            VRChatToonStandardOutline = 0x02,
-            [InspectorName("MToon")]
-            MToon = 0x10,
-            [InspectorName("MToon10")]
-            MToon10 = 0x11,
-        }
 
         public void RegisterTypeFilters(IEnumerable<Type> types)
         {
