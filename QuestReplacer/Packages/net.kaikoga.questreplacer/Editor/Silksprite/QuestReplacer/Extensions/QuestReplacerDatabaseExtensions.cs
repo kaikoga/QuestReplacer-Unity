@@ -8,7 +8,9 @@ namespace Silksprite.QuestReplacer.Extensions
         {
             switch (database.platform)
             {
-                case QuestReplacerDatabase.Platform.Quest:
+                case QuestReplacerDatabase.Platform.VRChatMobile:
+                case QuestReplacerDatabase.Platform.VRChatAndroid:
+                case QuestReplacerDatabase.Platform.VRChatIos:
                     return Shaders.VrcMobileStandardLite && Shaders.VrcMobileToonLit;
                 case QuestReplacerDatabase.Platform.VRM0:
                     return Shaders.VrmMToon;
@@ -44,12 +46,16 @@ namespace Silksprite.QuestReplacer.Extensions
         {
             switch (database.platform)
             {
-                case QuestReplacerDatabase.Platform.Quest:
-                    return "-q";
-                case QuestReplacerDatabase.Platform.VRM0:
+                case QuestReplacerDatabase.Platform.VRChatMobile:
                     return "-m";
+                case QuestReplacerDatabase.Platform.VRM0:
+                    return "-vrm0";
                 case QuestReplacerDatabase.Platform.VRM1:
-                    return "-m1";
+                    return "-vrm1";
+                case QuestReplacerDatabase.Platform.VRChatAndroid:
+                    return "-a";
+                case QuestReplacerDatabase.Platform.VRChatIos:
+                    return "-i";
                 default:
                     throw new ArgumentOutOfRangeException(nameof(database.platform), database.platform, null);
             }

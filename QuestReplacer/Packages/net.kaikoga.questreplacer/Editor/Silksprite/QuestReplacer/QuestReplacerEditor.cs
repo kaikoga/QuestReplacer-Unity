@@ -92,7 +92,7 @@ namespace Silksprite.QuestReplacer
                             {
                                 if (GUILayout.Button($"Generate {database.generateMode} Materials"))
                                 {
-                                    GenerateMaterials(_questReplacer.EnsureDatabase(QuestReplacerDatabase.Platform.Quest).CreateMaterialDuplicator());
+                                    GenerateMaterials(_questReplacer.EnsureDatabase(QuestReplacerDatabase.Platform.VRChatMobile).CreateMaterialDuplicator());
                                 }
                             }
                         }
@@ -172,7 +172,7 @@ namespace Silksprite.QuestReplacer
 
         void CreateDatabase()
         {
-            _questReplacer.CreateDatabase(QuestReplacerDatabase.Platform.Quest, QuestReplacerDatabase.GenerateMode.Quest);
+            _questReplacer.CreateDatabase(QuestReplacerDatabase.Platform.VRChatMobile, QuestReplacerDatabase.GenerateMode.Quest);
             UpdateTypeFilters();
             ClearCache();
         }

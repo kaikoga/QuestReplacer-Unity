@@ -6,10 +6,10 @@ namespace Silksprite.QuestReplacer
 {
     public static class QuestReplacerMenuItems
     {
-        [MenuItem("GameObject/QuestReplacer/New Quest", false, 40)]
+        [MenuItem("GameObject/QuestReplacer/New VRChat Mobile", false, 40)]
         static void CreateQuestReplacer(MenuCommand _)
         {
-            CreateQuestReplacer(QuestReplacerDatabase.Platform.Quest);
+            CreateQuestReplacer(QuestReplacerDatabase.Platform.VRChatMobile);
         }
 
         [MenuItem("GameObject/QuestReplacer/New VRM0", false, 40)]

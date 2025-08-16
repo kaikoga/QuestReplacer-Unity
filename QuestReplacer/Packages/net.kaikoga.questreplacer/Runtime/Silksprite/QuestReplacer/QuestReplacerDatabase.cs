@@ -18,7 +18,7 @@ namespace Silksprite.QuestReplacer
         public bool manageMaterials = ManageMaterialsDefault;
         public bool manageMeshes = ManageMeshesDefault;
 
-        public Platform platform = Platform.Quest;
+        public Platform platform = Platform.VRChatMobile;
         public GenerateMode generateMode = GenerateMode.Quest;
         public string generatedDirectory = "";
         public string generatedFilePrefix = "";
@@ -29,9 +29,11 @@ namespace Silksprite.QuestReplacer
 
         public enum Platform
         {
-            Quest,
+            VRChatMobile,
             VRM0,
-            VRM1
+            VRM1,
+            VRChatAndroid,
+            VRChatIos
         }
 
         public enum GenerateMode

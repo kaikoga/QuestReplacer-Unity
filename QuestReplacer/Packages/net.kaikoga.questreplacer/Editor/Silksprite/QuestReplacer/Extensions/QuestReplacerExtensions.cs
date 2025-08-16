@@ -17,25 +17,55 @@ namespace Silksprite.QuestReplacer.Extensions
         public static QuestReplacerDatabase EnsureDatabase(this QuestReplacer questReplacer, QuestReplacerDatabase.Platform? platform)
         {
             if (questReplacer.database) return questReplacer.database;
-            
-            var database = UnityEditor.AssetDatabase.FindAssets($"t:{nameof(QuestReplacerDatabase)}")
+
+            var databases = UnityEditor.AssetDatabase.FindAssets($"t:{nameof(QuestReplacerDatabase)}")
                 .Select(guid => UnityEditor.AssetDatabase.LoadAssetAtPath<QuestReplacerDatabase>(UnityEditor.AssetDatabase.GUIDToAssetPath(guid)))
-                // ReSharper disable once SimplifyConditionalTernaryExpression
-                .FirstOrDefault(db => platform is QuestReplacerDatabase.Platform value ? db.platform == value : true);
+                .ToArray();
+
+            QuestReplacerDatabase database;
+            QuestReplacerDatabase GetPlatform(QuestReplacerDatabase.Platform value)
+            {
+                return database = databases.FirstOrDefault(db => db.platform == value);
+            }
+
+            if (platform is QuestReplacerDatabase.Platform value)
+            {
+                switch (value)
+                {
+                    case QuestReplacerDatabase.Platform.VRChatAndroid:
+                    case QuestReplacerDatabase.Platform.VRChatIos:
+                        var _ = GetPlatform(value) || GetPlatform(QuestReplacerDatabase.Platform.VRChatMobile);
+                        break;
+                    default:
+                        GetPlatform(value);
+                        break;
+                }
+            }
+            else
+            {
+                database = databases.FirstOrDefault();
+            }
+
             questReplacer.database = database;
             if (database) return database;
 
             switch (platform)
             {
                 case null:
-                case QuestReplacerDatabase.Platform.Quest:
-                    questReplacer.CreateDatabase(QuestReplacerDatabase.Platform.Quest, QuestReplacerDatabase.GenerateMode.Quest);
+                case QuestReplacerDatabase.Platform.VRChatMobile:
+                    questReplacer.CreateDatabase(QuestReplacerDatabase.Platform.VRChatMobile, QuestReplacerDatabase.GenerateMode.Quest);
                     break;
                 case QuestReplacerDatabase.Platform.VRM0:
-                    questReplacer.CreateDatabase(QuestReplacerDatabase.Platform.Quest, QuestReplacerDatabase.GenerateMode.VRM0);
+                    questReplacer.CreateDatabase(QuestReplacerDatabase.Platform.VRM0, QuestReplacerDatabase.GenerateMode.VRM0);
                     break;
                 case QuestReplacerDatabase.Platform.VRM1:
                     questReplacer.CreateDatabase(QuestReplacerDatabase.Platform.VRM1, QuestReplacerDatabase.GenerateMode.VRM1);
+                    break;
+                case QuestReplacerDatabase.Platform.VRChatAndroid:
+                    questReplacer.CreateDatabase(QuestReplacerDatabase.Platform.VRChatAndroid, QuestReplacerDatabase.GenerateMode.Quest);
+                    break;
+                case QuestReplacerDatabase.Platform.VRChatIos:
+                    questReplacer.CreateDatabase(QuestReplacerDatabase.Platform.VRChatIos, QuestReplacerDatabase.GenerateMode.Quest);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(platform), platform, null);
