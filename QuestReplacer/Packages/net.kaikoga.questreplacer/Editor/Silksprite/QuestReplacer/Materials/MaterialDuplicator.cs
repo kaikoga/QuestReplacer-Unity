@@ -14,22 +14,23 @@ namespace Silksprite.QuestReplacer.Materials
             yield return new SingleMaterialDuplicator("", Shaders.VrcMobileToonLit);
         }
 
-        public static IEnumerable<ISingleMaterialDuplicator> MToonMaterialProcessors(bool lilToonSupport)
+        public static IEnumerable<ISingleMaterialDuplicator> MToonMaterialProcessors(bool ext)
         {
-            if (lilToonSupport) yield return new lilToonToVRMMaterialDuplicator();
+            if (ext) yield return new lilToonToVRMMaterialDuplicator();
             yield return new SingleMaterialDuplicator("Standard", Shaders.Standard);
             yield return new SingleMaterialDuplicator("", Shaders.VrmMToon);
         }
 
-        public static IEnumerable<ISingleMaterialDuplicator> MToon10MaterialProcessors(bool lilToonSupport)
+        public static IEnumerable<ISingleMaterialDuplicator> MToon10MaterialProcessors(bool ext)
         {
-            if (lilToonSupport) yield return new lilToonToVRMMaterialDuplicator(Shaders.VrmMToon10);
+            if (ext) yield return new lilToonToVRMMaterialDuplicator(Shaders.VrmMToon10);
             yield return new SingleMaterialDuplicator("Standard", Shaders.Standard);
             yield return new SingleMaterialDuplicator("", Shaders.VrmMToon10);
         }
 
-        public static IEnumerable<ISingleMaterialDuplicator> VRChatToonStandardMaterialProcessors()
+        public static IEnumerable<ISingleMaterialDuplicator> VRChatToonStandardMaterialProcessors(bool ext)
         {
+            if (ext) yield return new VRCQuestToolsMaterialDuplicator();
             yield return new SingleMaterialDuplicator("Standard", Shaders.VrcMobileStandardLite);
             yield return new SingleMaterialDuplicator("", Shaders.VrcMobileToonStandard);
         }

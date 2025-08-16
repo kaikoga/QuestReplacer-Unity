@@ -1,7 +1,9 @@
 {
     "name": "QuestReplacer.Editor.Materials.External",
     "references": [
-        "lilToon.Editor"
+        "lilToon.Editor",
+        "VRCQuestTools-Editor",
+        "VRCQuestTools"
     ],
     "includePlatforms": [
         "Editor"
@@ -17,6 +19,11 @@
             "name": "jp.lilxyzw.liltoon",
             "expression": "[2.0.0,999.0.0)",
             "define": "QUESTREPLACER_LILTOON"
+        },
+        {
+            "name": "com.github.kurotu.vrc-quest-tools",
+            "expression": "[2.0.0,999.0.0)",
+            "define": "QUESTREPLACER_VRCQUESTTOOLS"
         }
     ],
     "noEngineReferences": false

@@ -14,6 +14,8 @@ namespace Silksprite.QuestReplacer
         GenerateMToon = 0x200,
         [InspectorName("Generate MToon10")]
         GenerateMToon10 = 0x210,
+        [InspectorName("Ext Convert VRChat Toon Standard")]
+        ExtConvertVRChatToonStandard = 0x2120,
         [InspectorName("Ext Convert MToon")]
         ExtConvertMToon = 0x2200,
         [InspectorName("Ext Convert MToon10")]

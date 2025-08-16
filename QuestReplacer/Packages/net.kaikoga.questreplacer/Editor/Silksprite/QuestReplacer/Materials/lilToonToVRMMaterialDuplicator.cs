@@ -14,13 +14,13 @@ namespace Silksprite.QuestReplacer.Materials
             _shader = shader;
         }
 
-        public bool IsTarget(Material original)
+        bool ISingleMaterialDuplicator.IsTarget(Material original)
         {
             var originalShaderName = original.shader.name;
             return originalShaderName.Contains("lilToon") || originalShaderName.StartsWith("Hidden/lts");
         }
 
-        public Material Duplicate(Material original, string preferredPath)
+        Material ISingleMaterialDuplicator.Duplicate(Material original, string preferredPath)
         {
             var material = lilToonSupport.lilDuplicateMaterial(original, Path.GetDirectoryName(preferredPath));
             if (_shader) material.shader = _shader;
