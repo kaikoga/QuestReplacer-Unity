@@ -10,15 +10,15 @@ namespace Silksprite.QuestReplacer.Extensions
         {
             switch (database.generateMode)
             {
-                case QuestReplacerGenerateMode.VRChatToonLit:
+                case QuestReplacerGenerateMode.GenerateVRChatToonLit:
                     return Shaders.VrcMobileStandardLite && Shaders.VrcMobileToonLit;
-                case QuestReplacerGenerateMode.VRChatToonStandard:
+                case QuestReplacerGenerateMode.GenerateVRChatToonStandard:
                     return Shaders.VrcMobileStandardLite && Shaders.VrcMobileToonStandard;
-                case QuestReplacerGenerateMode.VRChatToonStandardOutline:
+                case QuestReplacerGenerateMode.GenerateVRChatToonStandardOutline:
                     return false;
-                case QuestReplacerGenerateMode.MToon:
+                case QuestReplacerGenerateMode.GenerateMToon:
                     return Shaders.VrmMToon;
-                case QuestReplacerGenerateMode.MToon10:
+                case QuestReplacerGenerateMode.GenerateMToon10:
                     return Shaders.VrmMToon && Shaders.VrmMToon10;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -30,19 +30,19 @@ namespace Silksprite.QuestReplacer.Extensions
             IEnumerable<ISingleMaterialDuplicator> processors;
             switch (database.generateMode)
             {
-                case QuestReplacerGenerateMode.VRChatToonLit:
+                case QuestReplacerGenerateMode.GenerateVRChatToonLit:
                     processors = MaterialDuplicator.VRChatToonLitMaterialProcessors();
                     break;
-                case QuestReplacerGenerateMode.VRChatToonStandard:
+                case QuestReplacerGenerateMode.GenerateVRChatToonStandard:
                     processors = MaterialDuplicator.VRChatToonStandardMaterialProcessors();
                     break;
-                case QuestReplacerGenerateMode.VRChatToonStandardOutline:
+                case QuestReplacerGenerateMode.GenerateVRChatToonStandardOutline:
                     processors = MaterialDuplicator.VRChatToonStandardOutlineMaterialProcessors();
                     break;
-                case QuestReplacerGenerateMode.MToon:
+                case QuestReplacerGenerateMode.GenerateMToon:
                     processors = MaterialDuplicator.MToonMaterialProcessors(true);
                     break;
-                case QuestReplacerGenerateMode.MToon10:
+                case QuestReplacerGenerateMode.GenerateMToon10:
                     processors = MaterialDuplicator.MToon10MaterialProcessors(true);
                     break;
                 default:

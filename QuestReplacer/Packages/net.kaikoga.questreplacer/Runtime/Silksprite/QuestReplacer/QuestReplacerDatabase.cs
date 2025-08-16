@@ -19,7 +19,7 @@ namespace Silksprite.QuestReplacer
         public bool manageMeshes = ManageMeshesDefault;
 
         public QuestReplacerPlatform platform = QuestReplacerPlatform.VRChatMobile;
-        public QuestReplacerGenerateMode generateMode = QuestReplacerGenerateMode.VRChatToonStandard;
+        public QuestReplacerGenerateMode generateMode = QuestReplacerGenerateMode.GenerateVRChatToonStandard;
         public string generatedDirectory = "";
         public string generatedFilePrefix = "";
         public string generatedFileSuffix = "-q";
