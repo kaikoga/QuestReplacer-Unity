@@ -8,37 +8,77 @@ namespace Silksprite.QuestReplacer.Materials
 {
     public class MaterialDuplicator
     {
+        static readonly Dictionary<QuestReplacerGenerateMode, ISingleMaterialDuplicator[]> Builtins = new Dictionary<QuestReplacerGenerateMode, ISingleMaterialDuplicator[]>
+        {
+            [QuestReplacerGenerateMode.GenerateVRChatToonLit] = new ISingleMaterialDuplicator[]
+            {
+                new SingleMaterialDuplicator("Standard", Shaders.VrcMobileStandardLite),
+                new SingleMaterialDuplicator("", Shaders.VrcMobileToonLit)
+            },
+            [QuestReplacerGenerateMode.GenerateVRChatToonStandard] = new ISingleMaterialDuplicator[]
+            {
+                new SingleMaterialDuplicator("Standard", Shaders.VrcMobileStandardLite),
+                new SingleMaterialDuplicator("", Shaders.VrcMobileToonStandard)
+            },
+            [QuestReplacerGenerateMode.GenerateVRChatToonStandardOutline] = new ISingleMaterialDuplicator[]
+            {
+                new SingleMaterialDuplicator("Standard", Shaders.VrcMobileStandardLite),
+                new SingleMaterialDuplicator("", Shaders.VrcMobileToonStandardOutline)
+            },
+            [QuestReplacerGenerateMode.GenerateMToon] = new ISingleMaterialDuplicator[]
+            {
+                new SingleMaterialDuplicator("Standard", Shaders.Standard),
+                new SingleMaterialDuplicator("", Shaders.VrmMToon)
+            },
+            [QuestReplacerGenerateMode.GenerateMToon10] = new ISingleMaterialDuplicator[]
+            {
+                new SingleMaterialDuplicator("Standard", Shaders.Standard),
+                new SingleMaterialDuplicator("", Shaders.VrmMToon10)
+            },
+        };
+        
+        static readonly Dictionary<QuestReplacerGenerateMode, List<ISingleMaterialDuplicator>> Exts = new Dictionary<QuestReplacerGenerateMode, List<ISingleMaterialDuplicator>>
+        {
+            [QuestReplacerGenerateMode.ExtConvertMToon] = new List<ISingleMaterialDuplicator>
+            {
+                new lilToonToVRMMaterialDuplicator()
+            },
+            [QuestReplacerGenerateMode.ExtConvertMToon10] = new List<ISingleMaterialDuplicator>
+            {
+                new lilToonToVRMMaterialDuplicator(Shaders.VrmMToon10)
+            },
+            [QuestReplacerGenerateMode.ExtConvertVRChatToonStandard] = new List<ISingleMaterialDuplicator>
+            {
+                new VRCQuestToolsMaterialDuplicator()
+            }
+        };
+        
         public static IEnumerable<ISingleMaterialDuplicator> VRChatToonLitMaterialProcessors()
         {
-            yield return new SingleMaterialDuplicator("Standard", Shaders.VrcMobileStandardLite);
-            yield return new SingleMaterialDuplicator("", Shaders.VrcMobileToonLit);
+            return Builtins[QuestReplacerGenerateMode.GenerateVRChatToonLit];
         }
 
         public static IEnumerable<ISingleMaterialDuplicator> MToonMaterialProcessors(bool ext)
         {
-            if (ext) yield return new lilToonToVRMMaterialDuplicator();
-            yield return new SingleMaterialDuplicator("Standard", Shaders.Standard);
-            yield return new SingleMaterialDuplicator("", Shaders.VrmMToon);
+            if (ext) foreach (var duplicator in Exts[QuestReplacerGenerateMode.ExtConvertMToon]) yield return duplicator; 
+            foreach (var duplicator in Builtins[QuestReplacerGenerateMode.GenerateMToon]) yield return duplicator;
         }
 
         public static IEnumerable<ISingleMaterialDuplicator> MToon10MaterialProcessors(bool ext)
         {
-            if (ext) yield return new lilToonToVRMMaterialDuplicator(Shaders.VrmMToon10);
-            yield return new SingleMaterialDuplicator("Standard", Shaders.Standard);
-            yield return new SingleMaterialDuplicator("", Shaders.VrmMToon10);
+            if (ext) foreach (var duplicator in Exts[QuestReplacerGenerateMode.ExtConvertMToon10]) yield return duplicator; 
+            foreach (var duplicator in Builtins[QuestReplacerGenerateMode.GenerateMToon10]) yield return duplicator;
         }
 
         public static IEnumerable<ISingleMaterialDuplicator> VRChatToonStandardMaterialProcessors(bool ext)
         {
-            if (ext) yield return new VRCQuestToolsMaterialDuplicator();
-            yield return new SingleMaterialDuplicator("Standard", Shaders.VrcMobileStandardLite);
-            yield return new SingleMaterialDuplicator("", Shaders.VrcMobileToonStandard);
+            if (ext) foreach (var duplicator in Exts[QuestReplacerGenerateMode.ExtConvertVRChatToonStandard]) yield return duplicator; 
+            foreach (var duplicator in Builtins[QuestReplacerGenerateMode.GenerateVRChatToonStandard]) yield return duplicator;
         }
 
         public static IEnumerable<ISingleMaterialDuplicator> VRChatToonStandardOutlineMaterialProcessors()
         {
-            yield return new SingleMaterialDuplicator("Standard", Shaders.VrcMobileStandardLite);
-            yield return new SingleMaterialDuplicator("", Shaders.VrcMobileToonStandardOutline);
+            return Builtins[QuestReplacerGenerateMode.GenerateVRChatToonStandardOutline];
         }
 
         readonly string _directory;
