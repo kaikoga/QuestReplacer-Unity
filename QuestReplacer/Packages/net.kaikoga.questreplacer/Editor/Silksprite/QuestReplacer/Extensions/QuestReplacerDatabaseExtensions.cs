@@ -29,11 +29,11 @@ namespace Silksprite.QuestReplacer.Extensions
                 case QuestReplacerDatabase.GenerateMode.VRChatToonLit:
                     processors = MaterialDuplicator.VRChatToonLitMaterialProcessors;
                     break;
-                case QuestReplacerDatabase.GenerateMode.VRM0:
-                    processors = MaterialDuplicator.VRM0MaterialProcessors;
+                case QuestReplacerDatabase.GenerateMode.MToon:
+                    processors = MaterialDuplicator.MToonMaterialProcessors;
                     break;
-                case QuestReplacerDatabase.GenerateMode.VRM1:
-                    processors = MaterialDuplicator.VRM1MaterialProcessors;
+                case QuestReplacerDatabase.GenerateMode.MToon10:
+                    processors = MaterialDuplicator.MToon10MaterialProcessors;
                     break;
                 case QuestReplacerDatabase.GenerateMode.VRChatToonStandard:
                     processors = MaterialDuplicator.VRChatToonStandardMaterialProcessors;

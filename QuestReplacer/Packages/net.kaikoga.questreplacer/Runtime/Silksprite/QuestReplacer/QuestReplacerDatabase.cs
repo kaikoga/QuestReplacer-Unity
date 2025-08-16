@@ -29,19 +29,26 @@ namespace Silksprite.QuestReplacer
 
         public enum Platform
         {
-            VRChatMobile,
-            VRM0,
-            VRM1,
-            VRChatAndroid,
-            VRChatIos
+            [InspectorName("VRChat Mobile")]
+            VRChatMobile = 0x00,
+            [InspectorName("VRChat Android")]
+            VRChatAndroid = 0x01,
+            [InspectorName("VRChat iOS")]
+            VRChatIos = 0x02,
+            VRM0 = 0x10,
+            VRM1 = 0x11,
         }
 
         public enum GenerateMode
         {
-            VRChatToonLit,
-            VRM0,
-            VRM1,
-            VRChatToonStandard
+            [InspectorName("VRChat ToonLit")]
+            VRChatToonLit = 0x00,
+            [InspectorName("VRChat Toon Standard")]
+            VRChatToonStandard = 0x01,
+            [InspectorName("MToon")]
+            MToon = 0x10,
+            [InspectorName("MToon10")]
+            MToon10 = 0x11,
         }
 
         public void RegisterTypeFilters(IEnumerable<Type> types)

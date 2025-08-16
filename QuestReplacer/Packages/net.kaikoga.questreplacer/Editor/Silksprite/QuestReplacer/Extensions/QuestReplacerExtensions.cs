@@ -56,10 +56,10 @@ namespace Silksprite.QuestReplacer.Extensions
                     questReplacer.CreateDatabase(QuestReplacerDatabase.Platform.VRChatMobile, QuestReplacerDatabase.GenerateMode.VRChatToonStandard);
                     break;
                 case QuestReplacerDatabase.Platform.VRM0:
-                    questReplacer.CreateDatabase(QuestReplacerDatabase.Platform.VRM0, QuestReplacerDatabase.GenerateMode.VRM0);
+                    questReplacer.CreateDatabase(QuestReplacerDatabase.Platform.VRM0, QuestReplacerDatabase.GenerateMode.MToon);
                     break;
                 case QuestReplacerDatabase.Platform.VRM1:
-                    questReplacer.CreateDatabase(QuestReplacerDatabase.Platform.VRM1, QuestReplacerDatabase.GenerateMode.VRM1);
+                    questReplacer.CreateDatabase(QuestReplacerDatabase.Platform.VRM1, QuestReplacerDatabase.GenerateMode.MToon10);
                     break;
                 case QuestReplacerDatabase.Platform.VRChatAndroid:
                     questReplacer.CreateDatabase(QuestReplacerDatabase.Platform.VRChatAndroid, QuestReplacerDatabase.GenerateMode.VRChatToonStandard);
