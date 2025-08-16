@@ -1,6 +1,7 @@
 ﻿#if QUEST_REPLACER_NDMF_SUPPORT
 
 using System;
+using System.Linq;
 using nadena.dev.ndmf;
 using Silksprite.QuestReplacer.Extensions;
 using Silksprite.QuestReplacer.Ndmf;
@@ -42,21 +43,85 @@ namespace Silksprite.QuestReplacer.Ndmf
         bool IsVrm1(GameObject avatarRootObject) => false;
 #endif
 
+#if QUEST_REPLACER_VRCSDK3_AVATARS
+        bool IsVRChat(GameObject avatarRootObject) => avatarRootObject.GetComponent<VRC.SDK3.Avatars.Components.VRCAvatarDescriptor>();
+#else
+        bool IsVRChatPC(GameObject avatarRootObject) => false;
+#endif
+
+#if UNITY_STANDALONE
+        bool IsStandalone() => true;
+#else
+        bool IsStandalone() => false;
+#endif
+
+#if UNITY_ANDROID
+        bool IsAndroid() => true;
+#else
+        bool IsAndroid() => false;
+#endif
+
+#if UNITY_IOS
+        bool IsIos() => true;
+#else
+        bool IsIos() => false;
+#endif
+
+        bool TryGetPlatformForAvatar(BuildContext buildContext, out QuestReplacerDatabase.Platform platform)
+        {
+            var avatarRootObject = buildContext.AvatarRootObject;
+            
+            if (IsVrm0(avatarRootObject))
+            {
+                platform = QuestReplacerDatabase.Platform.VRM0;
+            }
+            else if (IsVrm1(avatarRootObject))
+            {
+                platform = QuestReplacerDatabase.Platform.VRM1;
+            }
+            else if (IsVRChat(avatarRootObject))
+            {
+                if (IsAndroid())
+                {
+                    platform = QuestReplacerDatabase.Platform.VRChatAndroid;
+                }
+                else if (IsIos())
+                {
+                    platform = QuestReplacerDatabase.Platform.VRChatIos;
+                }
+                else
+                {
+                    platform = default;
+                    return false;
+                }
+            }
+            else
+            {
+                platform = default;
+                return false;
+            }
+            return true;
+        }
+
         protected override void Execute(BuildContext buildContext)
         {
-#if UNITY_STANDALONE
-            var avatarRootObject = buildContext.AvatarRootObject;
-            DoExecute(buildContext, IsVrm0(avatarRootObject) || IsVrm1(avatarRootObject));
-#elif UNITY_ANDROID || UNITY_IOS
-            DoExecute(buildContext, true); 
-#endif
+            if (TryGetPlatformForAvatar(buildContext, out var platform))
+            {
+                DoExecute(buildContext, platform);
+            }
         }
         
-        void DoExecute(BuildContext buildContext, bool toRight)
+        void DoExecute(BuildContext buildContext, QuestReplacerDatabase.Platform platform)
         {
-            foreach (var replacer in buildContext.AvatarRootTransform.GetComponentsInChildren<QuestReplacer>(true))
+            var allReplacers = buildContext.AvatarRootTransform.GetComponentsInChildren<QuestReplacer>(true);
+            foreach (var replacer in allReplacers.Where(replacer => replacer.database && replacer.database.platform != platform))
             {
-                replacer.ToContext().DeepOverrideReferences<Object>(toRight);
+                replacer.ToContext().DeepOverrideReferences<Object>(false);
+                Object.DestroyImmediate(replacer);
+            }
+            foreach (var replacer in allReplacers.Where(replacer => !replacer.database || replacer.database.platform == platform))
+            {
+                replacer.ToContext().DeepOverrideReferences<Object>(true);
                 Object.DestroyImmediate(replacer);
             }
         }
