@@ -1,3 +1,4 @@
+using Silksprite.QuestReplacer.Extensions;
 using UnityEditor;
 
 namespace Silksprite.QuestReplacer
@@ -6,6 +7,8 @@ namespace Silksprite.QuestReplacer
     [CustomEditor(typeof(QuestReplacerDatabase))]
     public class QuestReplacerDatabaseEditor : Editor
     {
+        QuestReplacerDatabase _database;
+
         SerializedProperty _serializedManageMaterials;
         SerializedProperty _serializedManageMeshes;
         SerializedProperty _serializedPlatform;
@@ -18,6 +21,7 @@ namespace Silksprite.QuestReplacer
 
         void OnEnable()
         {
+            _database =  (QuestReplacerDatabase)target;
             _serializedManageMaterials = serializedObject.FindProperty(nameof(QuestReplacerDatabase.manageMaterials));
             _serializedManageMeshes = serializedObject.FindProperty(nameof(QuestReplacerDatabase.manageMeshes));
             _reorderableComponentFilters = new QuestReplacementReorderableList(serializedObject, serializedObject.FindProperty(nameof(QuestReplacerDatabase.componentFilters)));
@@ -37,6 +41,12 @@ namespace Silksprite.QuestReplacer
             _reorderableComponentFilters.DoLayoutList();
             EditorGUILayout.PropertyField(_serializedPlatform);
             EditorGUILayout.PropertyField(_serializedGenerateMode);
+            var hasPlatformSupport = _database.HasGenerateModeSupport(); 
+            if (!hasPlatformSupport)
+            {
+                EditorGUILayout.HelpBox("マテリアルの自動変換に必要なライブラリがインポートされてないか、非対応の変換です。", MessageType.Error);
+            }
+
             EditorGUILayout.PropertyField(_serializedGeneratedDirectory);
             EditorGUILayout.PropertyField(_serializedGeneratedFilePrefix);
             EditorGUILayout.PropertyField(_serializedGeneratedFileSuffix);

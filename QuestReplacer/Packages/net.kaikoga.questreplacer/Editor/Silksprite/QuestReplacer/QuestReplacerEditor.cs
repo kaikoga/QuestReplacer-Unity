@@ -86,7 +86,7 @@ namespace Silksprite.QuestReplacer
                             var hasPlatformSupport = database.HasGenerateModeSupport(); 
                             if (!hasPlatformSupport)
                             {
-                                EditorGUILayout.HelpBox("マテリアルの自動変換に必要なライブラリがインポートされてないようです。", MessageType.Error);
+                                EditorGUILayout.HelpBox("マテリアルの自動変換に必要なライブラリがインポートされてないか、非対応の変換です。", MessageType.Error);
                             }
                             using (new EditorGUI.DisabledScope(!hasPlatformSupport))
                             {
