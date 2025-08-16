@@ -5,14 +5,14 @@ namespace Silksprite.QuestReplacer
     public enum QuestReplacerGenerateMode
     {
         [InspectorName("Generate VRChat ToonLit")]
-        GenerateVRChatToonLit = 0x00,
+        GenerateVRChatToonLit = 0x110,
         [InspectorName("Generate VRChat Toon Standard")]
-        GenerateVRChatToonStandard = 0x01,
+        GenerateVRChatToonStandard = 0x120,
         [InspectorName("Generate VRChat Toon Standard (Outline)")]
-        GenerateVRChatToonStandardOutline = 0x02,
+        GenerateVRChatToonStandardOutline = 0x121,
         [InspectorName("Generate MToon")]
-        GenerateMToon = 0x10,
+        GenerateMToon = 0x200,
         [InspectorName("Generate MToon10")]
-        GenerateMToon10 = 0x11,
+        GenerateMToon10 = 0x210,
     }
 }
