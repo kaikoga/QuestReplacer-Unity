@@ -8,6 +8,30 @@ namespace Silksprite.QuestReplacer.Materials
 {
     public class MaterialDuplicator
     {
+        [InitializeOnLoadMethod]
+        static void InitializeOnLoad()
+        {
+            RegisterExt(
+                QuestReplacerGenerateMode.ExtConvertMToon,
+                new lilToonToVRMMaterialDuplicator());
+            RegisterExt(
+                QuestReplacerGenerateMode.ExtConvertMToon10,
+                new lilToonToVRMMaterialDuplicator(Shaders.VrmMToon10));
+            RegisterExt(
+                QuestReplacerGenerateMode.ExtConvertVRChatToonStandard,
+                new VRCQuestToolsMaterialDuplicator());
+        }
+
+        static bool RegisterExt(QuestReplacerGenerateMode generateMode, ISingleMaterialDuplicator duplicator)
+        {
+            if (!Exts.TryGetValue(generateMode, out var list))
+            {
+                return false;
+            }
+            list.Add(duplicator);
+            return true;
+        }
+
         static readonly Dictionary<QuestReplacerGenerateMode, ISingleMaterialDuplicator[]> Builtins = new Dictionary<QuestReplacerGenerateMode, ISingleMaterialDuplicator[]>
         {
             [QuestReplacerGenerateMode.GenerateVRChatToonLit] = new ISingleMaterialDuplicator[]
@@ -39,18 +63,9 @@ namespace Silksprite.QuestReplacer.Materials
         
         static readonly Dictionary<QuestReplacerGenerateMode, List<ISingleMaterialDuplicator>> Exts = new Dictionary<QuestReplacerGenerateMode, List<ISingleMaterialDuplicator>>
         {
-            [QuestReplacerGenerateMode.ExtConvertMToon] = new List<ISingleMaterialDuplicator>
-            {
-                new lilToonToVRMMaterialDuplicator()
-            },
-            [QuestReplacerGenerateMode.ExtConvertMToon10] = new List<ISingleMaterialDuplicator>
-            {
-                new lilToonToVRMMaterialDuplicator(Shaders.VrmMToon10)
-            },
-            [QuestReplacerGenerateMode.ExtConvertVRChatToonStandard] = new List<ISingleMaterialDuplicator>
-            {
-                new VRCQuestToolsMaterialDuplicator()
-            }
+            [QuestReplacerGenerateMode.ExtConvertMToon] = new List<ISingleMaterialDuplicator>(),
+            [QuestReplacerGenerateMode.ExtConvertMToon10] = new List<ISingleMaterialDuplicator>(),
+            [QuestReplacerGenerateMode.ExtConvertVRChatToonStandard] = new List<ISingleMaterialDuplicator>(),
         };
         
         public static IEnumerable<ISingleMaterialDuplicator> VRChatToonLitMaterialProcessors()
