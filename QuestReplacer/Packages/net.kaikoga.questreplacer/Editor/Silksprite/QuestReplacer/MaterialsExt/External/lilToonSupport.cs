@@ -1,9 +1,9 @@
 using System;
-using System.Reflection;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 #if QUESTREPLACER_LILTOON
+using System.Reflection;
+using Object = UnityEngine.Object;
 using lilToon;
 using UnityEditor;
 #endif
@@ -38,9 +38,14 @@ namespace Silksprite.QuestReplacer.MaterialsExt.Support
 
         static lilToonInspector InitializeInspector(Material material)
         {
-            var materialProperties = MaterialEditor.GetMaterialProperties(new Object[] { material });
+            var props = MaterialEditor.GetMaterialProperties(new Object[] { material });
+            var setPropertiesMethod = typeof(lilToonInspector).GetMethod("SetProperties", BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.NonPublic);
+            var checkShaderTypeMethod = typeof(lilToonInspector).GetMethod("CheckShaderType", BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.NonPublic);
+            var loadCustomPropertiesMethod = typeof(lilToonInspector).GetMethod("LoadCustomProperties", BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.NonPublic);
             var inspector = new lilToonInspector();
-            inspector.InitializeInspector(materialProperties, material);
+            setPropertiesMethod!.Invoke(inspector, new object[] { props });
+            checkShaderTypeMethod!.Invoke(inspector, new object[] { material });
+            loadCustomPropertiesMethod!.Invoke(inspector, new object[] { props, material });
             return inspector;
         }
 
