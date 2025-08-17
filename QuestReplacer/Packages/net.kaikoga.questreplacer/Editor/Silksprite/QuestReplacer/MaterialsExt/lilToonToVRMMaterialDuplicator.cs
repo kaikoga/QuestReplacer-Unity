@@ -22,7 +22,10 @@ namespace Silksprite.QuestReplacer.MaterialsExt
         Material ISingleMaterialDuplicator.Duplicate(Material original, string bakedAssetDirectoryPath)
         {
             var material = lilToonSupport.lilDuplicateMaterial(original, bakedAssetDirectoryPath);
-            _mToonUpgrader?.Duplicate(original, bakedAssetDirectoryPath);
+            if (_mToonUpgrader != null)
+            {
+                material = _mToonUpgrader.Duplicate(material, bakedAssetDirectoryPath);
+            }
             return material;
         }
     }
