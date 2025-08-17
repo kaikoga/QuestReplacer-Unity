@@ -165,8 +165,7 @@ namespace Silksprite.QuestReplacer
         void Collect<T>()
         where T : Object
         {
-            var db = _questReplacer.database;
-            _questReplacer.AddEntries(Context.DeepCollectReferences<T>(), db, true);
+            _questReplacer.AddEntries(Context.DeepCollectReferences<T>(), null, true);
             UpdateTypeFilters();
             ClearCache();
         }
