@@ -2,6 +2,7 @@
     "name": "QuestReplacer.Editor",
     "rootNamespace": "Silksprite.QuestReplacer",
     "references": [
+        "AdLib",
         "QuestReplacer"
     ],
     "includePlatforms": [
