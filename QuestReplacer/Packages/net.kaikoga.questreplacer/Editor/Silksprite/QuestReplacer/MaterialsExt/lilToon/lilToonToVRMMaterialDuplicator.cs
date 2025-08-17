@@ -10,6 +10,25 @@ namespace Silksprite.QuestReplacer.MaterialsExt.lilToon
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class lilToonToVRMMaterialDuplicator : ISingleMaterialDuplicator
     {
+        static bool _lilToonSupportErrorReported;
+
+        static T Wrap<T>(T original, Func<T> func)
+        {
+            try
+            {
+                return func();
+            }
+            catch (Exception e)
+            {
+                if (_lilToonSupportErrorReported) return original;
+
+                _lilToonSupportErrorReported = true;
+                Debug.LogException(e);
+                Debug.LogError("Something was wrong in lilToon support of QuestReplacer.");
+                return original;
+            }
+        }
+
         bool ISingleMaterialDuplicator.IsTarget(Material original)
         {
             var originalShaderName = original.shader.name;
@@ -18,20 +37,23 @@ namespace Silksprite.QuestReplacer.MaterialsExt.lilToon
 
         Material ISingleMaterialDuplicator.Duplicate(Material original, string bakedAssetDirectoryPath)
         {
-            var mtoonMaterial = new Material(Shaders.VrmMToon);
-            var lilToonAccess = new LilToonMaterialAccess(original.ToMaterialAccess());
-            var mtoonAccess = new MToonMaterialAccess(mtoonMaterial.ToMaterialAccess());
+            return Wrap(original, () =>
+            {
+                var mtoonMaterial = new Material(Shaders.VrmMToon);
+                var lilToonAccess = new LilToonMaterialAccess(original.ToMaterialAccess());
+                var mtoonAccess = new MToonMaterialAccess(mtoonMaterial.ToMaterialAccess());
 
-            CopyBasicProperties(lilToonAccess, mtoonAccess);
-            CopyRenderingProperties(lilToonAccess, mtoonAccess);
-            CopyShadowProperties(lilToonAccess, mtoonAccess);
-            CopyEmissionProperties(lilToonAccess, mtoonAccess);
-            CopyRimProperties(lilToonAccess, mtoonAccess);
-            CopyMatCapProperties(lilToonAccess, mtoonAccess);
-            CopyOutlineProperties(lilToonAccess, mtoonAccess);
-            CopyUvAnimationProperties(lilToonAccess, mtoonAccess);
+                CopyBasicProperties(lilToonAccess, mtoonAccess);
+                CopyRenderingProperties(lilToonAccess, mtoonAccess);
+                CopyShadowProperties(lilToonAccess, mtoonAccess);
+                CopyEmissionProperties(lilToonAccess, mtoonAccess);
+                CopyRimProperties(lilToonAccess, mtoonAccess);
+                CopyMatCapProperties(lilToonAccess, mtoonAccess);
+                CopyOutlineProperties(lilToonAccess, mtoonAccess);
+                CopyUvAnimationProperties(lilToonAccess, mtoonAccess);
 
-            return mtoonMaterial;
+                return mtoonMaterial;
+            });
         }
 
         static void CopyBasicProperties(LilToonMaterialAccess lilToon, MToonMaterialAccess mtoon)
