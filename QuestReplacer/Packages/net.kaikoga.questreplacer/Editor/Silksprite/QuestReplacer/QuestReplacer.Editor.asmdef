@@ -3,6 +3,7 @@
     "rootNamespace": "Silksprite.QuestReplacer",
     "references": [
         "AdLib",
+        "VRMShaders.VRM10.MToon10.Runtime",
         "QuestReplacer"
     ],
     "includePlatforms": [
@@ -14,6 +15,12 @@
     "precompiledReferences": [],
     "autoReferenced": false,
     "defineConstraints": [],
-    "versionDefines": [],
+    "versionDefines": [
+        {
+            "name": "com.vrmc.vrmshaders",
+            "expression": "",
+            "define": "QUESTREPLACER_VRMSHADERS"
+        }
+    ],
     "noEngineReferences": false
 }
