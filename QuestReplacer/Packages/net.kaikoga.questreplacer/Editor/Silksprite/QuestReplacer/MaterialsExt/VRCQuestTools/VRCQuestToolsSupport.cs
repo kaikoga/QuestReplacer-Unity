@@ -1,19 +1,12 @@
 using System;
+using System.Reflection;
+using KRT.VRCQuestTools.Models;
 using UnityEngine;
 
-#if QUESTREPLACER_VRCQUESTTOOLS
-using System.Reflection;
-using KRT.VRCQuestTools;
-using KRT.VRCQuestTools.Models;
-#endif
-
-namespace Silksprite.QuestReplacer.MaterialsExt.Support
+namespace Silksprite.QuestReplacer.MaterialsExt.VRCQuestTools
 {
     public static class VRCQuestToolsSupport
     {
-
-#if QUESTREPLACER_VRCQUESTTOOLS
-
         static bool _vrcQuestToolsSupportErrorReported;
 
         static T Wrap<T>(T original, Func<T> func)
@@ -38,7 +31,7 @@ namespace Silksprite.QuestReplacer.MaterialsExt.Support
             return Wrap(original, () =>
             {
                 var converted = original;
-                var assembly = typeof(VRCQuestTools).Assembly;
+                var assembly = typeof(KRT.VRCQuestTools.VRCQuestTools).Assembly;
                 
                 var materialWrapperBuilderType = assembly.GetType("KRT.VRCQuestTools.Models.Unity.MaterialWrapperBuilder");
                 var avatarConverterType = assembly.GetType("KRT.VRCQuestTools.Models.VRChat.AvatarConverter");
@@ -72,12 +65,5 @@ namespace Silksprite.QuestReplacer.MaterialsExt.Support
                 return converted;
             });
         }
-
-#else
-
-        public static Material ConvertSingleMaterial(Material original) => original;
-
-#endif
-        
     }
 }

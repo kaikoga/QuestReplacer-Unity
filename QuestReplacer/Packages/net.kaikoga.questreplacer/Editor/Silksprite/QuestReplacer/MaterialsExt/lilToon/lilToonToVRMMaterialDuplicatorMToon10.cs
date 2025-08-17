@@ -2,7 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Silksprite.QuestReplacer.Materials;
 using UnityEngine;
 
-namespace Silksprite.QuestReplacer.MaterialsExt
+namespace Silksprite.QuestReplacer.MaterialsExt.lilToon
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class lilToonToVRMMaterialDuplicatorMToon10 : ISingleMaterialDuplicator

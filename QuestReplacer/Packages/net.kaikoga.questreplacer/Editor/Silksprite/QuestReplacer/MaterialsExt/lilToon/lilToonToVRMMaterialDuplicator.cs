@@ -3,10 +3,9 @@ using System.Diagnostics.CodeAnalysis;
 using Silksprite.AdLib.Material.Access.Impl;
 using Silksprite.AdLib.Material.Impl;
 using Silksprite.QuestReplacer.Materials;
-using Silksprite.QuestReplacer.MaterialsExt.Support;
 using UnityEngine;
 
-namespace Silksprite.QuestReplacer.MaterialsExt
+namespace Silksprite.QuestReplacer.MaterialsExt.lilToon
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class lilToonToVRMMaterialDuplicator : ISingleMaterialDuplicator
@@ -19,11 +18,6 @@ namespace Silksprite.QuestReplacer.MaterialsExt
 
         Material ISingleMaterialDuplicator.Duplicate(Material original, string bakedAssetDirectoryPath)
         {
-            if (!lilToonSupport.HasLilToonSupport)
-            {
-                return original;
-            }
-            
             var mtoonMaterial = new Material(Shaders.VrmMToon);
             var lilToonAccess = new LilToonMaterialAccess(original.ToMaterialAccess());
             var mtoonAccess = new MToonMaterialAccess(mtoonMaterial.ToMaterialAccess());

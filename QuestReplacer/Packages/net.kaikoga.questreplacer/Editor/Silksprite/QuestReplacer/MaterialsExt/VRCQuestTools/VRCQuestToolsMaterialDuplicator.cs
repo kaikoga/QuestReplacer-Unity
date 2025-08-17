@@ -1,8 +1,7 @@
 using Silksprite.QuestReplacer.Materials;
-using Silksprite.QuestReplacer.MaterialsExt.Support;
 using UnityEngine;
 
-namespace Silksprite.QuestReplacer.MaterialsExt
+namespace Silksprite.QuestReplacer.MaterialsExt.VRCQuestTools
 {
     public class VRCQuestToolsMaterialDuplicator : ISingleMaterialDuplicator
     {

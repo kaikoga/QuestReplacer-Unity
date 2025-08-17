@@ -1,29 +1,26 @@
 {
-    "name": "QuestReplacer.Editor.MaterialsExt.Support",
+    "name": "QuestReplacer.Editor.MaterialsExt.lilToon",
+    "rootNamespace": "Silksprite.QuestReplacer.MaterialsExt.lilToon",
     "references": [
+        "AdLib",
         "lilToon.Editor",
-        "VRCQuestTools-Editor",
-        "VRCQuestTools"
+        "QuestReplacer",
+        "QuestReplacer.Editor"
     ],
     "includePlatforms": [
         "Editor"
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
-    "overrideReferences": false,
+    "overrideReferences": true,
     "precompiledReferences": [],
     "autoReferenced": false,
-    "defineConstraints": [],
+    "defineConstraints": ["QUESTREPLACER_LILTOON"],
     "versionDefines": [
         {
             "name": "jp.lilxyzw.liltoon",
             "expression": "[2.0.0,999.0.0)",
             "define": "QUESTREPLACER_LILTOON"
-        },
-        {
-            "name": "com.github.kurotu.vrc-quest-tools",
-            "expression": "[2.0.0,999.0.0)",
-            "define": "QUESTREPLACER_VRCQUESTTOOLS"
         }
     ],
     "noEngineReferences": false

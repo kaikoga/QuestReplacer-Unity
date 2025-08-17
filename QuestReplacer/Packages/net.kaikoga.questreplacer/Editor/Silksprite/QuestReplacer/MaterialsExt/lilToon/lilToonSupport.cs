@@ -1,22 +1,14 @@
 using System;
-using UnityEngine;
-
-#if QUESTREPLACER_LILTOON
 using System.Reflection;
-using Object = UnityEngine.Object;
 using lilToon;
 using UnityEditor;
-#endif
+using UnityEngine;
+using Object = UnityEngine.Object;
 
-namespace Silksprite.QuestReplacer.MaterialsExt.Support
+namespace Silksprite.QuestReplacer.MaterialsExt.lilToon
 {
     public static class lilToonSupport
     {
-
-#if QUESTREPLACER_LILTOON
-
-        public static bool HasLilToonSupport => true;
-
         static bool _lilToonSupportErrorReported;
 
         static T Wrap<T>(T original, Func<T> func)
@@ -76,16 +68,5 @@ namespace Silksprite.QuestReplacer.MaterialsExt.Support
                 return autoBakeMatCapMethod!.Invoke(inspector, new object[] { material }) as Texture2D;
             });
         }
-
-#else
-
-        public static bool HasLilToonSupport => false;
-
-        public static Texture2D AutoBakeMainTexture(Material material) => throw new NotSupportedException();
-        public static Texture2D AutoBakeShadowTexture(Material material, Texture2D bakedMainTex) => throw new NotSupportedException();
-        public static Texture2D AutoBakeMatCap(Material material) => throw new NotSupportedException();
-
-#endif
-        
     }
 }
