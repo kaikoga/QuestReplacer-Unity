@@ -16,9 +16,26 @@ namespace Silksprite.QuestReplacer.MaterialsExt.Support
 
         static bool _vrcQuestToolsSupportErrorReported;
 
-        public static Material ConvertSingleMaterial(Material original, string bakedAssetDirectoryPath)
+        static T Wrap<T>(T original, Func<T> func)
         {
             try
+            {
+                return func();
+            }
+            catch (Exception e)
+            {
+                if (_vrcQuestToolsSupportErrorReported) return original;
+
+                _vrcQuestToolsSupportErrorReported = true;
+                Debug.LogException(e);
+                Debug.LogError("Something was wrong in VRCQuestTools support of QuestReplacer.");
+                return original;
+            }
+        }
+        
+        public static Material ConvertSingleMaterial(Material original, string bakedAssetDirectoryPath)
+        {
+            return Wrap(original, () =>
             {
                 var converted = original;
                 var assembly = typeof(VRCQuestTools).Assembly;
@@ -53,16 +70,7 @@ namespace Silksprite.QuestReplacer.MaterialsExt.Support
                 });
                 waitForCompletionMethod!.Invoke(asyncCallbackRequest, new object[]{ });
                 return converted;
-            }
-            catch (Exception e)
-            {
-                if (_vrcQuestToolsSupportErrorReported) return original;
-
-                _vrcQuestToolsSupportErrorReported = true;
-                Debug.LogException(e);
-                Debug.LogError("Something was wrong in VRCQuestTools support of QuestReplacer.");
-                return original;
-            }
+            });
         }
 
 #else

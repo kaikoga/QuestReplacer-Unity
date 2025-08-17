@@ -2,6 +2,7 @@
     "name": "QuestReplacer.Editor.MaterialsExt",
     "rootNamespace": "Silksprite.QuestReplacer",
     "references": [
+        "AdLib",
         "QuestReplacer",
         "QuestReplacer.Editor",
         "QuestReplacer.Editor.MaterialsExt.Support"

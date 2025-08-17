@@ -10,10 +10,10 @@ namespace Silksprite.QuestReplacer.MaterialsExt
         {
             MaterialDuplicator.RegisterExt(
                 QuestReplacerGenerateMode.ExtConvertMToon,
-                new lilToonToVRMMaterialDuplicator(false));
+                new lilToonToVRMMaterialDuplicator());
             MaterialDuplicator.RegisterExt(
                 QuestReplacerGenerateMode.ExtConvertMToon10,
-                new lilToonToVRMMaterialDuplicator(true));
+                new lilToonToVRMMaterialDuplicatorMToon10());
             MaterialDuplicator.RegisterExt(
                 QuestReplacerGenerateMode.ExtConvertVRChatToonStandard,
                 new VRCQuestToolsMaterialDuplicator());
