@@ -25,7 +25,7 @@ namespace Silksprite.QuestReplacer.Extensions
                 case QuestReplacerGenerateMode.ExtConvertMToon10:
                     return Shaders.VrmMToon && Shaders.VrmMToon10;
                 default:
-                    throw new ArgumentOutOfRangeException();
+                    return false;
             }
         }
 
