@@ -203,6 +203,8 @@ namespace Silksprite.QuestReplacer
         {
             var db = _questReplacer.EnsureDatabase(null);
             db.pairs = db.pairs.Merge(_questReplacer.pairs).ToList();
+            EditorUtility.SetDirty(db);
+            AssetDatabase.SaveAssetIfDirty(db);
             UpdateTypeFilters();
             ClearCache();
         }
