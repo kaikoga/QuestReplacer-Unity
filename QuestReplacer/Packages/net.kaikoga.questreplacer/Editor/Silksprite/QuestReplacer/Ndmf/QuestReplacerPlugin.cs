@@ -116,19 +116,10 @@ namespace Silksprite.QuestReplacer.Ndmf
         
         void DoExecute(BuildContext buildContext, QuestReplacerPlatform platform)
         {
-            var allReplacers = buildContext.AvatarRootTransform.GetComponentsInChildren<QuestReplacer>(true);
-            foreach (var replacer in allReplacers.Where(replacer => replacer.database && replacer.database.platform != platform))
-            {
-                replacer.ToContext().DeepOverrideReferences<Object>(false);
-                Object.DestroyImmediate(replacer);
-            }
-            foreach (var replacer in allReplacers.Where(replacer => !replacer.database || replacer.database.platform == platform))
-            {
-                replacer.ToContext().DeepOverrideReferences<Object>(true);
-                Object.DestroyImmediate(replacer);
-            }
+            var coordinator = QuestReplacerCoordinator.FromAvatarRoot(buildContext.AvatarRootTransform);
+            coordinator.Execute(platform);
+            coordinator.DestroyImmediate();
         }
-
     }
 }
 
