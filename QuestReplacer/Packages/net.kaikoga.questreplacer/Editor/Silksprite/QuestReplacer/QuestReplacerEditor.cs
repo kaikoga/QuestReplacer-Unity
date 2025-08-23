@@ -15,29 +15,11 @@ namespace Silksprite.QuestReplacer
         QuestReplacer _questReplacer;
         bool _force;
 
-        QuestReplacerContext _context;
-        QuestReplacerContext Context
-        {
-            get
-            {
-                if (_context != null) return _context;
-
-                _context = _questReplacer.ToContext();
-                return _context;
-            }
-        }
-
-        QuestStatus? _materialQuestStatus;
-        QuestStatus? _meshQuestStatus;
-        QuestStatus QuestMaterialStatus => _materialQuestStatus ?? (_materialQuestStatus = Context.ToQuestStatus<Material>()).Value;
-        QuestStatus QuestMeshStatus => _meshQuestStatus ?? (_meshQuestStatus = Context.ToQuestStatus<Mesh>()).Value;
-
+        QuestReplacerReusableContext _context;
 
         void ClearCache()
         {
-            _context = null;
-            _materialQuestStatus = null;
-            _meshQuestStatus = null;
+            _context.SetDirty();
         }
 
         SerializedProperty _serializedDatabase;
@@ -48,6 +30,7 @@ namespace Silksprite.QuestReplacer
         void OnEnable()
         {
             _questReplacer = (QuestReplacer)target;
+            _context = _questReplacer.ToReusableContext();
 
             _serializedDatabase = serializedObject.FindProperty(nameof(QuestReplacer.database));
             _serializedTargets = serializedObject.FindProperty(nameof(QuestReplacer.targets));
@@ -73,7 +56,7 @@ namespace Silksprite.QuestReplacer
                     using (new EditorGUI.DisabledScope(!_questReplacer.HasTargets))
                     using (new EditorGUILayout.HorizontalScope())
                     {
-                        EditorGUILayout.LabelField("Quest Material Status", $"{QuestMaterialStatus}");
+                        EditorGUILayout.LabelField("Quest Material Status", $"{_context.QuestMaterialStatus}");
                         if (GUILayout.Button("Collect"))
                         {
                             Collect<Material>();
@@ -103,7 +86,7 @@ namespace Silksprite.QuestReplacer
                 {
                     using (new EditorGUILayout.HorizontalScope())
                     {
-                        EditorGUILayout.LabelField("Quest Mesh Status", $"{QuestMeshStatus}");
+                        EditorGUILayout.LabelField("Quest Mesh Status", $"{_context.QuestMeshStatus}");
                         if (GUILayout.Button("Collect"))
                         {
                             Collect<Mesh>();
@@ -165,7 +148,7 @@ namespace Silksprite.QuestReplacer
         void Collect<T>()
         where T : Object
         {
-            _questReplacer.AddEntries(Context.DeepCollectReferences<T>(), null, true);
+            _questReplacer.AddEntries(_context.DeepCollectReferences<T>(), null, true);
             UpdateTypeFilters();
             ClearCache();
         }
@@ -194,7 +177,7 @@ namespace Silksprite.QuestReplacer
         {
             var db = _questReplacer.EnsureDatabase(null);
             _questReplacer.pairs = _questReplacer.pairs.Update(db.pairs).ToList();
-            _questReplacer.AddEntries(Context.DeepCollectReferences<Object>(), db, false);
+            _questReplacer.AddEntries(_context.DeepCollectReferences<Object>(), db, false);
             UpdateTypeFilters();
             ClearCache();
         }
@@ -212,14 +195,14 @@ namespace Silksprite.QuestReplacer
         void Convert(bool toRight)
         {
             UpdateTypeFilters();
-            Context.DeepOverrideReferences<Object>(toRight);
+            _context.DeepOverrideReferences<Object>(toRight);
             ClearCache();
         }
         
         void UpdateTypeFilters()
         {
             var db = _questReplacer.database; 
-            if (db) db.RegisterTypeFilters(Context.DeepCollectComponentTypes());
+            if (db) db.RegisterTypeFilters(_context.DeepCollectComponentTypes());
         }
     }
 }

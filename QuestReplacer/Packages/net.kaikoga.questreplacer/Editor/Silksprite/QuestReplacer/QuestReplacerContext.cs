@@ -16,6 +16,12 @@ namespace Silksprite.QuestReplacer
 
         readonly Dictionary<Type, SerializedProperty[]> _cachedTargetProperties = new Dictionary<Type, SerializedProperty[]>();
 
+        QuestStatus? _materialQuestStatus;
+        QuestStatus? _meshQuestStatus;
+        public QuestStatus QuestMaterialStatus => _materialQuestStatus ?? (_materialQuestStatus = ToQuestStatus<Material>()).Value;
+        public QuestStatus QuestMeshStatus => _meshQuestStatus ?? (_meshQuestStatus = ToQuestStatus<Mesh>()).Value;
+
+
         public QuestReplacerContext(IEnumerable<Transform> targets, IEnumerable<QuestTypeFilter> componentFilters, IEnumerable<QuestReplacement> pairs)
         {
             _targets = targets.Where(target => target).ToArray();

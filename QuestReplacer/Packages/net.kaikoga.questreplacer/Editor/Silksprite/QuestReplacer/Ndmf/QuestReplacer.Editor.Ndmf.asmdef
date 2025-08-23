@@ -17,7 +17,8 @@
     "overrideReferences": true,
     "precompiledReferences": [
         "VRCSDKBase.dll",
-        "VRCSDK3A.dll"
+        "VRCSDK3A.dll",
+        "System.Collections.Immutable.dll"
     ],
     "autoReferenced": false,
     "defineConstraints": [],
