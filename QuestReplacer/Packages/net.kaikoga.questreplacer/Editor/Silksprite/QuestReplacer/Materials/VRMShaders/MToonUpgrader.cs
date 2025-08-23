@@ -5,9 +5,11 @@ using UnityEngine;
 
 #if QUESTREPLACER_VRMSHADERS
 using VRMShaders.VRM10.MToon10.Runtime;
+#elif QUESTREPLACER_UNIVRM_WITH_SHADERS
+using VRM10.MToon10;
 #endif
 
-namespace Silksprite.QuestReplacer.Materials
+namespace Silksprite.QuestReplacer.Materials.VRMShaders
 {
     public class MToonUpgrader : ISingleMaterialDuplicator
     {
@@ -24,7 +26,7 @@ namespace Silksprite.QuestReplacer.Materials
             CopyRimLighting(mtoon, mtoon10);
             CopyOutline(mtoon, mtoon10);
             CopyUvAnimation(mtoon, mtoon10);
-#if QUESTREPLACER_VRMSHADERS
+#if QUESTREPLACER_VRMSHADERS || QUESTREPLACER_UNIVRM_WITH_SHADERS
             new MToonValidator(material).Validate();
 #endif
             return material;
@@ -81,7 +83,7 @@ namespace Silksprite.QuestReplacer.Materials
             mtoon10.BumpMap.Value = mtoon.BumpMap.Value;
             mtoon10.BumpScale.Value = mtoon.BumpScale.Value;
             
-#if QUESTREPLACER_VRMSHADERS
+#if QUESTREPLACER_VRMSHADERS || QUESTREPLACER_UNIVRM_WITH_SHADERS
             mtoon10.ShadingToonyFactor.Value = MToon10Migrator.MigrateToShadingToony(
                 mtoon.ShadeToony.Value, 
                 mtoon.ShadeShift.Value);

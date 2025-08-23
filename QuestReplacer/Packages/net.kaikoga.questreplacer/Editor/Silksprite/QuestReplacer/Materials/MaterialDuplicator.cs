@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Silksprite.QuestReplacer.Materials.VRMShaders;
 using UnityEditor;
 using UnityEngine;
 

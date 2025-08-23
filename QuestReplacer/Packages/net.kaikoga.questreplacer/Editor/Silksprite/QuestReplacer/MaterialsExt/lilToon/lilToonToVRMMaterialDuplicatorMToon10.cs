@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Silksprite.QuestReplacer.Materials;
+using Silksprite.QuestReplacer.Materials.VRMShaders;
 using UnityEngine;
 
 namespace Silksprite.QuestReplacer.MaterialsExt.lilToon

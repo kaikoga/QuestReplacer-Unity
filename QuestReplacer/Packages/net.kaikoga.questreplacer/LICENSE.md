@@ -1,7 +1,10 @@
 QuestReplacer is licensed under MIT License, except for the following directory, which is licensed accordingly.
 The full license text for the bundled softwares are available under their responsive directories.
 
-- Editor/Silksprite/QuestReplacer/MaterialsExt/External/lilToon
+- Editor/Silksprite/QuestReplacer/Materials/VRMShaders
+  - MIT License (UniVRM)
+  - LICENSE_VRMShaders.md
+- Editor/Silksprite/QuestReplacer/MaterialsExt/lilToon
   - MIT License (lilToon)
   - LICENSE_lilToon.md
 

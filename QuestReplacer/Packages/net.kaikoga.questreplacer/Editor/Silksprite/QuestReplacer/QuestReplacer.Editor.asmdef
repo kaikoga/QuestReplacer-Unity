@@ -4,6 +4,7 @@
     "references": [
         "AdLib",
         "VRMShaders.VRM10.MToon10.Runtime",
+        "VRM10.MToon10",
         "QuestReplacer"
     ],
     "includePlatforms": [
@@ -20,6 +21,11 @@
             "name": "com.vrmc.vrmshaders",
             "expression": "",
             "define": "QUESTREPLACER_VRMSHADERS"
+        },
+        {
+            "name": "com.vrmc.univrm",
+            "expression": "[0.125.0,999.0.0]",
+            "define": "QUESTREPLACER_UNIVRM_WITH_SHADERS"
         }
     ],
     "noEngineReferences": false
