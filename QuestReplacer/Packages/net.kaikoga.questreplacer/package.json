@@ -9,6 +9,7 @@
   "gitDependencies": {
   },
   "vpmDependencies": {
+    "net.kaikoga.adlib": ">=0.3.0"
   },
   "author": {
     "name": "kaikoga",
