@@ -21,8 +21,16 @@
         "System.Collections.Immutable.dll"
     ],
     "autoReferenced": false,
-    "defineConstraints": [],
+    "defineConstraints": [
+        "QUESTREPLACER_ADLIB",
+        "QUESTREPLACER_NDMF_SUPPORT"
+    ],
     "versionDefines": [
+        {
+            "name": "net.kaikoga.adlib",
+            "expression": "[0.3.0,999.0.0)",
+            "define": "QUESTREPLACER_ADLIB"
+        },
         {
             "name": "nadena.dev.ndmf",
             "expression": "[1.3.0,999.0.0)",

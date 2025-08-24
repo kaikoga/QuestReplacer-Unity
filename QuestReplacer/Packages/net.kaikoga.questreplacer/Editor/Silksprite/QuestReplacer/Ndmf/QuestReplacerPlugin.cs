@@ -1,6 +1,4 @@
-﻿#if QUESTREPLACER_NDMF_SUPPORT
-
-using System;
+﻿using System;
 using System.Linq;
 using nadena.dev.ndmf;
 using Silksprite.QuestReplacer.Extensions;
@@ -48,5 +46,3 @@ namespace Silksprite.QuestReplacer.Ndmf
         }
     }
 }
-
-#endif
