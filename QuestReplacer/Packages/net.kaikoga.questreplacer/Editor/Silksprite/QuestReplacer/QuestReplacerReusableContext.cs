@@ -17,8 +17,7 @@ namespace Silksprite.QuestReplacer
             _context = null;
         }
 
-        public QuestStatus QuestMaterialStatus => Context.QuestMaterialStatus;
-        public QuestStatus QuestMeshStatus => Context.QuestMeshStatus;
+        public QuestStatus ToQuestStatus<T>() where T : Object => Context.ToQuestStatus<T>();
 
         public QuestReplacerReusableContext(QuestReplacer questReplacer)
         {

@@ -15,12 +15,7 @@ namespace Silksprite.QuestReplacer
         readonly QuestReplacement[] _replacements;
 
         readonly Dictionary<Type, SerializedProperty[]> _cachedTargetProperties = new Dictionary<Type, SerializedProperty[]>();
-
-        QuestStatus? _materialQuestStatus;
-        QuestStatus? _meshQuestStatus;
-        public QuestStatus QuestMaterialStatus => _materialQuestStatus ?? (_materialQuestStatus = ToQuestStatus<Material>()).Value;
-        public QuestStatus QuestMeshStatus => _meshQuestStatus ?? (_meshQuestStatus = ToQuestStatus<Mesh>()).Value;
-
+        readonly Dictionary<Type, QuestStatus> _cachedQuestStatus = new Dictionary<Type, QuestStatus>();
 
         public QuestReplacerContext(IEnumerable<Transform> targets, IEnumerable<QuestTypeFilter> componentFilters, IEnumerable<QuestReplacement> pairs)
         {
@@ -32,7 +27,9 @@ namespace Silksprite.QuestReplacer
         public QuestStatus ToQuestStatus<T>()
             where T : Object
         {
-            return DeepCollectReferences<T>()
+            if (_cachedQuestStatus.TryGetValue(typeof(T), out var questStatus)) return questStatus;
+            
+            return _cachedQuestStatus[typeof(T)] = DeepCollectReferences<T>()
                 .SelectMany(c => _replacements.Select(r => r.GetStatus(c)).Where(s => s != QuestStatus.Unmanaged))
                 .Aggregate(QuestStatus.Either, (accumulator, v) => accumulator.Merge(v));
         }

@@ -62,7 +62,7 @@ namespace Silksprite.QuestReplacer
                     using (new EditorGUI.DisabledScope(!_questReplacer.HasTargets))
                     using (new EditorGUILayout.HorizontalScope())
                     {
-                        EditorGUILayout.LabelField("Quest Material Status", $"{_context.QuestMaterialStatus}");
+                        EditorGUILayout.LabelField("Quest Material Status", $"{_context.ToQuestStatus<Material>()}");
                         if (GUILayout.Button("Collect"))
                         {
                             Collect<Material>();
@@ -92,7 +92,7 @@ namespace Silksprite.QuestReplacer
                 {
                     using (new EditorGUILayout.HorizontalScope())
                     {
-                        EditorGUILayout.LabelField("Quest Mesh Status", $"{_context.QuestMeshStatus}");
+                        EditorGUILayout.LabelField("Quest Mesh Status", $"{_context.ToQuestStatus<Mesh>()}");
                         if (GUILayout.Button("Collect"))
                         {
                             Collect<Mesh>();
