@@ -15,5 +15,7 @@ namespace Silksprite.QuestReplacer
         VRChatIos = 0x112,
         VRM0 = 0x200,
         VRM1 = 0x210,
+        [InspectorName("Any Platform")]
+        Any = 0xffff,
     }
 }

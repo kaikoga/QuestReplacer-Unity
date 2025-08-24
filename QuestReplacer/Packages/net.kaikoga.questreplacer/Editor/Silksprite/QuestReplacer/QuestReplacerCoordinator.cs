@@ -9,13 +9,13 @@ namespace Silksprite.QuestReplacer
     public class QuestReplacerCoordinator
     {
         readonly QuestReplacer[] _replacers;
-        readonly (QuestReplacerPlatform? platform, QuestReplacerContext context)[] _contexts;
+        readonly (QuestReplacerPlatform platform, QuestReplacerContext context)[] _contexts;
 
         QuestReplacerCoordinator(Transform avatarRootTransform, IEnumerable<QuestReplacer> replacers)
         {
             _replacers = replacers.ToArray();
             _contexts = _replacers
-                .Select(replacer => (replacer.database?.platform, replacer.ToAvatarContext(avatarRootTransform)))
+                .Select(replacer => (replacer.Platform, replacer.ToAvatarContext(avatarRootTransform)))
                 .ToArray();
         }
 

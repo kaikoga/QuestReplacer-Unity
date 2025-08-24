@@ -16,6 +16,8 @@ namespace Silksprite.QuestReplacer
         [SerializeField] internal List<Transform> targets = new List<Transform>();
         [SerializeField] internal bool targetSceneObjects;
 
+        public QuestReplacerPlatform Platform => database?.platform ?? QuestReplacerPlatform.Any;
+
         public Transform Target
         {
             set
