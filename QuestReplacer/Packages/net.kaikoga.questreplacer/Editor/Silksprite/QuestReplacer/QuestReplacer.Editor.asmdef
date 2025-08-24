@@ -14,7 +14,10 @@
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": true,
-    "precompiledReferences": [],
+    "precompiledReferences": [
+        "VRCSDKBase.dll",
+        "VRCSDK3A.dll"
+    ],
     "autoReferenced": false,
     "defineConstraints": [],
     "versionDefines": [
@@ -22,6 +25,11 @@
             "name": "nadena.dev.ndmf",
             "expression": "",
             "define": "QUESTREPLACER_NDMF_SUPPORT"
+        },
+        {
+            "name": "com.vrchat.avatars",
+            "expression": "[3.0.0,999.0.0)",
+            "define": "QUESTREPLACER_VRCSDK3_AVATARS"
         },
         {
             "name": "com.vrmc.vrmshaders",

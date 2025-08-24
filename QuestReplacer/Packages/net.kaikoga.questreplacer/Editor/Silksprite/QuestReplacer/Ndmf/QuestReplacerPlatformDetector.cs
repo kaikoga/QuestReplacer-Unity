@@ -5,19 +5,19 @@ namespace Silksprite.QuestReplacer.Ndmf
     static class QuestReplacerPlatformDetector
     {
 
-#if QUEST_REPLACER_VRM0
+#if QUESTREPLACER_VRM0
         static bool IsVrm0(Transform avatarRootTransform) => avatarRootTransform.GetComponent<VRM.VRMMeta>();
 #else
         static bool IsVrm0(Transform avatarRootTransform) => false;
 #endif
 
-#if QUEST_REPLACER_VRM1
+#if QUESTREPLACER_VRM1
         static bool IsVrm1(Transform avatarRootTransform) => avatarRootTransform.GetComponent<UniVRM10.Vrm10Instance>();
 #else
         static bool IsVrm1(Transform avatarRootTransform) => false;
 #endif
 
-#if QUEST_REPLACER_VRCSDK3_AVATARS
+#if QUESTREPLACER_VRCSDK3_AVATARS
         static bool IsVRChat(Transform avatarRootTransform) => avatarRootTransform.GetComponent<VRC.SDK3.Avatars.Components.VRCAvatarDescriptor>();
 #else
         static bool IsVRChat(Transform avatarRootTransform) => false;

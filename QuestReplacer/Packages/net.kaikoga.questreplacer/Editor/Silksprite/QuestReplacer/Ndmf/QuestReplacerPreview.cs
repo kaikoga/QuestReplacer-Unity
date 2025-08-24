@@ -1,4 +1,4 @@
-﻿#if QUEST_REPLACER_NDMF_SUPPORT
+﻿#if QUESTREPLACER_NDMF_SUPPORT
 
 using System.Collections.Generic;
 using System.Collections.Immutable;

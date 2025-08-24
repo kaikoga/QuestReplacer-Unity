@@ -53,11 +53,11 @@ namespace Silksprite.QuestReplacer.Context
             return DeepCollectProperties<T>(true).Select(prop => (T)prop.objectReferenceValue);
         }
 
-        public void DeepOverrideReferences<T>(bool toRight)
+        public void DeepOverrideReferences<T>(bool toRight, bool withAssets)
             where T : Object
         {
             var serializedObjects = new HashSet<SerializedObject>(); 
-            foreach (var prop in DeepCollectProperties<T>(false))
+            foreach (var prop in DeepCollectProperties<T>(withAssets))
             {
                 // T might be Object, so do all replacements but ignore unregistered components
                 if (!Query(prop.objectReferenceValue, toRight, out var toValue)) continue;
@@ -76,17 +76,28 @@ namespace Silksprite.QuestReplacer.Context
         IEnumerable<SerializedProperty> DeepCollectProperties<T>(bool withAssets)
             where T : Object
         {
-            if (_cachedTargetProperties.TryGetValue((typeof(T), withAssets), out var properties)) return properties;
+            if (_cachedTargetProperties.TryGetValue((typeof(T), withAssets), out var properties))
+            {
+                return properties;
+            }
 
+            return _cachedTargetProperties[(typeof(T), withAssets)] = DoDeepCollectProperties<T>(withAssets).ToArray(); 
+        }
+
+        IEnumerable<SerializedProperty> DoDeepCollectProperties<T>(bool withAssets)
+            where T : Object
+        {
             var targets = _transforms.DeepCollectComponents(false).OfType<Object>();
             if (withAssets)
             {
-                targets = targets.Concat(_animatorControllers.CollectMotions());
+                targets = targets
+                    .Concat(DoDeepCollectProperties<Motion>(false)
+                        .Select(prop => prop.objectReferenceValue)
+                        .Where(motion => motion))
+                    .Concat(_animatorControllers.CollectMotions());
             }
 
-            return _cachedTargetProperties[(typeof(T), withAssets)] = targets 
-                .SelectMany(CollectProperties<T>)
-                .ToArray();
+            return targets.SelectMany(CollectProperties<T>);
         }
 
         static IEnumerable<SerializedProperty> CollectProperties<T>(Object obj)

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Silksprite.QuestReplacer.Context;
 using UnityEditor;
@@ -18,11 +19,11 @@ namespace Silksprite.QuestReplacer.Extensions
                 questReplacer.pairs);
         }
 
-        public static QuestReplacerContext ToAvatarContext(this QuestReplacer questReplacer, Transform avatarRootTransform)
+        public static QuestReplacerContext ToAvatarContext(this QuestReplacer questReplacer, Transform avatarRootTransform, IEnumerable<AnimatorController> animatorControllers)
         {
             return new QuestReplacerContext(
                 avatarRootTransform ? new [] { avatarRootTransform } : Array.Empty<Transform>(),
-                Enumerable.Empty<AnimatorController>(),
+                animatorControllers,
                 questReplacer.database != null ? questReplacer.database.componentFilters : null,
                 questReplacer.pairs);
         }

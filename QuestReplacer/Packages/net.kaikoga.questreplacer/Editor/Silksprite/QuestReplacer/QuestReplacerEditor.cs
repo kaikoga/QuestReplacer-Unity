@@ -51,7 +51,9 @@ namespace Silksprite.QuestReplacer
 
         void RecreateContext()
         {
-            _context = AvatarRootTransform ? _questReplacer.ToAvatarContext(AvatarRootTransform) : _questReplacer.ToContext();
+            _context = AvatarRootTransform 
+                ? _questReplacer.ToAvatarContext(AvatarRootTransform, AnimatorControllerExtractor.ExtractFrom(AvatarRootTransform))
+                : _questReplacer.ToContext();
         }
 
         SerializedProperty _serializedDatabase;
@@ -259,7 +261,7 @@ namespace Silksprite.QuestReplacer
         {
             Undo.SetCurrentGroupName(toRight ? "QuestReplacer: To Right" : "QuestReplacer: To Left");
             UpdateTypeFilters();
-            _context.DeepOverrideReferences<Object>(toRight);
+            _context.DeepOverrideReferences<Object>(toRight, withAssets: false);
             RecreateContext();
         }
         
