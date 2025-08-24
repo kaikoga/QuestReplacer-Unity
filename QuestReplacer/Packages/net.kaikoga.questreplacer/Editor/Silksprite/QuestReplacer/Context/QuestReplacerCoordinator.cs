@@ -4,7 +4,7 @@ using Silksprite.QuestReplacer.Extensions;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Silksprite.QuestReplacer
+namespace Silksprite.QuestReplacer.Context
 {
     public class QuestReplacerCoordinator
     {

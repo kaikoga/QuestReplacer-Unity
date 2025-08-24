@@ -1,5 +1,6 @@
 using System.Linq;
 using nadena.dev.ndmf.runtime;
+using Silksprite.QuestReplacer.Context;
 using Silksprite.QuestReplacer.Extensions;
 using Silksprite.QuestReplacer.Materials;
 using Silksprite.QuestReplacer.Scopes;

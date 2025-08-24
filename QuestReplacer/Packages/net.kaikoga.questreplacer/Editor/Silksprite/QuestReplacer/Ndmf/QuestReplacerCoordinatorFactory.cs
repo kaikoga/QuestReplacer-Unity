@@ -1,3 +1,4 @@
+using Silksprite.QuestReplacer.Context;
 using UnityEngine;
 
 #if QUEST_REPLACER_VRCSDK3_AVATARS
