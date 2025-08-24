@@ -41,29 +41,29 @@ namespace Silksprite.QuestReplacer.Ndmf
         static bool IsIos() => false;
 #endif
 
-        public static bool TryGetPlatformForAvatar(GameObject avatarRootObject, out QuestReplacerPlatform platform)
+        public static bool TryGetPlatformForAvatar(GameObject avatarRootObject, out QuestReplacerBuildPlatform platform)
         {
             if (IsVrm0(avatarRootObject))
             {
-                platform = QuestReplacerPlatform.VRM0;
+                platform = QuestReplacerBuildPlatform.VRM0;
             }
             else if (IsVrm1(avatarRootObject))
             {
-                platform = QuestReplacerPlatform.VRM1;
+                platform = QuestReplacerBuildPlatform.VRM1;
             }
             else if (IsVRChat(avatarRootObject))
             {
                 if (IsStandalone())
                 {
-                    platform = QuestReplacerPlatform.VRChatPC;
+                    platform = QuestReplacerBuildPlatform.VRChatPC;
                 }
                 if (IsAndroid())
                 {
-                    platform = QuestReplacerPlatform.VRChatAndroid;
+                    platform = QuestReplacerBuildPlatform.VRChatAndroid;
                 }
                 else if (IsIos())
                 {
-                    platform = QuestReplacerPlatform.VRChatIos;
+                    platform = QuestReplacerBuildPlatform.VRChatIos;
                 }
                 else
                 {
@@ -73,7 +73,7 @@ namespace Silksprite.QuestReplacer.Ndmf
             }
             else
             {
-                platform = QuestReplacerPlatform.Generic;
+                platform = QuestReplacerBuildPlatform.Generic;
             }
             return true;
         }

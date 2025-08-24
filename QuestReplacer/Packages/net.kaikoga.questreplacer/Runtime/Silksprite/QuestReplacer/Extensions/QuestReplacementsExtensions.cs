@@ -28,18 +28,29 @@ namespace Silksprite.QuestReplacer.Extensions
             }
         }
 
-        public static Object Query(this IEnumerable<QuestReplacement> self, Object fromValue, bool toRight)
+        public static bool Query<T>(this IEnumerable<QuestReplacement> self, T fromValue, bool toRight, out T toValue)
+        where T : Object
         {
             if (toRight)
             {
                 var replacement = self.FirstOrDefault(r => r.left == fromValue);
-                return replacement?.right;
+                if (replacement != null)
+                {
+                    toValue = replacement.right as T;
+                    return toValue;
+                }
             }
             else
             {
                 var replacement = self.FirstOrDefault(r => r.right == fromValue);
-                return replacement?.left;
+                if (replacement != null)
+                {
+                    toValue = replacement.left as T;
+                    return toValue;
+                }
             }
+            toValue = null;
+            return false;
         }
     }
 }

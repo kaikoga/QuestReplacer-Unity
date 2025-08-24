@@ -25,7 +25,8 @@ namespace Silksprite.QuestReplacer.Ndmf
         protected override void Configure()
         {
             var transforming = InPhase(BuildPhase.Transforming);
-            transforming.Run(QuestReplacerPass.Instance);
+            transforming.Run(QuestReplacerPass.Instance)
+                .PreviewingWith(new QuestReplacerPreview());
         }
     }
 
@@ -39,7 +40,7 @@ namespace Silksprite.QuestReplacer.Ndmf
             }
         }
         
-        void DoExecute(BuildContext buildContext, QuestReplacerPlatform platform)
+        void DoExecute(BuildContext buildContext, QuestReplacerBuildPlatform platform)
         {
             var coordinator = QuestReplacerCoordinator.FromAvatarRoot(buildContext.AvatarRootTransform);
             coordinator.Execute(platform);

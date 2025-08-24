@@ -20,16 +20,34 @@ namespace Silksprite.QuestReplacer
             return new QuestReplacerCoordinator(avatarRootTransform.GetComponentsInChildren<QuestReplacer>(true));
         }
 
-        public void Execute(QuestReplacerPlatform platform)
+        public void Execute(QuestReplacerBuildPlatform platform)
         {
-            foreach (var replacer in _replacers.Where(replacer => replacer.database && replacer.database.platform != platform))
+            foreach (var replacer in _replacers.Where(replacer => !platform.Match(replacer.database?.platform)))
             {
                 replacer.ToContext().DeepOverrideReferences<Object>(false);
             }
-            foreach (var replacer in _replacers.Where(replacer => !replacer.database || replacer.database.platform == platform))
+            foreach (var replacer in _replacers.Where(replacer => platform.Match(replacer.database?.platform)))
             {
                 replacer.ToContext().DeepOverrideReferences<Object>(true);
             }
+        }
+
+        public bool Query<T>(T fromValue, QuestReplacerBuildPlatform platform, out T toValue)
+        where T : Object
+        {
+            var replaced = false;
+            toValue = fromValue;
+            foreach (var replacer in _replacers.Where(replacer => !platform.Match(replacer.database?.platform)))
+            {
+                if (!replacer.ToContext().Query(toValue, false, out toValue)) continue;
+                replaced = true;
+            }
+            foreach (var replacer in _replacers.Where(replacer => platform.Match(replacer.database?.platform)))
+            {
+                if (!replacer.ToContext().Query(toValue, true, out toValue)) continue;
+                replaced = true;
+            }
+            return replaced;
         }
 
         public void DestroyImmediate()

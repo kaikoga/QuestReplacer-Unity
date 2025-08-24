@@ -37,6 +37,12 @@ namespace Silksprite.QuestReplacer
                 .Aggregate(QuestStatus.Either, (accumulator, v) => accumulator.Merge(v));
         }
 
+        public bool Query<T>(T fromValue, bool toRight, out T toValue)
+        where T : Object
+        {
+            return _replacements.Query(fromValue, toRight, out toValue);
+        }
+
         public IEnumerable<Type> DeepCollectComponentTypes()
         {
             return DeepCollectComponents(true).Select(component => component.GetType()).Distinct().OrderBy(t => t.FullName);
@@ -55,8 +61,7 @@ namespace Silksprite.QuestReplacer
             foreach (var prop in DeepCollectProperties<T>())
             {
                 // T might be Object, so do all replacements but ignore unregistered components
-                var toValue = _replacements.Query(prop.objectReferenceValue, toRight);
-                if (!toValue) continue;
+                if (!Query(prop.objectReferenceValue, toRight, out var toValue)) continue;
                 prop.objectReferenceValue = toValue;
                 serializedObjects.Add(prop.serializedObject);
             }

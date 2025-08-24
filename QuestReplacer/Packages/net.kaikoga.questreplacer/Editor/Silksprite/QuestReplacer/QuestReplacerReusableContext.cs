@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Silksprite.QuestReplacer.Extensions;
-using UnityEngine;
 using Object = UnityEngine.Object;
+
+#if QUEST_REPLACER_NDMF_SUPPORT
+using nadena.dev.ndmf.preview;
+#endif
 
 namespace Silksprite.QuestReplacer
 {
@@ -14,7 +16,11 @@ namespace Silksprite.QuestReplacer
         QuestReplacerContext _context;
         QuestReplacerContext Context => _context ??= _questReplacer.ToContext();
 
-        public void SetDirty() => _context = null;
+        public void SetDirty()
+        {
+            _context = null;
+            QuestReplacerEditorEvents.OnQuestReplacerDirty(_questReplacer); 
+        }
 
         public QuestStatus QuestMaterialStatus => Context.QuestMaterialStatus;
         public QuestStatus QuestMeshStatus => Context.QuestMeshStatus;
