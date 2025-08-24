@@ -15,7 +15,7 @@ namespace Silksprite.QuestReplacer
         QuestReplacer _questReplacer;
         bool _force;
 
-        QuestReplacerReusableContext _context;
+        QuestReplacerContext _context;
 
 #if QUESTREPLACER_NDMF_SUPPORT
         const bool HasNdmfSupport = true;
@@ -23,9 +23,9 @@ namespace Silksprite.QuestReplacer
         const bool HasNdmfSupport = false;
 #endif
 
-        void ClearCache()
+        void RecreateContext()
         {
-            _context.SetDirty();
+            _context = _questReplacer.ToContext();
         }
 
         SerializedProperty _serializedDatabase;
@@ -36,7 +36,7 @@ namespace Silksprite.QuestReplacer
         void OnEnable()
         {
             _questReplacer = (QuestReplacer)target;
-            _context = _questReplacer.ToReusableContext();
+            RecreateContext();
 
             _serializedDatabase = serializedObject.FindProperty(nameof(QuestReplacer.database));
             _serializedTargets = serializedObject.FindProperty(nameof(QuestReplacer.targets));
@@ -122,7 +122,7 @@ namespace Silksprite.QuestReplacer
 
                 if (changed.changed)
                 {
-                    ClearCache();
+                    RecreateContext();
                 }
                 serializedObject.ApplyModifiedProperties();
 
@@ -167,7 +167,7 @@ namespace Silksprite.QuestReplacer
             Undo.RecordObject(_questReplacer, "QuestReplacer: Collect");
             _questReplacer.AddEntries(_context.DeepCollectReferences<T>(), null, true);
             UpdateTypeFilters();
-            ClearCache();
+            RecreateContext();
         }
 
         void CreateDatabase()
@@ -175,7 +175,7 @@ namespace Silksprite.QuestReplacer
             Undo.SetCurrentGroupName("QuestReplacer: Create Database");
             _questReplacer.CreateDatabase(QuestReplacerPlatform.VRChatMobile, QuestReplacerGenerateMode.GenerateVRChatToonStandard);
             UpdateTypeFilters();
-            ClearCache();
+            RecreateContext();
         }
 
         void GenerateMaterials(MaterialDuplicator duplicator)
@@ -192,7 +192,7 @@ namespace Silksprite.QuestReplacer
                 }
             }
             UpdateTypeFilters();
-            ClearCache();
+            RecreateContext();
         }
 
         void LoadFromDatabase()
@@ -203,7 +203,7 @@ namespace Silksprite.QuestReplacer
             _questReplacer.pairs = _questReplacer.pairs.Update(db.pairs).ToList();
             _questReplacer.AddEntries(_context.DeepCollectReferences<Object>(), db, false);
             UpdateTypeFilters();
-            ClearCache();
+            RecreateContext();
         }
 
         void SaveToDatabase()
@@ -214,7 +214,7 @@ namespace Silksprite.QuestReplacer
             db.pairs = db.pairs.Merge(_questReplacer.pairs).ToList();
             AssetDatabase.SaveAssetIfDirty(db);
             UpdateTypeFilters();
-            ClearCache();
+            RecreateContext();
         }
 
         void Convert(bool toRight)
@@ -222,7 +222,7 @@ namespace Silksprite.QuestReplacer
             Undo.SetCurrentGroupName(toRight ? "QuestReplacer: To Right" : "QuestReplacer: To Left");
             UpdateTypeFilters();
             _context.DeepOverrideReferences<Object>(toRight);
-            ClearCache();
+            RecreateContext();
         }
         
         void UpdateTypeFilters()

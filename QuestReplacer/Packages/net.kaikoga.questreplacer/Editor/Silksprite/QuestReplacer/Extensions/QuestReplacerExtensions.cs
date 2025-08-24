@@ -23,11 +23,6 @@ namespace Silksprite.QuestReplacer.Extensions
                 questReplacer.pairs);
         }
 
-        public static QuestReplacerReusableContext ToReusableContext(this QuestReplacer questReplacer)
-        {
-            return new QuestReplacerReusableContext(questReplacer);
-        }
-
         public static QuestReplacerDatabase EnsureDatabase(this QuestReplacer questReplacer, QuestReplacerPlatform? platform)
         {
             if (questReplacer.database) return questReplacer.database;
