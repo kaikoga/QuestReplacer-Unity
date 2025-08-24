@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 namespace Silksprite.QuestReplacer.Extensions
@@ -23,8 +24,8 @@ namespace Silksprite.QuestReplacer.Extensions
         {
             if (questReplacer.database) return questReplacer.database;
 
-            var databases = UnityEditor.AssetDatabase.FindAssets($"t:{nameof(QuestReplacerDatabase)}")
-                .Select(guid => UnityEditor.AssetDatabase.LoadAssetAtPath<QuestReplacerDatabase>(UnityEditor.AssetDatabase.GUIDToAssetPath(guid)))
+            var databases = AssetDatabase.FindAssets($"t:{nameof(QuestReplacerDatabase)}")
+                .Select(guid => AssetDatabase.LoadAssetAtPath<QuestReplacerDatabase>(AssetDatabase.GUIDToAssetPath(guid)))
                 .ToArray();
 
             QuestReplacerDatabase database;
@@ -80,14 +81,16 @@ namespace Silksprite.QuestReplacer.Extensions
 
         public static void CreateDatabase(this QuestReplacer questReplacer, QuestReplacerPlatform platform, QuestReplacerGenerateMode generateMode)
         {
+            Undo.RecordObject(questReplacer, "Quest Replacer: Create Database");
             var database = ScriptableObject.CreateInstance<QuestReplacerDatabase>();
             database.platform = platform;
             database.generateMode = generateMode;
             database.generatedFileSuffix = database.GetDefaultSuffix();
 
-            var assetPath = UnityEditor.AssetDatabase.GenerateUniqueAssetPath($"Assets/{platform} Replacer Database.asset");
-            UnityEditor.AssetDatabase.CreateAsset(database, assetPath);
+            var assetPath = AssetDatabase.GenerateUniqueAssetPath($"Assets/{platform} Replacer Database.asset");
+            AssetDatabase.CreateAsset(database, assetPath);
             questReplacer.database = database;
+            Undo.RegisterCreatedObjectUndo(database, "Quest Replacer: Create Database");
         }
     }
 }

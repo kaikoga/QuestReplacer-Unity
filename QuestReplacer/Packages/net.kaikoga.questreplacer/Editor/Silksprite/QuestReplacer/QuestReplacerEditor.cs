@@ -148,6 +148,8 @@ namespace Silksprite.QuestReplacer
         void Collect<T>()
         where T : Object
         {
+            Undo.SetCurrentGroupName("QuestReplacer: Collect");
+            Undo.RecordObject(_questReplacer, "QuestReplacer: Collect");
             _questReplacer.AddEntries(_context.DeepCollectReferences<T>(), null, true);
             UpdateTypeFilters();
             ClearCache();
@@ -155,6 +157,7 @@ namespace Silksprite.QuestReplacer
 
         void CreateDatabase()
         {
+            Undo.SetCurrentGroupName("QuestReplacer: Create Database");
             _questReplacer.CreateDatabase(QuestReplacerPlatform.VRChatMobile, QuestReplacerGenerateMode.GenerateVRChatToonStandard);
             UpdateTypeFilters();
             ClearCache();
@@ -162,11 +165,15 @@ namespace Silksprite.QuestReplacer
 
         void GenerateMaterials(MaterialDuplicator duplicator)
         {
+            Undo.SetCurrentGroupName("QuestReplacer: Generate Materials");
+            Undo.RecordObject(_questReplacer, "QuestReplacer: Generate Materials");
             foreach (var pair in _questReplacer.pairs.Where(pair => pair.LikelyUnset))
             {
                 if (pair.left is Material leftMaterial)
                 {
-                    pair.right = duplicator.Duplicate(leftMaterial);
+                    var rightMaterial = duplicator.Duplicate(leftMaterial);
+                    Undo.RegisterCreatedObjectUndo(rightMaterial, "QuestReplacer: Generate Materials");
+                    pair.right = rightMaterial; 
                 }
             }
             UpdateTypeFilters();
@@ -175,6 +182,8 @@ namespace Silksprite.QuestReplacer
 
         void LoadFromDatabase()
         {
+            Undo.SetCurrentGroupName("QuestReplacer: Load");
+            Undo.RecordObject(_questReplacer, "QuestReplacer: Load");
             var db = _questReplacer.EnsureDatabase(null);
             _questReplacer.pairs = _questReplacer.pairs.Update(db.pairs).ToList();
             _questReplacer.AddEntries(_context.DeepCollectReferences<Object>(), db, false);
@@ -184,9 +193,10 @@ namespace Silksprite.QuestReplacer
 
         void SaveToDatabase()
         {
+            Undo.SetCurrentGroupName("QuestReplacer: Save");
             var db = _questReplacer.EnsureDatabase(null);
+            Undo.RecordObject(db, "QuestReplacer: Save");
             db.pairs = db.pairs.Merge(_questReplacer.pairs).ToList();
-            EditorUtility.SetDirty(db);
             AssetDatabase.SaveAssetIfDirty(db);
             UpdateTypeFilters();
             ClearCache();
@@ -194,6 +204,7 @@ namespace Silksprite.QuestReplacer
 
         void Convert(bool toRight)
         {
+            Undo.SetCurrentGroupName(toRight ? "QuestReplacer: To Right" : "QuestReplacer: To Left");
             UpdateTypeFilters();
             _context.DeepOverrideReferences<Object>(toRight);
             ClearCache();
@@ -202,6 +213,7 @@ namespace Silksprite.QuestReplacer
         void UpdateTypeFilters()
         {
             var db = _questReplacer.database; 
+            Undo.RecordObject(db, "QuestReplacer: Update Type Filters");
             if (db) db.RegisterTypeFilters(_context.DeepCollectComponentTypes());
         }
     }

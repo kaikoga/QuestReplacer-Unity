@@ -15,7 +15,6 @@ namespace Silksprite.QuestReplacer
         public void SetDirty()
         {
             _context = null;
-            QuestReplacerEditorEvents.OnQuestReplacerDirty(_questReplacer); 
         }
 
         public QuestStatus QuestMaterialStatus => Context.QuestMaterialStatus;
