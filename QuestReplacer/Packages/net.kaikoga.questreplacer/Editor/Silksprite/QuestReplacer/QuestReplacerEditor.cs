@@ -1,4 +1,5 @@
 using System.Linq;
+using nadena.dev.ndmf.runtime;
 using Silksprite.QuestReplacer.Extensions;
 using Silksprite.QuestReplacer.Materials;
 using Silksprite.QuestReplacer.Scopes;
@@ -18,14 +19,27 @@ namespace Silksprite.QuestReplacer
         QuestReplacerContext _context;
 
 #if QUESTREPLACER_NDMF_SUPPORT
-        const bool HasNdmfSupport = true;
+        static bool HasNdmfSupport => true;
 #else
-        const bool HasNdmfSupport = false;
+        static bool HasNdmfSupport => false;
 #endif
+
+        Transform FindAvatarInParents()
+        {
+#if QUESTREPLACER_NDMF_SUPPORT
+            return RuntimeUtil.FindAvatarInParents(_questReplacer.transform);
+#else
+            return null;
+#endif
+        }
 
         void RecreateContext()
         {
+#if QUESTREPLACER_NDMF_SUPPORT
+            _context = _questReplacer.ToAvatarContext(FindAvatarInParents());
+#else
             _context = _questReplacer.ToContext();
+#endif
         }
 
         SerializedProperty _serializedDatabase;
@@ -47,19 +61,29 @@ namespace Silksprite.QuestReplacer
 
         public override void OnInspectorGUI()
         {
+            var hasTargets = HasNdmfSupport ? FindAvatarInParents() : _questReplacer.HasTargets;
             using (var changed = new EditorGUI.ChangeCheckScope())
             {
-                using (new EditorGUI.DisabledScope(_serializedTargetSceneObjects.boolValue))
+                if (HasNdmfSupport)
                 {
-                    EditorGUILayout.PropertyField(_serializedTargets);
+                    _serializedTargets.arraySize = 0;
+                    _serializedTargetSceneObjects.boolValue = false;
                 }
-                EditorGUILayout.PropertyField(_serializedTargetSceneObjects);
+                else
+                {
+                    using (new EditorGUI.DisabledScope(_serializedTargetSceneObjects.boolValue))
+                    {
+                        EditorGUILayout.PropertyField(_serializedTargets);
+                    }
+                    EditorGUILayout.PropertyField(_serializedTargetSceneObjects);
+                }
+
                 _reorderablePairs.DoLayoutList();
 
                 var pairs = _questReplacer.pairs.ToArray();
                 if (_questReplacer.ManageMaterials)
                 {
-                    using (new EditorGUI.DisabledScope(!_questReplacer.HasTargets))
+                    using (new EditorGUI.DisabledScope(!hasTargets))
                     using (new EditorGUILayout.HorizontalScope())
                     {
                         EditorGUILayout.LabelField("Quest Material Status", $"{_context.ToQuestStatus<Material>()}");
@@ -136,7 +160,7 @@ namespace Silksprite.QuestReplacer
                 
                 if (HasNdmfSupport)
                 {
-                    EditorGUILayout.HelpBox("ndmf 連携が有効です。", MessageType.Info);
+                    EditorGUILayout.HelpBox("NDMF連携が有効です。置き換えの結果はNDMFプレビューとして表示されるため、手動置き換え操作は不要です。", MessageType.Info);
                     requireForce = true;
                 }
 
@@ -144,7 +168,7 @@ namespace Silksprite.QuestReplacer
 
                 using (new EditorGUILayout.HorizontalScope())
                 {
-                    using (new EditorGUI.DisabledScope(!(_questReplacer.HasTargets && pairs.Length > 0)))
+                    using (new EditorGUI.DisabledScope(!(hasTargets && pairs.Length > 0)))
                     using (new EditorGUI.DisabledScope(requireForce != _force))
                     {
                         if (GUILayout.Button("To Left"))

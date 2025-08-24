@@ -18,7 +18,7 @@ namespace Silksprite.QuestReplacer.Extensions
         public static QuestReplacerContext ToAvatarContext(this QuestReplacer questReplacer, Transform avatarRootTransform)
         {
             return new QuestReplacerContext(
-                new [] { avatarRootTransform },
+                avatarRootTransform ? new [] { avatarRootTransform } : Array.Empty<Transform>(),
                 questReplacer.database != null ? questReplacer.database.componentFilters : null,
                 questReplacer.pairs);
         }

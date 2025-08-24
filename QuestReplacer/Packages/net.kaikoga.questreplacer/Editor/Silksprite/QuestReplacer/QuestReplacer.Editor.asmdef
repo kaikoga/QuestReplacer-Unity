@@ -5,7 +5,8 @@
         "AdLib",
         "VRMShaders.VRM10.MToon10.Runtime",
         "VRM10.MToon10",
-        "QuestReplacer"
+        "QuestReplacer",
+        "nadena.dev.ndmf.runtime"
     ],
     "includePlatforms": [
         "Editor"
