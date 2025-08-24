@@ -9,10 +9,14 @@ namespace Silksprite.QuestReplacer
     public class QuestReplacerCoordinator
     {
         readonly QuestReplacer[] _replacers;
+        readonly (QuestReplacerPlatform? platform, QuestReplacerContext context)[] _contexts;
 
         QuestReplacerCoordinator(IEnumerable<QuestReplacer> replacers)
         {
             _replacers = replacers.ToArray();
+            _contexts = _replacers
+                .Select(replacer => (replacer.database?.platform, replacer.ToContext()))
+                .ToArray();
         }
 
         public static QuestReplacerCoordinator FromAvatarRoot(Transform avatarRootTransform)
@@ -22,13 +26,13 @@ namespace Silksprite.QuestReplacer
 
         public void Execute(QuestReplacerBuildPlatform platform)
         {
-            foreach (var replacer in _replacers.Where(replacer => !platform.Match(replacer.database?.platform)))
+            foreach (var context in _contexts.Where(context => !platform.Match(context.platform)))
             {
-                replacer.ToContext().DeepOverrideReferences<Object>(false);
+                context.context.DeepOverrideReferences<Object>(false);
             }
-            foreach (var replacer in _replacers.Where(replacer => platform.Match(replacer.database?.platform)))
+            foreach (var context in _contexts.Where(context => platform.Match(context.platform)))
             {
-                replacer.ToContext().DeepOverrideReferences<Object>(true);
+                context.context.DeepOverrideReferences<Object>(true);
             }
         }
 
@@ -37,14 +41,14 @@ namespace Silksprite.QuestReplacer
         {
             var replaced = false;
             toValue = fromValue;
-            foreach (var replacer in _replacers.Where(replacer => !platform.Match(replacer.database?.platform)))
+            foreach (var context in _contexts.Where(context => !platform.Match(context.platform)))
             {
-                if (!replacer.ToContext().Query(toValue, false, out toValue)) continue;
+                if (!context.context.Query(toValue, false, out toValue)) continue;
                 replaced = true;
             }
-            foreach (var replacer in _replacers.Where(replacer => platform.Match(replacer.database?.platform)))
+            foreach (var context in _contexts.Where(context => platform.Match(context.platform)))
             {
-                if (!replacer.ToContext().Query(toValue, true, out toValue)) continue;
+                if (!context.context.Query(toValue, true, out toValue)) continue;
                 replaced = true;
             }
             return replaced;
