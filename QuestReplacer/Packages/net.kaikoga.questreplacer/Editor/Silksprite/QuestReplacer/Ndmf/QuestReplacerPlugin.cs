@@ -34,7 +34,7 @@ namespace Silksprite.QuestReplacer.Ndmf
     {
         protected override void Execute(BuildContext buildContext)
         {
-            if (QuestReplacerPlatformDetector.TryGetPlatformForAvatar(buildContext.AvatarRootObject, out var platform))
+            if (QuestReplacerPlatformDetector.TryGetPlatformForAvatar(buildContext.AvatarRootTransform, out var platform))
             {
                 DoExecute(buildContext, platform);
             }

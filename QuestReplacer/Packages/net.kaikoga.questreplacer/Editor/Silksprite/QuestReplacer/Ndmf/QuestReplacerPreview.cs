@@ -25,11 +25,11 @@ namespace Silksprite.QuestReplacer.Ndmf
             return context.GetComponentsByType<Renderer>()
                 .Where(r => r is SkinnedMeshRenderer or MeshRenderer)
                 .Where(r => context.ActiveInHierarchy(r.gameObject))
-                .GroupBy(r => context.GetAvatarRootCrossPlatform(r.gameObject))
+                .GroupBy(r => context.GetAvatarRootCrossPlatform(r.gameObject)?.transform)
                 .SelectMany(g =>
                 {
-                    var coordinator = QuestReplacerCoordinatorFactory.FromAvatarRoot(g.Key.transform);
-                    if (!QuestReplacerPlatformDetector.TryGetPlatformForAvatar(g.Key.gameObject, out var replacerPlatform))
+                    var coordinator = QuestReplacerCoordinatorFactory.FromAvatarRoot(g.Key);
+                    if (!QuestReplacerPlatformDetector.TryGetPlatformForAvatar(g.Key, out var replacerPlatform))
                     {
                         replacerPlatform = QuestReplacerBuildPlatform.Generic;
                     }

@@ -6,21 +6,21 @@ namespace Silksprite.QuestReplacer.Ndmf
     {
 
 #if QUEST_REPLACER_VRM0
-        static bool IsVrm0(GameObject avatarRootObject) => avatarRootObject.GetComponent<VRM.VRMMeta>();
+        static bool IsVrm0(Transform avatarRootTransform) => avatarRootTransform.GetComponent<VRM.VRMMeta>();
 #else
-        static bool IsVrm0(GameObject avatarRootObject) => false;
+        static bool IsVrm0(Transform avatarRootTransform) => false;
 #endif
 
 #if QUEST_REPLACER_VRM1
-        static bool IsVrm1(GameObject avatarRootObject) => avatarRootObject.GetComponent<UniVRM10.Vrm10Instance>();
+        static bool IsVrm1(Transform avatarRootTransform) => avatarRootTransform.GetComponent<UniVRM10.Vrm10Instance>();
 #else
-        static bool IsVrm1(GameObject avatarRootObject) => false;
+        static bool IsVrm1(Transform avatarRootTransform) => false;
 #endif
 
 #if QUEST_REPLACER_VRCSDK3_AVATARS
-        static bool IsVRChat(GameObject avatarRootObject) => avatarRootObject.GetComponent<VRC.SDK3.Avatars.Components.VRCAvatarDescriptor>();
+        static bool IsVRChat(Transform avatarRootTransform) => avatarRootTransform.GetComponent<VRC.SDK3.Avatars.Components.VRCAvatarDescriptor>();
 #else
-        static bool IsVRChat(GameObject avatarRootObject) => false;
+        static bool IsVRChat(Transform avatarRootTransform) => false;
 #endif
 
 #if UNITY_STANDALONE
@@ -41,17 +41,17 @@ namespace Silksprite.QuestReplacer.Ndmf
         static bool IsIos() => false;
 #endif
 
-        public static bool TryGetPlatformForAvatar(GameObject avatarRootObject, out QuestReplacerBuildPlatform platform)
+        public static bool TryGetPlatformForAvatar(Transform avatarRootTransform, out QuestReplacerBuildPlatform platform)
         {
-            if (IsVrm0(avatarRootObject))
+            if (IsVrm0(avatarRootTransform))
             {
                 platform = QuestReplacerBuildPlatform.VRM0;
             }
-            else if (IsVrm1(avatarRootObject))
+            else if (IsVrm1(avatarRootTransform))
             {
                 platform = QuestReplacerBuildPlatform.VRM1;
             }
-            else if (IsVRChat(avatarRootObject))
+            else if (IsVRChat(avatarRootTransform))
             {
                 if (IsStandalone())
                 {
