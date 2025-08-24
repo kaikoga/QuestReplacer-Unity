@@ -13,7 +13,6 @@ namespace Silksprite.QuestReplacer
     {
         public QuestReplacerDatabase database;
         
-        [SerializeField] internal Transform avatarRoot;
         [SerializeField] internal List<Transform> targets = new List<Transform>();
         [SerializeField] internal bool targetSceneObjects;
 
@@ -21,7 +20,6 @@ namespace Silksprite.QuestReplacer
         {
             set
             {
-                avatarRoot = null;
                 targets.Clear();
                 if (value) targets.Add(value);
                 targetSceneObjects = false;
@@ -37,17 +35,11 @@ namespace Silksprite.QuestReplacer
                     return SceneManager.GetActiveScene().GetRootGameObjects().Select(root => root.transform);
                 }
 
-                if (avatarRoot)
-                {
-                    targets.Add(avatarRoot);
-                    avatarRoot = null;
-                }
-
                 return targets;
             }
         }
 
-        public bool HasTargets => avatarRoot || targets.Count > 0 || targetSceneObjects;
+        public bool HasTargets => targets.Count > 0 || targetSceneObjects;
         
         public List<QuestReplacement> pairs = new List<QuestReplacement>();
         
