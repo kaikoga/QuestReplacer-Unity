@@ -10,17 +10,16 @@ namespace Silksprite.QuestReplacer.Context
 {
     public class QuestReplacerContext
     {
-        readonly Transform[] _targets;
-        readonly QuestTypeFilter[] _componentFilters;
         readonly QuestReplacement[] _replacements;
 
         readonly Dictionary<Type, SerializedProperty[]> _cachedTargetProperties = new Dictionary<Type, SerializedProperty[]>();
         readonly Dictionary<Type, QuestStatus> _cachedQuestStatus = new Dictionary<Type, QuestStatus>();
+        readonly QuestReplacerTransformTarget _transformTarget;
 
         public QuestReplacerContext(IEnumerable<Transform> targets, IEnumerable<QuestTypeFilter> componentFilters, IEnumerable<QuestReplacement> pairs)
         {
-            _targets = targets.Where(target => target).ToArray();
-            _componentFilters = (componentFilters != null) ? componentFilters.Reverse().ToArray() : DeepCollectComponentTypes().ToTypeFilters().Reverse().ToArray();
+            var filters = (componentFilters ?? DeepCollectComponentTypes().ToTypeFilters()).Reverse().ToArray();
+            _transformTarget = new QuestReplacerTransformTarget(targets.Where(target => target).ToArray(), filters);
             _replacements = pairs.ToArray();
         }
 
@@ -42,7 +41,7 @@ namespace Silksprite.QuestReplacer.Context
 
         public IEnumerable<Type> DeepCollectComponentTypes()
         {
-            return DeepCollectComponents(true).Select(component => component.GetType()).Distinct().OrderBy(t => t.FullName);
+            return _transformTarget.DeepCollectComponentTypes();
         }
 
         public IEnumerable<T> DeepCollectReferences<T>()
@@ -71,20 +70,12 @@ namespace Silksprite.QuestReplacer.Context
             }
         }
 
-        IEnumerable<Component> DeepCollectComponents(bool ignoreFilters) =>
-            _targets.SelectMany(target => target.GetComponentsInChildren<Component>(true)
-                .Where(component =>
-                {
-                    return component // Missing Script
-                           && (ignoreFilters || _componentFilters.Any(componentFilter => componentFilter.Includes(component.GetType()))); // exclude QuestReplacer itself (and else)
-                }));
-
         IEnumerable<SerializedProperty> DeepCollectProperties<T>()
             where T : Object
         {
             if (_cachedTargetProperties.TryGetValue(typeof(T), out var properties)) return properties;
 
-            return _cachedTargetProperties[typeof(T)] = DeepCollectComponents(false).SelectMany(CollectProperties<T>).ToArray();
+            return _cachedTargetProperties[typeof(T)] = _transformTarget.DeepCollectComponents(false).SelectMany(CollectProperties<T>).ToArray();
         }
 
         static IEnumerable<SerializedProperty> CollectProperties<T>(Component component)
