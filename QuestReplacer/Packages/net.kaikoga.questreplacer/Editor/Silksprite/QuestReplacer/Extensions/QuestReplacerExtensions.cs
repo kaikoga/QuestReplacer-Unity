@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Silksprite.QuestReplacer.Context;
 using UnityEditor;
+using UnityEditor.Animations;
 using UnityEngine;
 
 namespace Silksprite.QuestReplacer.Extensions
@@ -12,6 +13,7 @@ namespace Silksprite.QuestReplacer.Extensions
         {
             return new QuestReplacerContext(
                 questReplacer.Targets,
+                Enumerable.Empty<AnimatorController>(),
                 questReplacer.database != null ? questReplacer.database.componentFilters : null,
                 questReplacer.pairs);
         }
@@ -20,6 +22,7 @@ namespace Silksprite.QuestReplacer.Extensions
         {
             return new QuestReplacerContext(
                 avatarRootTransform ? new [] { avatarRootTransform } : Array.Empty<Transform>(),
+                Enumerable.Empty<AnimatorController>(),
                 questReplacer.database != null ? questReplacer.database.componentFilters : null,
                 questReplacer.pairs);
         }
