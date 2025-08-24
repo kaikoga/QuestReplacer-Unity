@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using nadena.dev.ndmf;
 using nadena.dev.ndmf.preview;
+using nadena.dev.ndmf.runtime;
 using UnityEngine;
 
 namespace Silksprite.QuestReplacer.Ndmf
@@ -24,7 +25,7 @@ namespace Silksprite.QuestReplacer.Ndmf
             return context.GetComponentsByType<Renderer>()
                 .Where(r => r is SkinnedMeshRenderer or MeshRenderer)
                 .Where(r => context.ActiveInHierarchy(r.gameObject))
-                .GroupBy(r => context.GetAvatarRoot(r.gameObject))
+                .GroupBy(r => context.GetAvatarRootCrossPlatform(r.gameObject))
                 .SelectMany(g =>
                 {
                     var reusable = QuestReplacerReusableCoordinator.FromAvatarRoot(g.Key.transform);
@@ -97,6 +98,27 @@ namespace Silksprite.QuestReplacer.Ndmf
                     Object.DestroyImmediate(tmpMaterial);
                 }
             }
+        }
+    }
+
+    static class ContextExtension
+    {
+        // Cross platform nadena.dev.ndmf.preview.ComputeContextQueries.GetAvatarRoot
+        public static GameObject GetAvatarRootCrossPlatform(this ComputeContext context, GameObject obj)
+        {
+            if (obj == null) return null;
+
+            var avatarRoot = RuntimeUtil.FindAvatarInParents(obj.transform);
+            GameObject candidate = null;
+            foreach (var elem in context.ObservePath(obj.transform))
+            {
+                candidate = elem.gameObject;
+                if (elem == avatarRoot)
+                {
+                    break;
+                }
+            }
+            return candidate;
         }
     }
 }
