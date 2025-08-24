@@ -11,17 +11,18 @@ namespace Silksprite.QuestReplacer
         readonly QuestReplacer[] _replacers;
         readonly (QuestReplacerPlatform? platform, QuestReplacerContext context)[] _contexts;
 
-        QuestReplacerCoordinator(IEnumerable<QuestReplacer> replacers)
+        QuestReplacerCoordinator(Transform avatarRootTransform, IEnumerable<QuestReplacer> replacers)
         {
             _replacers = replacers.ToArray();
             _contexts = _replacers
-                .Select(replacer => (replacer.database?.platform, replacer.ToContext()))
+                .Select(replacer => (replacer.database?.platform, replacer.ToAvatarContext(avatarRootTransform)))
                 .ToArray();
         }
 
         public static QuestReplacerCoordinator FromAvatarRoot(Transform avatarRootTransform)
         {
-            return new QuestReplacerCoordinator(avatarRootTransform.GetComponentsInChildren<QuestReplacer>(true));
+            return new QuestReplacerCoordinator(avatarRootTransform,
+                avatarRootTransform.GetComponentsInChildren<QuestReplacer>(true));
         }
 
         public void Execute(QuestReplacerBuildPlatform platform)

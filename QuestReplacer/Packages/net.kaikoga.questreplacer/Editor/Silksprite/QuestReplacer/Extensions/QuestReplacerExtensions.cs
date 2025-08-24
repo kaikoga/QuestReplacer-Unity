@@ -15,6 +15,14 @@ namespace Silksprite.QuestReplacer.Extensions
                 questReplacer.pairs);
         }
 
+        public static QuestReplacerContext ToAvatarContext(this QuestReplacer questReplacer, Transform avatarRootTransform)
+        {
+            return new QuestReplacerContext(
+                new [] { avatarRootTransform },
+                questReplacer.database != null ? questReplacer.database.componentFilters : null,
+                questReplacer.pairs);
+        }
+
         public static QuestReplacerReusableContext ToReusableContext(this QuestReplacer questReplacer)
         {
             return new QuestReplacerReusableContext(questReplacer);
