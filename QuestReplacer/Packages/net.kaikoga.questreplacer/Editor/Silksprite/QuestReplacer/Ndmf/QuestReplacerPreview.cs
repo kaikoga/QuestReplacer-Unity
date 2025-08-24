@@ -80,7 +80,7 @@ namespace Silksprite.QuestReplacer.Ndmf
             public void OnFrame(Renderer original, Renderer proxy)
             {
                 proxy.sharedMaterials = original.sharedMaterials
-                    .Select(material => _tmpMaterials.GetValueOrDefault(material, material))
+                    .Select(material => material ? _tmpMaterials.GetValueOrDefault(material, material) : null)
                     .ToArray();
             }
 
