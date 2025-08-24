@@ -28,7 +28,7 @@ namespace Silksprite.QuestReplacer.Ndmf
                 .GroupBy(r => context.GetAvatarRootCrossPlatform(r.gameObject))
                 .SelectMany(g =>
                 {
-                    var coordinator = QuestReplacerCoordinator.FromAvatarRoot(g.Key.transform);
+                    var coordinator = QuestReplacerCoordinatorFactory.FromAvatarRoot(g.Key.transform);
                     if (!QuestReplacerPlatformDetector.TryGetPlatformForAvatar(g.Key.gameObject, out var replacerPlatform))
                     {
                         replacerPlatform = QuestReplacerBuildPlatform.Generic;
