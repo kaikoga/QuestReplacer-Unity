@@ -31,84 +31,9 @@ namespace Silksprite.QuestReplacer.Ndmf
 
     class QuestReplacerPass : Pass<QuestReplacerPass>
     {
-#if QUEST_REPLACER_VRM0
-        bool IsVrm0(GameObject avatarRootObject) => avatarRootObject.GetComponent<VRM.VRMMeta>();
-#else
-        bool IsVrm0(GameObject avatarRootObject) => false;
-#endif
-
-#if QUEST_REPLACER_VRM1
-        bool IsVrm1(GameObject avatarRootObject) => avatarRootObject.GetComponent<UniVRM10.Vrm10Instance>();
-#else
-        bool IsVrm1(GameObject avatarRootObject) => false;
-#endif
-
-#if QUEST_REPLACER_VRCSDK3_AVATARS
-        bool IsVRChat(GameObject avatarRootObject) => avatarRootObject.GetComponent<VRC.SDK3.Avatars.Components.VRCAvatarDescriptor>();
-#else
-        bool IsVRChatPC(GameObject avatarRootObject) => false;
-#endif
-
-#if UNITY_STANDALONE
-        bool IsStandalone() => true;
-#else
-        bool IsStandalone() => false;
-#endif
-
-#if UNITY_ANDROID
-        bool IsAndroid() => true;
-#else
-        bool IsAndroid() => false;
-#endif
-
-#if UNITY_IOS
-        bool IsIos() => true;
-#else
-        bool IsIos() => false;
-#endif
-
-        bool TryGetPlatformForAvatar(BuildContext buildContext, out QuestReplacerPlatform platform)
-        {
-            var avatarRootObject = buildContext.AvatarRootObject;
-            
-            if (IsVrm0(avatarRootObject))
-            {
-                platform = QuestReplacerPlatform.VRM0;
-            }
-            else if (IsVrm1(avatarRootObject))
-            {
-                platform = QuestReplacerPlatform.VRM1;
-            }
-            else if (IsVRChat(avatarRootObject))
-            {
-                if (IsStandalone())
-                {
-                    platform = QuestReplacerPlatform.VRChatPC;
-                }
-                if (IsAndroid())
-                {
-                    platform = QuestReplacerPlatform.VRChatAndroid;
-                }
-                else if (IsIos())
-                {
-                    platform = QuestReplacerPlatform.VRChatIos;
-                }
-                else
-                {
-                    platform = default;
-                    return false;
-                }
-            }
-            else
-            {
-                platform = QuestReplacerPlatform.Generic;
-            }
-            return true;
-        }
-
         protected override void Execute(BuildContext buildContext)
         {
-            if (TryGetPlatformForAvatar(buildContext, out var platform))
+            if (QuestReplacerPlatformDetector.TryGetPlatformForAvatar(buildContext.AvatarRootObject, out var platform))
             {
                 DoExecute(buildContext, platform);
             }
