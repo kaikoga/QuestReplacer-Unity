@@ -17,6 +17,12 @@ namespace Silksprite.QuestReplacer
 
         QuestReplacerReusableContext _context;
 
+#if QUESTREPLACER_NDMF_SUPPORT
+        const bool HasNdmfSupport = true;
+#else
+        const bool HasNdmfSupport = false;
+#endif
+
         void ClearCache()
         {
             _context.SetDirty();
@@ -121,16 +127,25 @@ namespace Silksprite.QuestReplacer
                 serializedObject.ApplyModifiedProperties();
 
                 var isReversible = pairs.Validate(out var messages);
+                var requireForce = false;
                 if (!isReversible)
                 {
                     EditorGUILayout.HelpBox($"置き換え設定を確認してください。\n{string.Join("\n", messages)}", MessageType.Error);
-                    _force = EditorGUILayout.Toggle("確認した", _force);
+                    requireForce = true;
                 }
                 
+                if (HasNdmfSupport)
+                {
+                    EditorGUILayout.HelpBox("ndmf 連携が有効です。", MessageType.Info);
+                    requireForce = true;
+                }
+
+                _force = requireForce && EditorGUILayout.Toggle("確認した", _force);
+
                 using (new EditorGUILayout.HorizontalScope())
                 {
                     using (new EditorGUI.DisabledScope(!(_questReplacer.HasTargets && pairs.Length > 0)))
-                    using (new EditorGUI.DisabledScope(!(isReversible || _force)))
+                    using (new EditorGUI.DisabledScope(requireForce != _force))
                     {
                         if (GUILayout.Button("To Left"))
                         {

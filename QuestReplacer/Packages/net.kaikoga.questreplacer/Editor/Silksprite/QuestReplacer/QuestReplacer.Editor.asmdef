@@ -18,6 +18,11 @@
     "defineConstraints": [],
     "versionDefines": [
         {
+            "name": "nadena.dev.ndmf",
+            "expression": "",
+            "define": "QUESTREPLACER_NDMF_SUPPORT"
+        },
+        {
             "name": "com.vrmc.vrmshaders",
             "expression": "",
             "define": "QUESTREPLACER_VRMSHADERS"
