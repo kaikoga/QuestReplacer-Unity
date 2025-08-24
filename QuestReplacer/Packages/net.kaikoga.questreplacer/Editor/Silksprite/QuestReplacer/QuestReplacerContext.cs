@@ -55,23 +55,10 @@ namespace Silksprite.QuestReplacer
             foreach (var prop in DeepCollectProperties<T>())
             {
                 // T might be Object, so do all replacements but ignore unregistered components
-                if (toRight)
-                {
-                    var replacement = _replacements.FirstOrDefault(r => r.left == prop.objectReferenceValue);
-                    if (replacement == null) continue;
-
-                    prop.objectReferenceValue = replacement.right;
-                    serializedObjects.Add(prop.serializedObject);
-                }
-                else
-                {
-                    var replacement = _replacements.FirstOrDefault(r => r.right == prop.objectReferenceValue);
-                    if (replacement == null) continue;
-
-                    prop.objectReferenceValue = replacement.left;
-                    serializedObjects.Add(prop.serializedObject);
-                }
-
+                var toValue = _replacements.Query(prop.objectReferenceValue, toRight);
+                if (!toValue) continue;
+                prop.objectReferenceValue = toValue;
+                serializedObjects.Add(prop.serializedObject);
             }
 
             foreach (var serializedObject in serializedObjects)

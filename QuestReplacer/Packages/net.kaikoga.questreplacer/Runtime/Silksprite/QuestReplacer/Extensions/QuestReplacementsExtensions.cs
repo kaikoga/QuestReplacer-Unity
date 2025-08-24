@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Silksprite.QuestReplacer.Extensions
 {
@@ -24,6 +25,20 @@ namespace Silksprite.QuestReplacer.Extensions
             foreach (var r in self)
             {
                 yield return others.FirstOrDefault(o => r.Contains(o)) ?? r;
+            }
+        }
+
+        public static Object Query(this IEnumerable<QuestReplacement> self, Object fromValue, bool toRight)
+        {
+            if (toRight)
+            {
+                var replacement = self.FirstOrDefault(r => r.left == fromValue);
+                return replacement?.right;
+            }
+            else
+            {
+                var replacement = self.FirstOrDefault(r => r.right == fromValue);
+                return replacement?.left;
             }
         }
     }
