@@ -71,15 +71,13 @@ namespace Silksprite.QuestReplacer
             }
         }
 
-        IEnumerable<Component> DeepCollectComponents(bool ignoreFilters) => _targets.SelectMany(target =>
-        {
-            return target.GetComponentsInChildren<Component>(true)
+        IEnumerable<Component> DeepCollectComponents(bool ignoreFilters) =>
+            _targets.SelectMany(target => target.GetComponentsInChildren<Component>(true)
                 .Where(component =>
-                    {
-                        return component // Missing Script
-                               && (ignoreFilters || _componentFilters.Any(componentFilter => componentFilter.Includes(component.GetType()))); // exclude QuestReplacer itself (and else)
-                    });
-        });
+                {
+                    return component // Missing Script
+                           && (ignoreFilters || _componentFilters.Any(componentFilter => componentFilter.Includes(component.GetType()))); // exclude QuestReplacer itself (and else)
+                }));
 
         IEnumerable<SerializedProperty> DeepCollectProperties<T>()
             where T : Object
