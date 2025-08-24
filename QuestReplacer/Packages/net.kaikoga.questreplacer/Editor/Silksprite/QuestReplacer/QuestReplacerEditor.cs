@@ -14,32 +14,43 @@ namespace Silksprite.QuestReplacer
     public class QuestReplacerEditor : Editor
     {
         QuestReplacer _questReplacer;
+        bool _currentEnableNdmfSupport;
+        Transform _currentAvatarRootTransform;
         bool _force;
-
-        QuestReplacerContext _context;
 
 #if QUESTREPLACER_NDMF_SUPPORT
         static bool HasNdmfSupport => true;
 #else
         static bool HasNdmfSupport => false;
 #endif
-
-        Transform FindAvatarInParents()
+        
+        bool EnableNdmfSupport
         {
-#if QUESTREPLACER_NDMF_SUPPORT
-            return RuntimeUtil.FindAvatarInParents(_questReplacer.transform);
-#else
-            return null;
-#endif
+            get => _currentEnableNdmfSupport;
+            set
+            {
+                if (_currentEnableNdmfSupport == value) return;
+                _currentEnableNdmfSupport = value;
+                RecreateContext();
+            }
         }
+
+        
+        Transform AvatarRootTransform
+        {
+            get => _currentAvatarRootTransform;
+            set
+            {
+                if (_currentAvatarRootTransform == value) return;
+                _currentAvatarRootTransform = value;
+                RecreateContext();
+            }
+        }
+        QuestReplacerContext _context;
 
         void RecreateContext()
         {
-#if QUESTREPLACER_NDMF_SUPPORT
-            _context = _questReplacer.ToAvatarContext(FindAvatarInParents());
-#else
-            _context = _questReplacer.ToContext();
-#endif
+            _context = AvatarRootTransform ? _questReplacer.ToAvatarContext(AvatarRootTransform) : _questReplacer.ToContext();
         }
 
         SerializedProperty _serializedDatabase;
@@ -50,6 +61,9 @@ namespace Silksprite.QuestReplacer
         void OnEnable()
         {
             _questReplacer = (QuestReplacer)target;
+#if QUESTREPLACER_NDMF_SUPPORT
+            AvatarRootTransform = RuntimeUtil.FindAvatarInParents(_questReplacer.transform);
+#endif
             RecreateContext();
 
             _serializedDatabase = serializedObject.FindProperty(nameof(QuestReplacer.database));
@@ -61,15 +75,14 @@ namespace Silksprite.QuestReplacer
 
         public override void OnInspectorGUI()
         {
-            var hasTargets = HasNdmfSupport ? FindAvatarInParents() : _questReplacer.HasTargets;
+#if QUESTREPLACER_NDMF_SUPPORT
+            AvatarRootTransform = RuntimeUtil.FindAvatarInParents(_questReplacer.transform);
+#endif
+            EnableNdmfSupport = HasNdmfSupport && AvatarRootTransform;
+            var hasTargets = EnableNdmfSupport || _questReplacer.HasTargets;
             using (var changed = new EditorGUI.ChangeCheckScope())
             {
-                if (HasNdmfSupport)
-                {
-                    _serializedTargets.arraySize = 0;
-                    _serializedTargetSceneObjects.boolValue = false;
-                }
-                else
+                if (!EnableNdmfSupport)
                 {
                     using (new EditorGUI.DisabledScope(_serializedTargetSceneObjects.boolValue))
                     {
@@ -158,7 +171,7 @@ namespace Silksprite.QuestReplacer
                     requireForce = true;
                 }
                 
-                if (HasNdmfSupport)
+                if (EnableNdmfSupport)
                 {
                     EditorGUILayout.HelpBox("NDMF連携が有効です。置き換えの結果はNDMFプレビューとして表示されるため、手動置き換え操作は不要です。", MessageType.Info);
                     requireForce = true;
