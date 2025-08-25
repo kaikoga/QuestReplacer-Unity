@@ -259,7 +259,7 @@ namespace Silksprite.QuestReplacer
             Undo.SetCurrentGroupName("QuestReplacer: Save");
             var db = _questReplacer.EnsureDatabase(null);
             Undo.RecordObject(db, "QuestReplacer: Save");
-            db.pairs = db.pairs.Merge(_questReplacer.pairs).ToList();
+            db.pairs = db.pairs.Merge(_questReplacer.pairs.Where(pair => !pair.LikelyUnset)).ToList();
             AssetDatabase.SaveAssetIfDirty(db);
             UpdateTypeFilters();
             RecreateContext();
