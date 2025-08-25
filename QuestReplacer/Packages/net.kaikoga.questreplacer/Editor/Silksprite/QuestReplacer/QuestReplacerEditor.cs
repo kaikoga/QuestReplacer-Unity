@@ -59,6 +59,7 @@ namespace Silksprite.QuestReplacer
         }
 
         SerializedProperty _serializedDatabase;
+        SerializedProperty _serializedTargetVRChatAnimations;
         SerializedProperty _serializedTargets;
         SerializedProperty _serializedTargetSceneObjects;
         QuestReplacementReorderableList _reorderablePairs;
@@ -72,6 +73,7 @@ namespace Silksprite.QuestReplacer
             RecreateContext();
 
             _serializedDatabase = serializedObject.FindProperty(nameof(QuestReplacer.database));
+            _serializedTargetVRChatAnimations = serializedObject.FindProperty(nameof(QuestReplacer.targetVRChatAnimations));
             _serializedTargets = serializedObject.FindProperty(nameof(QuestReplacer.targets));
             _serializedTargetSceneObjects = serializedObject.FindProperty(nameof(QuestReplacer.targetSceneObjects));
             _reorderablePairs = new QuestReplacementReorderableList(serializedObject, serializedObject.FindProperty(nameof(QuestReplacer.pairs)));
@@ -87,7 +89,11 @@ namespace Silksprite.QuestReplacer
             var hasTargets = EnableNdmfSupport || _questReplacer.HasTargets;
             using (var changed = new EditorGUI.ChangeCheckScope())
             {
-                if (!EnableNdmfSupport)
+                if (EnableNdmfSupport)
+                {
+                    EditorGUILayout.PropertyField(_serializedTargetVRChatAnimations, new GUIContent("Target VRChat Animations"));
+                }
+                else
                 {
                     using (new EditorGUI.DisabledScope(_serializedTargetSceneObjects.boolValue))
                     {

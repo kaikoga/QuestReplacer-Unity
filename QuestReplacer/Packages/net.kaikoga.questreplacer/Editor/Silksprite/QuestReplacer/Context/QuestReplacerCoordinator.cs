@@ -10,14 +10,14 @@ namespace Silksprite.QuestReplacer.Context
     public class QuestReplacerCoordinator
     {
         readonly QuestReplacer[] _replacers;
-        readonly (QuestReplacerPlatform platform, QuestReplacerContext context)[] _contexts;
+        readonly (QuestReplacerPlatform platform, bool animations, QuestReplacerContext context)[] _contexts;
 
         public QuestReplacerCoordinator(Transform avatarRootTransform, IEnumerable<AnimatorController> animatorControllers, IEnumerable<QuestReplacer> replacers)
         {
             _replacers = replacers.ToArray();
             var animatorControllersArray = animatorControllers.ToArray();
             _contexts = _replacers
-                .Select(replacer => (replacer.Platform, replacer.ToAvatarContext(avatarRootTransform, animatorControllersArray)))
+                .Select(replacer => (replacer.Platform, replacer.TargetVRChatAnimations, replacer.ToAvatarContext(avatarRootTransform, animatorControllersArray)))
                 .ToArray();
         }
 
@@ -25,11 +25,11 @@ namespace Silksprite.QuestReplacer.Context
         {
             foreach (var context in _contexts.Where(context => !platform.Match(context.platform)))
             {
-                context.context.DeepOverrideReferences<Object>(toRight: false, withAssets: withAssets);
+                context.context.DeepOverrideReferences<Object>(toRight: false, withAssets: withAssets && context.animations);
             }
             foreach (var context in _contexts.Where(context => platform.Match(context.platform)))
             {
-                context.context.DeepOverrideReferences<Object>(toRight: true, withAssets: withAssets);
+                context.context.DeepOverrideReferences<Object>(toRight: true, withAssets: withAssets && context.animations);
             }
         }
 

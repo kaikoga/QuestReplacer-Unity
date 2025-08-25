@@ -15,6 +15,8 @@ namespace Silksprite.QuestReplacer
         
         [SerializeField] internal List<Transform> targets = new List<Transform>();
         [SerializeField] internal bool targetSceneObjects;
+        [SerializeField] internal bool targetVRChatAnimations = true;
+        public bool TargetVRChatAnimations => targetVRChatAnimations;
 
         public QuestReplacerPlatform Platform => database?.platform ?? QuestReplacerPlatform.Any;
 
@@ -40,6 +42,7 @@ namespace Silksprite.QuestReplacer
                 return targets;
             }
         }
+        
 
         public bool HasTargets => targets.Count > 0 || targetSceneObjects;
         
