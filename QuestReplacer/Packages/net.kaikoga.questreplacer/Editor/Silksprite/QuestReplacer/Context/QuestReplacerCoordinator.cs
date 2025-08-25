@@ -21,15 +21,15 @@ namespace Silksprite.QuestReplacer.Context
                 .ToArray();
         }
 
-        public void Execute(QuestReplacerBuildPlatform platform)
+        public void Execute(QuestReplacerBuildPlatform platform, bool withAssets)
         {
             foreach (var context in _contexts.Where(context => !platform.Match(context.platform)))
             {
-                context.context.DeepOverrideReferences<Object>(toRight: false, withAssets: false);
+                context.context.DeepOverrideReferences<Object>(toRight: false, withAssets: withAssets);
             }
             foreach (var context in _contexts.Where(context => platform.Match(context.platform)))
             {
-                context.context.DeepOverrideReferences<Object>(toRight: true, withAssets: false);
+                context.context.DeepOverrideReferences<Object>(toRight: true, withAssets: withAssets);
             }
         }
 

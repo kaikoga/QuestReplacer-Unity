@@ -52,7 +52,9 @@ namespace Silksprite.QuestReplacer
         void RecreateContext()
         {
             _context = AvatarRootTransform 
-                ? _questReplacer.ToAvatarContext(AvatarRootTransform, AnimatorControllerExtractor.ExtractFrom(AvatarRootTransform))
+                ? _questReplacer.ToAvatarContext(
+                    AvatarRootTransform,
+                    AnimatorControllerExtractor.ExtractFrom(AvatarRootTransform, false))
                 : _questReplacer.ToContext();
         }
 

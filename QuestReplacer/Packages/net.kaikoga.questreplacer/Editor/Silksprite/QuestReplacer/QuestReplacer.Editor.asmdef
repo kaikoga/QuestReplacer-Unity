@@ -6,7 +6,9 @@
         "VRMShaders.VRM10.MToon10.Runtime",
         "VRM10.MToon10",
         "QuestReplacer",
-        "nadena.dev.ndmf.runtime"
+        "nadena.dev.ndmf.runtime",
+        "AdLib.Editor",
+        "nadena.dev.ndmf"
     ],
     "includePlatforms": [
         "Editor"
@@ -21,6 +23,11 @@
     "autoReferenced": false,
     "defineConstraints": [],
     "versionDefines": [
+        {
+            "name": "net.kaikoga.adlib",
+            "expression": "[0.3.0,999.0.0)",
+            "define": "QUESTREPLACER_ADLIB"
+        },
         {
             "name": "nadena.dev.ndmf",
             "expression": "",
