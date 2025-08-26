@@ -24,9 +24,6 @@ namespace Silksprite.QuestReplacer
         public string generatedFilePrefix = "";
         public string generatedFileSuffix = "-q";
 
-        static bool _instanceFound;
-        static QuestReplacerDatabase _instance;
-
         public void RegisterTypeFilters(IEnumerable<Type> types)
         {
             componentFilters = componentFilters.Merge(types).ToList();
