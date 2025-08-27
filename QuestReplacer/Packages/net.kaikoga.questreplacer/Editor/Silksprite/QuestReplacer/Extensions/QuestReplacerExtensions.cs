@@ -39,7 +39,7 @@ namespace Silksprite.QuestReplacer.Extensions
             QuestReplacerDatabase database;
             QuestReplacerDatabase GetPlatform(QuestReplacerPlatform value)
             {
-                return database = databases.FirstOrDefault(db => db.platform == value);
+                return database = databases.FirstOrDefault(db => db.config.platform == value);
             }
 
             if (platform is QuestReplacerPlatform value)
@@ -91,8 +91,8 @@ namespace Silksprite.QuestReplacer.Extensions
         {
             Undo.RecordObject(questReplacer, "Quest Replacer: Create Database");
             var database = ScriptableObject.CreateInstance<QuestReplacerDatabase>();
-            database.platform = platform;
-            database.generateMode = generateMode;
+            database.config.platform = platform;
+            database.config.generateMode = generateMode;
             database.generatedFileSuffix = database.GetDefaultSuffix();
 
             var assetPath = AssetDatabase.GenerateUniqueAssetPath($"Assets/{platform} Replacer Database.asset");

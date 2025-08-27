@@ -14,12 +14,9 @@ namespace Silksprite.QuestReplacer
 
         public const bool ManageMaterialsDefault = true;
         public const bool ManageMeshesDefault = false;
-        
-        public bool manageMaterials = ManageMaterialsDefault;
-        public bool manageMeshes = ManageMeshesDefault;
 
-        public QuestReplacerPlatform platform = QuestReplacerPlatform.VRChatMobile;
-        public QuestReplacerGenerateMode generateMode = QuestReplacerGenerateMode.GenerateVRChatToonStandard;
+        public QuestReplacerConfig config = new QuestReplacerConfig();
+
         public string generatedDirectory = "";
         public string generatedFilePrefix = "";
         public string generatedFileSuffix = "-q";

@@ -9,10 +9,7 @@ namespace Silksprite.QuestReplacer
     {
         QuestReplacerDatabase _database;
 
-        SerializedProperty _serializedManageMaterials;
-        SerializedProperty _serializedManageMeshes;
-        SerializedProperty _serializedPlatform;
-        SerializedProperty _serializedGenerateMode;
+        SerializedProperty _serializedConfig;
         SerializedProperty _serializedGeneratedDirectory;
         SerializedProperty _serializedGeneratedFilePrefix;
         SerializedProperty _serializedGeneratedFileSuffix;
@@ -22,12 +19,9 @@ namespace Silksprite.QuestReplacer
         void OnEnable()
         {
             _database =  (QuestReplacerDatabase)target;
-            _serializedManageMaterials = serializedObject.FindProperty(nameof(QuestReplacerDatabase.manageMaterials));
-            _serializedManageMeshes = serializedObject.FindProperty(nameof(QuestReplacerDatabase.manageMeshes));
+            _serializedConfig = serializedObject.FindProperty(nameof(QuestReplacerDatabase.config));
             _reorderableComponentFilters = new QuestReplacementReorderableList(serializedObject, serializedObject.FindProperty(nameof(QuestReplacerDatabase.componentFilters)));
             _reorderablePairs = new QuestReplacementReorderableList(serializedObject, serializedObject.FindProperty(nameof(QuestReplacerDatabase.pairs)));
-            _serializedPlatform = serializedObject.FindProperty(nameof(QuestReplacerDatabase.platform));
-            _serializedGenerateMode = serializedObject.FindProperty(nameof(QuestReplacerDatabase.generateMode));
             _serializedGeneratedDirectory = serializedObject.FindProperty(nameof(QuestReplacerDatabase.generatedDirectory));
             _serializedGeneratedFilePrefix = serializedObject.FindProperty(nameof(QuestReplacerDatabase.generatedFilePrefix));
             _serializedGeneratedFileSuffix = serializedObject.FindProperty(nameof(QuestReplacerDatabase.generatedFileSuffix));
@@ -35,12 +29,9 @@ namespace Silksprite.QuestReplacer
 
         public override void OnInspectorGUI()
         {
-            EditorGUILayout.PropertyField(_serializedManageMaterials);
-            EditorGUILayout.PropertyField(_serializedManageMeshes);
+            EditorGUILayout.PropertyField(_serializedConfig);
             _reorderablePairs.DoLayoutList();
             _reorderableComponentFilters.DoLayoutList();
-            EditorGUILayout.PropertyField(_serializedPlatform);
-            EditorGUILayout.PropertyField(_serializedGenerateMode);
             var hasPlatformSupport = _database.HasGenerateModeSupport(); 
             if (!hasPlatformSupport)
             {

@@ -9,7 +9,7 @@ namespace Silksprite.QuestReplacer.Extensions
     {
         public static bool HasGenerateModeSupport(this QuestReplacerDatabase database)
         {
-            switch (database.generateMode)
+            switch (database.config.generateMode)
             {
                 case QuestReplacerGenerateMode.GenerateVRChatToonLit:
                     return Shaders.VrcMobileStandardLite && Shaders.VrcMobileToonLit;
@@ -29,10 +29,10 @@ namespace Silksprite.QuestReplacer.Extensions
             }
         }
 
-        public static MaterialDuplicator CreateMaterialDuplicator(this QuestReplacerDatabase database)
+        public static MaterialDuplicator CreateMaterialDuplicator(this QuestReplacerDatabase database, QuestReplacerGenerateMode generateMode)
         {
             IEnumerable<ISingleMaterialDuplicator> processors;
-            switch (database.generateMode)
+            switch (generateMode)
             {
                 case QuestReplacerGenerateMode.GenerateVRChatToonLit:
                     processors = MaterialDuplicator.VRChatToonLitMaterialProcessors();
@@ -70,7 +70,8 @@ namespace Silksprite.QuestReplacer.Extensions
 
         public static string GetDefaultSuffix(this QuestReplacerDatabase database)
         {
-            switch (database.platform)
+            var platform = database.config.platform;
+            switch (platform)
             {
                 case QuestReplacerPlatform.VRChatMobile:
                     return "-m";
@@ -83,7 +84,7 @@ namespace Silksprite.QuestReplacer.Extensions
                 case QuestReplacerPlatform.VRChatIos:
                     return "-i";
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(database.platform), database.platform, null);
+                    throw new ArgumentOutOfRangeException();
             }
         }
     }

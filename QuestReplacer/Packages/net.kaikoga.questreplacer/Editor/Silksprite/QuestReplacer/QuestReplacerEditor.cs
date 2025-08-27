@@ -58,6 +58,8 @@ namespace Silksprite.QuestReplacer
                 : _questReplacer.ToContext();
         }
 
+        SerializedProperty _serializedConfig;
+        SerializedProperty _serializedOverrideConfig;
         SerializedProperty _serializedDatabase;
         SerializedProperty _serializedTargetVRChatAnimations;
         SerializedProperty _serializedTargets;
@@ -72,6 +74,8 @@ namespace Silksprite.QuestReplacer
 #endif
             RecreateContext();
 
+            _serializedConfig = serializedObject.FindProperty(nameof(QuestReplacer.config));
+            _serializedOverrideConfig = serializedObject.FindProperty(nameof(QuestReplacer.overrideConfig));
             _serializedDatabase = serializedObject.FindProperty(nameof(QuestReplacer.database));
             _serializedTargetVRChatAnimations = serializedObject.FindProperty(nameof(QuestReplacer.targetVRChatAnimations));
             _serializedTargets = serializedObject.FindProperty(nameof(QuestReplacer.targets));
@@ -82,6 +86,7 @@ namespace Silksprite.QuestReplacer
 
         public override void OnInspectorGUI()
         {
+            var config = _questReplacer.Config;
 #if QUESTREPLACER_NDMF_SUPPORT
             AvatarRootTransform = RuntimeUtil.FindAvatarInParents(_questReplacer.transform);
 #endif
@@ -105,7 +110,7 @@ namespace Silksprite.QuestReplacer
                 _reorderablePairs.DoLayoutList();
 
                 var pairs = _questReplacer.pairs.ToArray();
-                if (_questReplacer.ManageMaterials)
+                if (config.manageMaterials)
                 {
                     using (new EditorGUI.DisabledScope(!hasTargets))
                     using (new EditorGUILayout.HorizontalScope())
@@ -128,15 +133,17 @@ namespace Silksprite.QuestReplacer
                             }
                             using (new EditorGUI.DisabledScope(!hasPlatformSupport))
                             {
-                                if (GUILayout.Button($"{database.generateMode} Materials"))
+                                if (GUILayout.Button($"{config.generateMode} Materials"))
                                 {
-                                    GenerateMaterials(_questReplacer.EnsureDatabase(QuestReplacerPlatform.VRChatMobile).CreateMaterialDuplicator());
+                                    GenerateMaterials(_questReplacer
+                                        .EnsureDatabase(QuestReplacerPlatform.VRChatMobile)
+                                        .CreateMaterialDuplicator(config.generateMode));
                                 }
                             }
                         }
                     }
                 }
-                if (_questReplacer.ManageMeshes)
+                if (config.manageMeshes)
                 {
                     using (new EditorGUILayout.HorizontalScope())
                     {
@@ -151,19 +158,45 @@ namespace Silksprite.QuestReplacer
                 using (new BoxLayoutScope())
                 {
                     EditorGUILayout.PropertyField(_serializedDatabase);
-                    using (new EditorGUILayout.HorizontalScope())
+                    if (_serializedDatabase.objectReferenceValue)
                     {
-                        if (!_serializedDatabase.objectReferenceValue && GUILayout.Button("Create"))
+                        using (new EditorGUILayout.HorizontalScope())
+                        {
+                            if (GUILayout.Button("Load"))
+                            {
+                                LoadFromDatabase();
+                            }
+                            if (GUILayout.Button("Save"))
+                            {
+                                SaveToDatabase();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (GUILayout.Button("Create"))
                         {
                             CreateDatabase();
                         }
-                        if (GUILayout.Button("Load"))
+                    }
+                }
+                EditorGUILayout.PropertyField(_serializedOverrideConfig);
+                using (new BoxLayoutScope())
+                {
+                    if (_serializedOverrideConfig.boolValue)
+                    {
+                        EditorGUILayout.PropertyField(_serializedConfig);
+                        if (GUILayout.Button("Reset"))
                         {
-                            LoadFromDatabase();
+                            ResetConfig();
                         }
-                        if (GUILayout.Button("Save"))
+                    }
+                    else if (_questReplacer.database)
+                    {
+                        using (new EditorGUI.DisabledScope(true))
                         {
-                            SaveToDatabase();
+                            EditorGUILayout.PropertyField(new SerializedObject(_questReplacer.database)
+                                .FindProperty(nameof(QuestReplacerDatabase.config)));
                         }
                     }
                 }
@@ -207,7 +240,6 @@ namespace Silksprite.QuestReplacer
                 }
             }
         }
-
         void Collect<T>()
         where T : Object
         {
@@ -275,9 +307,20 @@ namespace Silksprite.QuestReplacer
         
         void UpdateTypeFilters()
         {
-            var db = _questReplacer.database; 
-            Undo.RecordObject(db, "QuestReplacer: Update Type Filters");
-            if (db) db.RegisterTypeFilters(_context.DeepCollectComponentTypes());
+            var db = _questReplacer.database;
+            if (db)
+            {
+                Undo.RecordObject(db, "QuestReplacer: Update Type Filters");
+                db.RegisterTypeFilters(_context.DeepCollectComponentTypes());
+            }
+        }
+        
+        void ResetConfig()
+        {
+            Undo.SetCurrentGroupName("QuestReplacer: Reset Config");
+            Undo.RecordObject(_questReplacer, "QuestReplacer: Reset Config");
+            EditorJsonUtility.FromJsonOverwrite(EditorJsonUtility.ToJson(_questReplacer.database.config), _questReplacer.config);
+            RecreateContext();
         }
     }
 }

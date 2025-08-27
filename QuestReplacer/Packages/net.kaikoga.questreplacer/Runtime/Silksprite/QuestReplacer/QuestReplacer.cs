@@ -18,7 +18,12 @@ namespace Silksprite.QuestReplacer
         [SerializeField] internal bool targetVRChatAnimations = true;
         public bool TargetVRChatAnimations => targetVRChatAnimations;
 
-        public QuestReplacerPlatform Platform => database?.platform ?? QuestReplacerPlatform.Any;
+        public QuestReplacerPlatform Platform => Config.platform;
+
+        [SerializeField] internal QuestReplacerConfig config = new QuestReplacerConfig();
+        [SerializeField] internal bool overrideConfig;
+
+        public QuestReplacerConfig Config => overrideConfig ? database?.config ?? config : config;
 
         public Transform Target
         {
@@ -48,11 +53,6 @@ namespace Silksprite.QuestReplacer
         
         public List<QuestReplacement> pairs = new List<QuestReplacement>();
         
-        // ReSharper disable SimplifyConditionalTernaryExpression
-        public bool ManageMaterials => database ? database.manageMaterials : QuestReplacerDatabase.ManageMaterialsDefault;
-        public bool ManageMeshes => database ? database.manageMeshes : QuestReplacerDatabase.ManageMeshesDefault;
-        // ReSharper enable SimplifyConditionalTernaryExpression
-
         public void AddEntries(IEnumerable<Object> source, QuestReplacerDatabase db, bool defaultEntry)
         {
             foreach (var obj in source)
