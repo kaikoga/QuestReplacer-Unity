@@ -8,9 +8,9 @@ namespace Silksprite.QuestReplacer.Context
     public class QuestReplacerAnimatorControllerTarget
     {
         readonly AnimatorController[] _animatorControllers;
-        public QuestReplacerAnimatorControllerTarget(AnimatorController[] animatorControllers)
+        public QuestReplacerAnimatorControllerTarget(IEnumerable<AnimatorController> animatorControllers)
         {
-            _animatorControllers = animatorControllers;
+            _animatorControllers = animatorControllers.ToArray();
         }
         
         public IEnumerable<Motion> CollectMotions()

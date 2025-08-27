@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Silksprite.QuestReplacer.Extensions;
 using UnityEngine;
 
 namespace Silksprite.QuestReplacer.Context
@@ -9,10 +10,10 @@ namespace Silksprite.QuestReplacer.Context
     {
         readonly Transform[] _targets;
         readonly QuestTypeFilter[] _componentFilters;
-        public QuestReplacerTransformTarget(Transform[] targets, QuestTypeFilter[] componentFilters)
+        public QuestReplacerTransformTarget(Transform[] targets, IEnumerable<QuestTypeFilter> componentFilters)
         {
             _targets = targets;
-            _componentFilters = componentFilters;
+            _componentFilters = (componentFilters ?? DeepCollectComponentTypes().ToTypeFilters()).Reverse().ToArray();
         }
         public IEnumerable<Type> DeepCollectComponentTypes()
         {

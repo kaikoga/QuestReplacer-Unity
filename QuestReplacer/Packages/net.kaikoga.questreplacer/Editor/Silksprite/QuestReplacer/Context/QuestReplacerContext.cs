@@ -20,9 +20,8 @@ namespace Silksprite.QuestReplacer.Context
 
         public QuestReplacerContext(IEnumerable<Transform> targets, IEnumerable<AnimatorController> animatorControllers, IEnumerable<QuestTypeFilter> componentFilters, IEnumerable<QuestReplacement> pairs)
         {
-            var filters = (componentFilters ?? DeepCollectComponentTypes().ToTypeFilters()).Reverse().ToArray();
-            _transforms = new QuestReplacerTransformTarget(targets.Where(target => target).ToArray(), filters);
-            _animatorControllers = new QuestReplacerAnimatorControllerTarget(animatorControllers.ToArray());
+            _transforms = new QuestReplacerTransformTarget(targets, componentFilters);
+            _animatorControllers = new QuestReplacerAnimatorControllerTarget(animatorControllers);
             _replacements = pairs.ToArray();
         }
 
