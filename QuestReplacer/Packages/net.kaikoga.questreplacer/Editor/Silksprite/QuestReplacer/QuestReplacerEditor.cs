@@ -51,6 +51,7 @@ namespace Silksprite.QuestReplacer
 
         void RecreateContext()
         {
+            _context?.Dispose();
             _context = AvatarRootTransform 
                 ? _questReplacer.ToAvatarContext(
                     AvatarRootTransform,

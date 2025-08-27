@@ -9,7 +9,7 @@ using Object = UnityEngine.Object;
 
 namespace Silksprite.QuestReplacer.Context
 {
-    public class QuestReplacerContext
+    public class QuestReplacerContext : IDisposable
     {
         readonly QuestReplacement[] _replacements;
 
@@ -111,6 +111,14 @@ namespace Silksprite.QuestReplacer.Context
                 {
                     yield return it.Copy();
                 }
+            }
+        }
+
+        public void Dispose()
+        {
+            foreach (var prop in _cachedTargetProperties.Values.SelectMany(props => props))
+            {
+                prop.Dispose();
             }
         }
     }

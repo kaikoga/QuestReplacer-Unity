@@ -27,6 +27,7 @@ namespace Silksprite.QuestReplacer.Ndmf
                 .GroupBy(r => context.GetAvatarRootCrossPlatform(r.gameObject)?.transform)
                 .SelectMany(g =>
                 {
+                    // FIXME: instantiate and dispose Coordinators in IRenderFilterNode with reference count 
                     var coordinator = QuestReplacerCoordinatorFactory.FromAvatarRoot(g.Key, false);
                     if (!QuestReplacerPlatformDetector.TryGetPlatformForAvatar(g.Key, out var replacerPlatform))
                     {

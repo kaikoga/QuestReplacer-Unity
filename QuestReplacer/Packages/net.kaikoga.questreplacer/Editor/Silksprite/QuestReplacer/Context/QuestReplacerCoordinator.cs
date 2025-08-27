@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Silksprite.QuestReplacer.Extensions;
@@ -7,7 +8,7 @@ using Object = UnityEngine.Object;
 
 namespace Silksprite.QuestReplacer.Context
 {
-    public class QuestReplacerCoordinator
+    public class QuestReplacerCoordinator : IDisposable
     {
         readonly QuestReplacer[] _replacers;
         readonly (QuestReplacerPlatform platform, bool animations, QuestReplacerContext context)[] _contexts;
@@ -56,6 +57,14 @@ namespace Silksprite.QuestReplacer.Context
             foreach (var replacer in _replacers)
             {
                 Object.DestroyImmediate(replacer);
+            }
+        }
+
+        public void Dispose()
+        {
+            foreach (var (_, _, context) in _contexts)
+            {
+                context.Dispose();
             }
         }
     }

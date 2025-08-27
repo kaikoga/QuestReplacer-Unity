@@ -40,7 +40,7 @@ namespace Silksprite.QuestReplacer.Ndmf
         
         void DoExecute(BuildContext buildContext, QuestReplacerBuildPlatform platform)
         {
-            var coordinator = QuestReplacerCoordinatorFactory.FromAvatarRoot(buildContext.AvatarRootTransform, true);
+            using var coordinator = QuestReplacerCoordinatorFactory.FromAvatarRoot(buildContext.AvatarRootTransform, true);
             coordinator.Execute(platform, true);
             coordinator.DestroyImmediate();
         }
