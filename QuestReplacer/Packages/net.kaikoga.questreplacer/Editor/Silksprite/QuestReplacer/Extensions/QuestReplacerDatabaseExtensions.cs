@@ -9,53 +9,53 @@ namespace Silksprite.QuestReplacer.Extensions
     {
         public static bool HasGenerateModeSupport(this QuestReplacerDatabase database)
         {
-            switch (database.config.generateMode)
+            switch (database.config.materialGenerationMode)
             {
-                case QuestReplacerGenerateMode.GenerateVRChatToonLit:
+                case QuestReplacerMaterialGenerationMode.GenerateVRChatToonLit:
                     return Shaders.VrcMobileStandardLite && Shaders.VrcMobileToonLit;
-                case QuestReplacerGenerateMode.GenerateVRChatToonStandard:
-                case QuestReplacerGenerateMode.ExtConvertVRChatToonStandard:
+                case QuestReplacerMaterialGenerationMode.GenerateVRChatToonStandard:
+                case QuestReplacerMaterialGenerationMode.ExtConvertVRChatToonStandard:
                     return Shaders.VrcMobileStandardLite && Shaders.VrcMobileToonStandard;
-                case QuestReplacerGenerateMode.GenerateVRChatToonStandardOutline:
+                case QuestReplacerMaterialGenerationMode.GenerateVRChatToonStandardOutline:
                     return false;
-                case QuestReplacerGenerateMode.GenerateMToon:
-                case QuestReplacerGenerateMode.ExtConvertMToon:
+                case QuestReplacerMaterialGenerationMode.GenerateMToon:
+                case QuestReplacerMaterialGenerationMode.ExtConvertMToon:
                     return Shaders.VrmMToon;
-                case QuestReplacerGenerateMode.GenerateMToon10:
-                case QuestReplacerGenerateMode.ExtConvertMToon10:
+                case QuestReplacerMaterialGenerationMode.GenerateMToon10:
+                case QuestReplacerMaterialGenerationMode.ExtConvertMToon10:
                     return Shaders.VrmMToon && Shaders.VrmMToon10;
                 default:
                     return false;
             }
         }
 
-        public static MaterialDuplicator CreateMaterialDuplicator(this QuestReplacerDatabase database, QuestReplacerGenerateMode generateMode)
+        public static MaterialDuplicator CreateMaterialDuplicator(this QuestReplacerDatabase database, QuestReplacerMaterialGenerationMode materialGenerationMode)
         {
             IEnumerable<ISingleMaterialDuplicator> processors;
-            switch (generateMode)
+            switch (materialGenerationMode)
             {
-                case QuestReplacerGenerateMode.GenerateVRChatToonLit:
+                case QuestReplacerMaterialGenerationMode.GenerateVRChatToonLit:
                     processors = MaterialDuplicator.VRChatToonLitMaterialProcessors();
                     break;
-                case QuestReplacerGenerateMode.GenerateVRChatToonStandard:
+                case QuestReplacerMaterialGenerationMode.GenerateVRChatToonStandard:
                     processors = MaterialDuplicator.VRChatToonStandardMaterialProcessors(false);
                     break;
-                case QuestReplacerGenerateMode.GenerateVRChatToonStandardOutline:
+                case QuestReplacerMaterialGenerationMode.GenerateVRChatToonStandardOutline:
                     processors = MaterialDuplicator.VRChatToonStandardOutlineMaterialProcessors();
                     break;
-                case QuestReplacerGenerateMode.GenerateMToon:
+                case QuestReplacerMaterialGenerationMode.GenerateMToon:
                     processors = MaterialDuplicator.MToonMaterialProcessors(false);
                     break;
-                case QuestReplacerGenerateMode.GenerateMToon10:
+                case QuestReplacerMaterialGenerationMode.GenerateMToon10:
                     processors = MaterialDuplicator.MToon10MaterialProcessors(false);
                     break;
-                case QuestReplacerGenerateMode.ExtConvertVRChatToonStandard:
+                case QuestReplacerMaterialGenerationMode.ExtConvertVRChatToonStandard:
                     processors = MaterialDuplicator.VRChatToonStandardMaterialProcessors(true);
                     break;
-                case QuestReplacerGenerateMode.ExtConvertMToon:
+                case QuestReplacerMaterialGenerationMode.ExtConvertMToon:
                     processors = MaterialDuplicator.MToonMaterialProcessors(true);
                     break;
-                case QuestReplacerGenerateMode.ExtConvertMToon10:
+                case QuestReplacerMaterialGenerationMode.ExtConvertMToon10:
                     processors = MaterialDuplicator.MToon10MaterialProcessors(true);
                     break;
                 default:

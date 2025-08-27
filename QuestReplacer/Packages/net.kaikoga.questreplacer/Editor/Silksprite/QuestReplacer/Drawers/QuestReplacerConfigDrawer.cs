@@ -9,7 +9,7 @@ namespace Silksprite.QuestReplacer
         public override void OnGUI(Rect position, SerializedProperty serializedProperty, GUIContent label)
         {
             var platform = serializedProperty.FindPropertyRelative(nameof(QuestReplacerConfig.platform));
-            var generateMode = serializedProperty.FindPropertyRelative(nameof(QuestReplacerConfig.generateMode));
+            var generateMode = serializedProperty.FindPropertyRelative(nameof(QuestReplacerConfig.materialGenerationMode));
             var manageMaterials = serializedProperty.FindPropertyRelative(nameof(QuestReplacerConfig.manageMaterials));
             var manageMeshes = serializedProperty.FindPropertyRelative(nameof(QuestReplacerConfig.manageMeshes));
             var targetVRChatAnimations = serializedProperty.FindPropertyRelative(nameof(QuestReplacerConfig.targetVRChatAnimations));

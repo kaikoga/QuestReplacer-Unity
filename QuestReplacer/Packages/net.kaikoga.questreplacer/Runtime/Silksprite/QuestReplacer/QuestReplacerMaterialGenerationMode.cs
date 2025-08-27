@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Silksprite.QuestReplacer
 {
-    public enum QuestReplacerGenerateMode
+    public enum QuestReplacerMaterialGenerationMode
     {
         [InspectorName("Generate VRChat ToonLit")]
         GenerateVRChatToonLit = 0x110,

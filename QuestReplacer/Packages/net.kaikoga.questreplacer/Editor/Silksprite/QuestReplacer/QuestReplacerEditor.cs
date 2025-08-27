@@ -125,11 +125,11 @@ namespace Silksprite.QuestReplacer
                             }
                             using (new EditorGUI.DisabledScope(!hasPlatformSupport))
                             {
-                                if (GUILayout.Button($"{config.generateMode} Materials"))
+                                if (GUILayout.Button($"{config.materialGenerationMode} Materials"))
                                 {
                                     GenerateMaterials(_questReplacer
                                         .EnsureDatabase(QuestReplacerPlatform.VRChatMobile)
-                                        .CreateMaterialDuplicator(config.generateMode));
+                                        .CreateMaterialDuplicator(config.materialGenerationMode));
                                 }
                             }
                         }
@@ -245,7 +245,7 @@ namespace Silksprite.QuestReplacer
         void CreateDatabase()
         {
             Undo.SetCurrentGroupName("QuestReplacer: Create Database");
-            _questReplacer.CreateDatabase(QuestReplacerPlatform.VRChatMobile, QuestReplacerGenerateMode.GenerateVRChatToonStandard);
+            _questReplacer.CreateDatabase(QuestReplacerPlatform.VRChatMobile, QuestReplacerMaterialGenerationMode.GenerateVRChatToonStandard);
             UpdateTypeFilters();
             RecreateContext();
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Silksprite.QuestReplacer.Extensions;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Silksprite.QuestReplacer
 {
@@ -10,7 +11,7 @@ namespace Silksprite.QuestReplacer
     public class QuestReplacerConfig
     {
         public QuestReplacerPlatform platform = QuestReplacerPlatform.VRChatMobile;
-        public QuestReplacerGenerateMode generateMode = QuestReplacerGenerateMode.GenerateVRChatToonStandard;
+        public QuestReplacerMaterialGenerationMode materialGenerationMode = QuestReplacerMaterialGenerationMode.GenerateVRChatToonStandard;
 
         public bool manageMaterials = true;
         public bool manageMeshes;

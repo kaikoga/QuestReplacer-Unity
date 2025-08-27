@@ -67,19 +67,19 @@ namespace Silksprite.QuestReplacer.Extensions
             {
                 case null:
                 case QuestReplacerPlatform.VRChatMobile:
-                    questReplacer.CreateDatabase(QuestReplacerPlatform.VRChatMobile, QuestReplacerGenerateMode.GenerateVRChatToonStandard);
+                    questReplacer.CreateDatabase(QuestReplacerPlatform.VRChatMobile, QuestReplacerMaterialGenerationMode.GenerateVRChatToonStandard);
                     break;
                 case QuestReplacerPlatform.VRM0:
-                    questReplacer.CreateDatabase(QuestReplacerPlatform.VRM0, QuestReplacerGenerateMode.GenerateMToon);
+                    questReplacer.CreateDatabase(QuestReplacerPlatform.VRM0, QuestReplacerMaterialGenerationMode.GenerateMToon);
                     break;
                 case QuestReplacerPlatform.VRM1:
-                    questReplacer.CreateDatabase(QuestReplacerPlatform.VRM1, QuestReplacerGenerateMode.GenerateMToon10);
+                    questReplacer.CreateDatabase(QuestReplacerPlatform.VRM1, QuestReplacerMaterialGenerationMode.GenerateMToon10);
                     break;
                 case QuestReplacerPlatform.VRChatAndroid:
-                    questReplacer.CreateDatabase(QuestReplacerPlatform.VRChatAndroid, QuestReplacerGenerateMode.GenerateVRChatToonStandard);
+                    questReplacer.CreateDatabase(QuestReplacerPlatform.VRChatAndroid, QuestReplacerMaterialGenerationMode.GenerateVRChatToonStandard);
                     break;
                 case QuestReplacerPlatform.VRChatIos:
-                    questReplacer.CreateDatabase(QuestReplacerPlatform.VRChatIos, QuestReplacerGenerateMode.GenerateVRChatToonStandard);
+                    questReplacer.CreateDatabase(QuestReplacerPlatform.VRChatIos, QuestReplacerMaterialGenerationMode.GenerateVRChatToonStandard);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(platform), platform, null);
@@ -87,12 +87,12 @@ namespace Silksprite.QuestReplacer.Extensions
             return questReplacer.database;
         }
 
-        public static void CreateDatabase(this QuestReplacer questReplacer, QuestReplacerPlatform platform, QuestReplacerGenerateMode generateMode)
+        public static void CreateDatabase(this QuestReplacer questReplacer, QuestReplacerPlatform platform, QuestReplacerMaterialGenerationMode materialGenerationMode)
         {
             Undo.RecordObject(questReplacer, "Quest Replacer: Create Database");
             var database = ScriptableObject.CreateInstance<QuestReplacerDatabase>();
             database.config.platform = platform;
-            database.config.generateMode = generateMode;
+            database.config.materialGenerationMode = materialGenerationMode;
             database.generatedFileSuffix = database.GetDefaultSuffix();
 
             var assetPath = AssetDatabase.GenerateUniqueAssetPath($"Assets/{platform} Replacer Database.asset");
