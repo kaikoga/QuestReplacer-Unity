@@ -17,7 +17,7 @@ namespace Silksprite.QuestReplacer.Context
             _replacers = replacers.ToArray();
             var animatorControllersArray = animatorControllers.ToArray();
             _contexts = _replacers
-                .Select(replacer => (replacer.Platform, replacer.TargetVRChatAnimations, replacer.ToAvatarContext(avatarRootTransform, animatorControllersArray)))
+                .Select(replacer => (replacer.Platform, replacer.Config.targetVRChatAnimations, replacer.ToAvatarContext(avatarRootTransform, animatorControllersArray)))
                 .ToArray();
         }
 

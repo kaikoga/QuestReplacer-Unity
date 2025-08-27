@@ -14,5 +14,7 @@ namespace Silksprite.QuestReplacer
 
         public bool manageMaterials = true;
         public bool manageMeshes;
+        
+        public bool targetVRChatAnimations = true;
     }
 }

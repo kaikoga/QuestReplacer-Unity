@@ -61,7 +61,6 @@ namespace Silksprite.QuestReplacer
         SerializedProperty _serializedConfig;
         SerializedProperty _serializedOverrideConfig;
         SerializedProperty _serializedDatabase;
-        SerializedProperty _serializedTargetVRChatAnimations;
         SerializedProperty _serializedTargets;
         SerializedProperty _serializedTargetSceneObjects;
         QuestReplacementReorderableList _reorderablePairs;
@@ -77,7 +76,6 @@ namespace Silksprite.QuestReplacer
             _serializedConfig = serializedObject.FindProperty(nameof(QuestReplacer.config));
             _serializedOverrideConfig = serializedObject.FindProperty(nameof(QuestReplacer.overrideConfig));
             _serializedDatabase = serializedObject.FindProperty(nameof(QuestReplacer.database));
-            _serializedTargetVRChatAnimations = serializedObject.FindProperty(nameof(QuestReplacer.targetVRChatAnimations));
             _serializedTargets = serializedObject.FindProperty(nameof(QuestReplacer.targets));
             _serializedTargetSceneObjects = serializedObject.FindProperty(nameof(QuestReplacer.targetSceneObjects));
             _reorderablePairs = new QuestReplacementReorderableList(serializedObject, serializedObject.FindProperty(nameof(QuestReplacer.pairs)));
@@ -94,18 +92,11 @@ namespace Silksprite.QuestReplacer
             var hasTargets = EnableNdmfSupport || _questReplacer.HasTargets;
             using (var changed = new EditorGUI.ChangeCheckScope())
             {
-                if (EnableNdmfSupport)
+                using (new EditorGUI.DisabledScope(_serializedTargetSceneObjects.boolValue))
                 {
-                    EditorGUILayout.PropertyField(_serializedTargetVRChatAnimations, new GUIContent("Target VRChat Animations"));
+                    EditorGUILayout.PropertyField(_serializedTargets);
                 }
-                else
-                {
-                    using (new EditorGUI.DisabledScope(_serializedTargetSceneObjects.boolValue))
-                    {
-                        EditorGUILayout.PropertyField(_serializedTargets);
-                    }
-                    EditorGUILayout.PropertyField(_serializedTargetSceneObjects);
-                }
+                EditorGUILayout.PropertyField(_serializedTargetSceneObjects);
 
                 _reorderablePairs.DoLayoutList();
 
@@ -195,8 +186,8 @@ namespace Silksprite.QuestReplacer
                     {
                         using (new EditorGUI.DisabledScope(true))
                         {
-                            EditorGUILayout.PropertyField(new SerializedObject(_questReplacer.database)
-                                .FindProperty(nameof(QuestReplacerDatabase.config)));
+                            using var serializedDatabase = new SerializedObject(_questReplacer.database);
+                            EditorGUILayout.PropertyField(serializedDatabase.FindProperty(nameof(QuestReplacerDatabase.config)));
                         }
                     }
                 }
