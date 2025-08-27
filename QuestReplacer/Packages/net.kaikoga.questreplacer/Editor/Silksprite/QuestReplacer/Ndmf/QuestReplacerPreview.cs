@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using nadena.dev.ndmf;
 using nadena.dev.ndmf.preview;
 using nadena.dev.ndmf.runtime;
-using Silksprite.QuestReplacer.Context;
 using UnityEngine;
 
 namespace Silksprite.QuestReplacer.Ndmf
@@ -27,34 +26,33 @@ namespace Silksprite.QuestReplacer.Ndmf
                 .GroupBy(r => context.GetAvatarRootCrossPlatform(r.gameObject)?.transform)
                 .SelectMany(g =>
                 {
-                    // FIXME: instantiate and dispose Coordinators in IRenderFilterNode with reference count 
-                    var coordinator = QuestReplacerCoordinatorFactory.FromAvatarRoot(g.Key, false);
+                    var reusableCoordinator = ReusableQuestReplacerCoordinator.FromAvatarRoot(g.Key, false);
                     if (!QuestReplacerPlatformDetector.TryGetPlatformForAvatar(g.Key, out var replacerPlatform))
                     {
                         replacerPlatform = QuestReplacerBuildPlatform.Generic;
                     }
-                    return g.Select(renderer => RenderGroup.For(renderer).WithData((coordinator, replacerPlatform)));
+                    return g.Select(renderer => RenderGroup.For(renderer).WithData((reusableCoordinator, replacerPlatform)));
                 })
                 .ToImmutableList();
         }
 
         public Task<IRenderFilterNode> Instantiate(RenderGroup group, IEnumerable<(Renderer, Renderer)> proxyPairs, ComputeContext context)
         {
-            var (coordinator, platform) = group.GetData<(QuestReplacerCoordinator, QuestReplacerBuildPlatform)>();
-            return new QuestReplacedNode(coordinator, platform).Initialize(proxyPairs);
+            var (reusableCoordinator, platform) = group.GetData<(ReusableQuestReplacerCoordinator, QuestReplacerBuildPlatform)>();
+            return new QuestReplacedNode(reusableCoordinator, platform).Initialize(proxyPairs);
         }
-        
+
         class QuestReplacedNode : IRenderFilterNode
         {
-            readonly QuestReplacerCoordinator _coordinator;
+            readonly ReusableQuestReplacerCoordinatorReference _reusableCoordinatorRef;
             readonly QuestReplacerBuildPlatform _platform;
             readonly Dictionary<Material, Material> _tmpMaterials = new();
 
             public RenderAspects WhatChanged => RenderAspects.Material;
 
-            public QuestReplacedNode(QuestReplacerCoordinator coordinator, QuestReplacerBuildPlatform platform)
+            public QuestReplacedNode(ReusableQuestReplacerCoordinator reusableCoordinator, QuestReplacerBuildPlatform platform)
             {
-                _coordinator = coordinator;
+                _reusableCoordinatorRef = reusableCoordinator.Acquire();
                 _platform = platform;
             }
 
@@ -64,7 +62,7 @@ namespace Silksprite.QuestReplacer.Ndmf
                 {
                     foreach (var material in original.sharedMaterials)
                     {
-                        if (!_coordinator.Query(material, _platform, out var toValue))
+                        if (!_reusableCoordinatorRef.Query(material, _platform, out var toValue))
                         {
                             continue;
                         }
@@ -85,6 +83,7 @@ namespace Silksprite.QuestReplacer.Ndmf
 
             public void Dispose()
             {
+                _reusableCoordinatorRef.Dispose();
                 foreach (var tmpMaterial in _tmpMaterials.Values)
                 {
                     Object.DestroyImmediate(tmpMaterial);
