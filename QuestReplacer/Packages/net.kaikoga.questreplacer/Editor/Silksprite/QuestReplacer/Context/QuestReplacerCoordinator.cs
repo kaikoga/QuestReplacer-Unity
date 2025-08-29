@@ -41,12 +41,14 @@ namespace Silksprite.QuestReplacer.Context
             toValue = fromValue;
             foreach (var context in _contexts.Where(context => !platform.Match(context.platform)))
             {
-                if (!context.context.Query(toValue, false, out toValue)) continue;
+                if (!context.context.Query(toValue, false, out var value)) continue;
+                toValue = value;
                 replaced = true;
             }
             foreach (var context in _contexts.Where(context => platform.Match(context.platform)))
             {
-                if (!context.context.Query(toValue, true, out toValue)) continue;
+                if (!context.context.Query(toValue, true, out var value)) continue;
+                toValue = value;
                 replaced = true;
             }
             return replaced;
