@@ -140,6 +140,7 @@ namespace Silksprite.QuestReplacer
                 }
                 if (config.manageMeshes)
                 {
+                    using (new EditorGUI.DisabledScope(!hasTargets))
                     using (new EditorGUILayout.HorizontalScope())
                     {
                         EditorGUILayout.LabelField("Quest Mesh Status", $"{_context.ToQuestStatus<Mesh>()}");
@@ -148,6 +149,11 @@ namespace Silksprite.QuestReplacer
                             Collect<Mesh>();
                         }
                     }
+                }
+
+                if (GUILayout.Button("Cleanup"))
+                {
+                    CleanupPairs();
                 }
 
                 using (new BoxLayoutScope())
@@ -236,11 +242,20 @@ namespace Silksprite.QuestReplacer
             }
         }
         void Collect<T>()
-        where T : Object
+            where T : Object
         {
             Undo.SetCurrentGroupName("QuestReplacer: Collect");
             Undo.RecordObject(_questReplacer, "QuestReplacer: Collect");
             _questReplacer.AddEntries(_context.DeepCollectReferences<T>(), null, true);
+            UpdateTypeFilters();
+            RecreateContext();
+        }
+
+        void CleanupPairs()
+        {
+            Undo.SetCurrentGroupName("QuestReplacer: Cleanup");
+            Undo.RecordObject(_questReplacer, "QuestReplacer: Cleanup");
+            _questReplacer.pairs = _questReplacer.pairs.Where(pair => !pair.LikelyUnset).ToList();
             UpdateTypeFilters();
             RecreateContext();
         }
