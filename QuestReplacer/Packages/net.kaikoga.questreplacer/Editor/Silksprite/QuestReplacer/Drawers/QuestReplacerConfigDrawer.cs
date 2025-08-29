@@ -12,6 +12,7 @@ namespace Silksprite.QuestReplacer
             var generateMode = serializedProperty.FindPropertyRelative(nameof(QuestReplacerConfig.materialGenerationMode));
             var manageMaterials = serializedProperty.FindPropertyRelative(nameof(QuestReplacerConfig.manageMaterials));
             var manageMeshes = serializedProperty.FindPropertyRelative(nameof(QuestReplacerConfig.manageMeshes));
+            var manageAnimationClips = serializedProperty.FindPropertyRelative(nameof(QuestReplacerConfig.manageAnimationClips));
             var targetVRChatAnimations = serializedProperty.FindPropertyRelative(nameof(QuestReplacerConfig.targetVRChatAnimations));
             
             position.height = EditorGUIUtility.singleLineHeight;
@@ -22,6 +23,8 @@ namespace Silksprite.QuestReplacer
             EditorGUI.PropertyField(position, manageMaterials);
             position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
             EditorGUI.PropertyField(position, manageMeshes);
+            position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
+            EditorGUI.PropertyField(position, manageAnimationClips);
 #if QUESTREPLACER_NDMF_SUPPORT
             position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
             EditorGUI.PropertyField(position, targetVRChatAnimations, new GUIContent("NDMF VRChat Animations"));
@@ -31,9 +34,9 @@ namespace Silksprite.QuestReplacer
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
 #if QUESTREPLACER_NDMF_SUPPORT
-            const int propertyCount = 5;
+            const int propertyCount = 6;
 #else
-            const int propertyCount = 4;
+            const int propertyCount = 5;
 #endif
             return EditorGUIUtility.singleLineHeight * propertyCount + EditorGUIUtility.standardVerticalSpacing * (propertyCount - 1);
         }

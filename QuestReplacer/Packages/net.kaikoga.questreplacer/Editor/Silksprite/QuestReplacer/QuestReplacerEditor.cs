@@ -151,6 +151,19 @@ namespace Silksprite.QuestReplacer
                     }
                 }
 
+                if (config.manageAnimationClips)
+                {
+                    using (new EditorGUI.DisabledScope(!hasTargets))
+                    using (new EditorGUILayout.HorizontalScope())
+                    {
+                        EditorGUILayout.LabelField("Quest Animation Clip Status", $"{_context.ToQuestStatus<AnimationClip>()}");
+                        if (GUILayout.Button("Collect"))
+                        {
+                            Collect<AnimationClip>();
+                        }
+                    }
+                }
+
                 if (GUILayout.Button("Cleanup"))
                 {
                     CleanupPairs();
