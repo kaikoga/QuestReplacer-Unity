@@ -93,11 +93,14 @@ namespace Silksprite.QuestReplacer
             var hasTargets = EnableNdmfSupport || _questReplacer.HasTargets;
             using (var changed = new EditorGUI.ChangeCheckScope())
             {
-                using (new EditorGUI.DisabledScope(_serializedTargetSceneObjects.boolValue))
+                if (!EnableNdmfSupport)
                 {
-                    EditorGUILayout.PropertyField(_serializedTargets);
+                    using (new EditorGUI.DisabledScope(_serializedTargetSceneObjects.boolValue))
+                    {
+                        EditorGUILayout.PropertyField(_serializedTargets);
+                    }
+                    EditorGUILayout.PropertyField(_serializedTargetSceneObjects);
                 }
-                EditorGUILayout.PropertyField(_serializedTargetSceneObjects);
 
                 _reorderablePairs.DoLayoutList();
 
