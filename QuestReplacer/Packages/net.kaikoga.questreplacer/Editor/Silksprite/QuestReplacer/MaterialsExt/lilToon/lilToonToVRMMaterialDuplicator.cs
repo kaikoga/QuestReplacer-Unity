@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Silksprite.AdLib.Material.Access.Impl;
 using Silksprite.AdLib.Material.Impl;
-using Silksprite.QuestReplacer.Materials;
+using Silksprite.QuestReplacer.Assets;
 using UnityEngine;
 
 namespace Silksprite.QuestReplacer.MaterialsExt.lilToon

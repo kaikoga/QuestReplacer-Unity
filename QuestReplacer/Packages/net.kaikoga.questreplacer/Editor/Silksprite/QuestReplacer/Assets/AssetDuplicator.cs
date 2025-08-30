@@ -1,9 +1,10 @@
 using System.IO;
 using System.Linq;
+using Silksprite.QuestReplacer.Materials;
 using UnityEditor;
 using UnityEngine;
 
-namespace Silksprite.QuestReplacer.Materials
+namespace Silksprite.QuestReplacer.Assets
 {
     public class AssetDuplicator<T>
     where T : Object

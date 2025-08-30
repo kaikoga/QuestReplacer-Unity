@@ -1,6 +1,7 @@
 using System;
 using Silksprite.AdLib.Material.Access.Impl;
 using Silksprite.AdLib.Material.Impl;
+using Silksprite.QuestReplacer.Assets;
 using UnityEngine;
 
 #if QUESTREPLACER_VRMSHADERS

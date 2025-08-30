@@ -1,5 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
-using Silksprite.QuestReplacer.Materials;
+using Silksprite.QuestReplacer.Assets;
 using Silksprite.QuestReplacer.Materials.VRMShaders;
 using UnityEngine;
 

@@ -1,5 +1,5 @@
 using System;
-using Silksprite.QuestReplacer.Materials;
+using Silksprite.QuestReplacer.Assets;
 using UnityEngine;
 
 namespace Silksprite.QuestReplacer.MaterialsExt.VRCQuestTools

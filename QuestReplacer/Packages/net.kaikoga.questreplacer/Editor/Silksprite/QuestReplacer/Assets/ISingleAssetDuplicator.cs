@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Silksprite.QuestReplacer.Materials
+namespace Silksprite.QuestReplacer.Assets
 {
     public interface ISingleAssetDuplicator<T>
     where T : Object

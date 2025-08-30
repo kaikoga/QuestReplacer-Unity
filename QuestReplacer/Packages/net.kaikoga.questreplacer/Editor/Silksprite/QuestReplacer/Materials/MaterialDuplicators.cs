@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Silksprite.QuestReplacer.Assets;
 using Silksprite.QuestReplacer.Materials.VRMShaders;
 using UnityEngine;
 
