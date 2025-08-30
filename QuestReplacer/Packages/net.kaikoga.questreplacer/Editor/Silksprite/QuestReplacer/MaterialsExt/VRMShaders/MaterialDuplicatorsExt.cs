@@ -1,4 +1,4 @@
-using Silksprite.QuestReplacer.Materials;
+using Silksprite.QuestReplacer.Assets;
 using Silksprite.QuestReplacer.MaterialsExt.VRMShaders;
 using UnityEditor;
 

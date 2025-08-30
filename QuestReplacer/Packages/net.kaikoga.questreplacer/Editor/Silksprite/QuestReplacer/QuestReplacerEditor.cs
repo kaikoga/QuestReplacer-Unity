@@ -3,7 +3,6 @@ using nadena.dev.ndmf.runtime;
 using Silksprite.QuestReplacer.Context;
 using Silksprite.QuestReplacer.Assets;
 using Silksprite.QuestReplacer.Extensions;
-using Silksprite.QuestReplacer.Materials;
 using Silksprite.QuestReplacer.Scopes;
 using UnityEditor;
 using UnityEngine;

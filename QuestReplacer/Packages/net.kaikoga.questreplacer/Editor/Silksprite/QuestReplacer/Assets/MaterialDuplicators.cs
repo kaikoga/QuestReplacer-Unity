@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using Silksprite.QuestReplacer.Assets;
 using UnityEngine;
 
-namespace Silksprite.QuestReplacer.Materials
+namespace Silksprite.QuestReplacer.Assets
 {
     public static class MaterialDuplicators
     {

@@ -1,4 +1,4 @@
-using Silksprite.QuestReplacer.Materials;
+using Silksprite.QuestReplacer.Assets;
 using UnityEditor;
 
 namespace Silksprite.QuestReplacer.MaterialsExt.VRCQuestTools
