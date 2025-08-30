@@ -132,7 +132,7 @@ namespace Silksprite.QuestReplacer
                                 {
                                     GenerateMaterials(_questReplacer
                                         .EnsureDatabase(QuestReplacerPlatform.VRChatMobile)
-                                        .CreateMaterialDuplicator(config.materialGenerationMode));
+                                        .CreateMaterialAssetDuplicator(config.materialGenerationMode));
                                 }
                             }
                         }
@@ -281,7 +281,7 @@ namespace Silksprite.QuestReplacer
             RecreateContext();
         }
 
-        void GenerateMaterials(MaterialDuplicator duplicator)
+        void GenerateMaterials(AssetDuplicator duplicator)
         {
             Undo.SetCurrentGroupName("QuestReplacer: Generate Materials");
             Undo.RecordObject(_questReplacer, "QuestReplacer: Generate Materials");

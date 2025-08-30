@@ -29,40 +29,40 @@ namespace Silksprite.QuestReplacer.Extensions
             }
         }
 
-        public static MaterialDuplicator CreateMaterialDuplicator(this QuestReplacerDatabase database, QuestReplacerMaterialGenerationMode materialGenerationMode)
+        public static AssetDuplicator CreateMaterialAssetDuplicator(this QuestReplacerDatabase database, QuestReplacerMaterialGenerationMode materialGenerationMode)
         {
             IEnumerable<ISingleMaterialDuplicator> processors;
             switch (materialGenerationMode)
             {
                 case QuestReplacerMaterialGenerationMode.GenerateVRChatToonLit:
-                    processors = MaterialDuplicator.VRChatToonLitMaterialProcessors();
+                    processors = MaterialDuplicators.VRChatToonLitMaterialProcessors();
                     break;
                 case QuestReplacerMaterialGenerationMode.GenerateVRChatToonStandard:
-                    processors = MaterialDuplicator.VRChatToonStandardMaterialProcessors(false);
+                    processors = MaterialDuplicators.VRChatToonStandardMaterialProcessors(false);
                     break;
                 case QuestReplacerMaterialGenerationMode.GenerateVRChatToonStandardOutline:
-                    processors = MaterialDuplicator.VRChatToonStandardOutlineMaterialProcessors();
+                    processors = MaterialDuplicators.VRChatToonStandardOutlineMaterialProcessors();
                     break;
                 case QuestReplacerMaterialGenerationMode.GenerateMToon:
-                    processors = MaterialDuplicator.MToonMaterialProcessors(false);
+                    processors = MaterialDuplicators.MToonMaterialProcessors(false);
                     break;
                 case QuestReplacerMaterialGenerationMode.GenerateMToon10:
-                    processors = MaterialDuplicator.MToon10MaterialProcessors(false);
+                    processors = MaterialDuplicators.MToon10MaterialProcessors(false);
                     break;
                 case QuestReplacerMaterialGenerationMode.ExtConvertVRChatToonStandard:
-                    processors = MaterialDuplicator.VRChatToonStandardMaterialProcessors(true);
+                    processors = MaterialDuplicators.VRChatToonStandardMaterialProcessors(true);
                     break;
                 case QuestReplacerMaterialGenerationMode.ExtConvertMToon:
-                    processors = MaterialDuplicator.MToonMaterialProcessors(true);
+                    processors = MaterialDuplicators.MToonMaterialProcessors(true);
                     break;
                 case QuestReplacerMaterialGenerationMode.ExtConvertMToon10:
-                    processors = MaterialDuplicator.MToon10MaterialProcessors(true);
+                    processors = MaterialDuplicators.MToon10MaterialProcessors(true);
                     break;
                 default:
                     processors = Enumerable.Empty<ISingleMaterialDuplicator>();
                     break;
             }
-            return new MaterialDuplicator(database.generatedDirectory,
+            return new AssetDuplicator(database.generatedDirectory,
                 database.generatedFilePrefix,
                 database.generatedFileSuffix,
                 processors.ToArray());
