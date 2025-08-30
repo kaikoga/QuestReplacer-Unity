@@ -162,6 +162,19 @@ namespace Silksprite.QuestReplacer
                             Collect<AnimationClip>();
                         }
                     }
+                    
+                    if (pairs.Any(pair => pair.LikelyUnset))
+                    {
+                        if (_questReplacer.database is QuestReplacerDatabase database)
+                        {
+                            if (GUILayout.Button("Instantiate Animation Clips"))
+                            {
+                                GenerateAnimationClips(_questReplacer
+                                    .EnsureDatabase(QuestReplacerPlatform.VRChatMobile)
+                                    .CreateAnimationClipAssetDuplicator(QuestReplacerAnimationClipGenerationMode.Instantiate));
+                            }
+                        }
+                    }
                 }
 
                 if (GUILayout.Button("Cleanup"))
@@ -291,6 +304,23 @@ namespace Silksprite.QuestReplacer
                 {
                     var rightMaterial = duplicator.Duplicate(leftMaterial);
                     Undo.RegisterCreatedObjectUndo(rightMaterial, "QuestReplacer: Generate Materials");
+                    pair.right = rightMaterial; 
+                }
+            }
+            UpdateTypeFilters();
+            RecreateContext();
+        }
+
+        void GenerateAnimationClips(AssetDuplicator<AnimationClip> duplicator)
+        {
+            Undo.SetCurrentGroupName("QuestReplacer: Generate AnimationClips");
+            Undo.RecordObject(_questReplacer, "QuestReplacer: Generate AnimationClips");
+            foreach (var pair in _questReplacer.pairs.Where(pair => pair.LikelyUnset))
+            {
+                if (pair.left is AnimationClip leftAnimationClip)
+                {
+                    var rightMaterial = duplicator.Duplicate(leftAnimationClip);
+                    Undo.RegisterCreatedObjectUndo(rightMaterial, "QuestReplacer: Generate AnimationClips");
                     pair.right = rightMaterial; 
                 }
             }

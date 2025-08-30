@@ -7,7 +7,7 @@ namespace Silksprite.QuestReplacer.Assets
     {
         public static readonly MaterialDuplicatorRepository Instance = new MaterialDuplicatorRepository();
 
-        static readonly Dictionary<QuestReplacerMaterialGenerationMode, ISingleAssetDuplicator<Material>[]> Builtins =
+        static Dictionary<QuestReplacerMaterialGenerationMode, ISingleAssetDuplicator<Material>[]> Builtins =>
             new Dictionary<QuestReplacerMaterialGenerationMode, ISingleAssetDuplicator<Material>[]>
             {
                 [QuestReplacerMaterialGenerationMode.GenerateVRChatToonLit] = new ISingleAssetDuplicator<Material>[]

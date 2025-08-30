@@ -69,6 +69,24 @@ namespace Silksprite.QuestReplacer.Extensions
                 processors.ToArray());
         }
 
+        public static AssetDuplicator<AnimationClip> CreateAnimationClipAssetDuplicator(this QuestReplacerDatabase database, QuestReplacerAnimationClipGenerationMode animationClipGenerationMode)
+        {
+            IEnumerable<ISingleAssetDuplicator<AnimationClip>> processors;
+            switch (animationClipGenerationMode)
+            {
+                case QuestReplacerAnimationClipGenerationMode.Instantiate:
+                    processors = AnimationClipDuplicatorRepository.Instance.AnimationClipProcessors();
+                    break;
+                default:
+                    processors = Enumerable.Empty<ISingleAssetDuplicator<AnimationClip>>();
+                    break;
+            }
+            return new AssetDuplicator<AnimationClip>(database.generatedDirectory,
+                database.generatedFilePrefix,
+                database.generatedFileSuffix,
+                processors.ToArray());
+        }
+
         public static string GetDefaultSuffix(this QuestReplacerDatabase database)
         {
             var platform = database.config.platform;
