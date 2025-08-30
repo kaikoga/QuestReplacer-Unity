@@ -8,10 +8,10 @@ namespace Silksprite.QuestReplacer.MaterialsExt.lilToon
         [InitializeOnLoadMethod]
         static void InitializeOnLoad()
         {
-            MaterialDuplicatorRepository.Instance.RegisterExt(
+            MaterialDuplicatorRepository.Instance.Register(
                 QuestReplacerMaterialGenerationMode.ExtConvertMToon,
                 new lilToonToVRMMaterialDuplicator());
-            MaterialDuplicatorRepository.Instance.RegisterExt(
+            MaterialDuplicatorRepository.Instance.Register(
                 QuestReplacerMaterialGenerationMode.ExtConvertMToon10,
                 new lilToonToVRMMaterialDuplicatorMToon10());
         }

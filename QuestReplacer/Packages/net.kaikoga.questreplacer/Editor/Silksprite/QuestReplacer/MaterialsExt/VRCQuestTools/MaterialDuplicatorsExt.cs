@@ -8,7 +8,7 @@ namespace Silksprite.QuestReplacer.MaterialsExt.VRCQuestTools
         [InitializeOnLoadMethod]
         static void InitializeOnLoad()
         {
-            MaterialDuplicatorRepository.Instance.RegisterExt(
+            MaterialDuplicatorRepository.Instance.Register(
                 QuestReplacerMaterialGenerationMode.ExtConvertVRChatToonStandard,
                 new VRCQuestToolsMaterialDuplicator());
         }

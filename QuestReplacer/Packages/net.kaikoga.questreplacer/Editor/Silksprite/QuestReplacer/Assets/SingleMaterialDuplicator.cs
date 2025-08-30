@@ -2,12 +2,12 @@ using UnityEngine;
 
 namespace Silksprite.QuestReplacer.Assets
 {
-    public class SingleAssetDuplicator : ISingleAssetDuplicator<Material>
+    public class SingleMaterialDuplicator : ISingleAssetDuplicator<Material>
     {
         readonly string _pattern;
         readonly Shader _shader;
 
-        public SingleAssetDuplicator(string pattern, Shader shader)
+        public SingleMaterialDuplicator(string pattern, Shader shader)
         {
             _pattern = pattern;
             _shader = shader;

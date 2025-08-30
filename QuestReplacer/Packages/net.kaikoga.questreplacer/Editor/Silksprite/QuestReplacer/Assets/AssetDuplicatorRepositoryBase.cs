@@ -1,29 +1,34 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Linq;
+using Object = UnityEngine.Object;
 
 namespace Silksprite.QuestReplacer.Assets
 {
-    public abstract class AssetDuplicatorRepositoryBase<T>
-        where T : Object
+    public abstract class AssetDuplicatorRepositoryBase<TAsset, TGenerationMode>
+        where TAsset : Object
+        where TGenerationMode : Enum
     {
-        public bool RegisterExt(QuestReplacerMaterialGenerationMode materialGenerationMode, ISingleAssetDuplicator<T> duplicator)
+        readonly Dictionary<TGenerationMode, SortedSet<ISingleAssetDuplicator<TAsset>>> _duplicators = CreateDictionary();
+
+        static Dictionary<TGenerationMode, SortedSet<ISingleAssetDuplicator<TAsset>>> CreateDictionary() =>
+            typeof(TGenerationMode).GetEnumValues().OfType<TGenerationMode>()
+                .ToDictionary(
+                    t => t,
+                    _ => new SortedSet<ISingleAssetDuplicator<TAsset>>(SingleAssetDuplicatorComparer<TAsset>.Instance));
+
+        public bool Register(TGenerationMode generationMode, ISingleAssetDuplicator<TAsset> duplicator)
         {
-            if (!Exts.TryGetValue(materialGenerationMode, out var list))
+            if (!_duplicators.TryGetValue(generationMode, out var set))
             {
                 return false;
             }
-            list.Add(duplicator);
+            set.Add(duplicator);
             return true;
         }
 
-        protected readonly Dictionary<QuestReplacerMaterialGenerationMode, SortedSet<ISingleAssetDuplicator<T>>> Exts = new Dictionary<QuestReplacerMaterialGenerationMode, SortedSet<ISingleAssetDuplicator<T>>>
-        {
-            [QuestReplacerMaterialGenerationMode.GenerateMToon10] = new SortedSet<ISingleAssetDuplicator<T>>(SingleAssetDuplicatorComparer<T>.Instance),
-            [QuestReplacerMaterialGenerationMode.ExtConvertMToon] = new SortedSet<ISingleAssetDuplicator<T>>(SingleAssetDuplicatorComparer<T>.Instance),
-            [QuestReplacerMaterialGenerationMode.ExtConvertMToon10] = new SortedSet<ISingleAssetDuplicator<T>>(SingleAssetDuplicatorComparer<T>.Instance),
-            [QuestReplacerMaterialGenerationMode.ExtConvertVRChatToonStandard] = new SortedSet<ISingleAssetDuplicator<T>>(SingleAssetDuplicatorComparer<T>.Instance),
-        };
+        protected IEnumerable<ISingleAssetDuplicator<TAsset>> Query(TGenerationMode generationMode) => _duplicators[generationMode];
     }
 
     class SingleAssetDuplicatorComparer<T> : IComparer<ISingleAssetDuplicator<T>>
