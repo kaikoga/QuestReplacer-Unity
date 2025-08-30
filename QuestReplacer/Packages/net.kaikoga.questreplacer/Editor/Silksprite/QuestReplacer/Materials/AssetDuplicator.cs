@@ -5,14 +5,15 @@ using UnityEngine;
 
 namespace Silksprite.QuestReplacer.Materials
 {
-    public class AssetDuplicator
+    public class AssetDuplicator<T>
+    where T : Object
     {
         readonly string _directory;
         readonly string _filePrefix;
         readonly string _fileSuffix;
-        readonly ISingleMaterialDuplicator[] _processors;
+        readonly ISingleAssetDuplicator<T>[] _processors;
 
-        public AssetDuplicator(string directory, string filePrefix, string fileSuffix, ISingleMaterialDuplicator[] processors)
+        public AssetDuplicator(string directory, string filePrefix, string fileSuffix, ISingleAssetDuplicator<T>[] processors)
         {
             _directory = directory;
             _filePrefix = filePrefix;
@@ -21,14 +22,14 @@ namespace Silksprite.QuestReplacer.Materials
             _processors = processors;
         }
 
-        public Material Duplicate(Material original)
+        public T Duplicate(T original)
         {
             var originalAssetPath = AssetDatabase.GetAssetPath(original);
             var assetDirectory = _directory.StartsWith("Assets/") ? _directory : Path.Combine(Path.GetDirectoryName(originalAssetPath) ?? string.Empty, _directory);
             EnsureDirectory(assetDirectory);
             var assetPath = Path.Combine(assetDirectory, $"{_filePrefix}{Path.GetFileNameWithoutExtension(originalAssetPath)}{_fileSuffix}.mat");
             
-            var existingMaterial = AssetDatabase.LoadAssetAtPath<Material>(assetPath);
+            var existingMaterial = AssetDatabase.LoadAssetAtPath<T>(assetPath);
             if (existingMaterial) return existingMaterial;
 
             var bakedAssetDirectoryPath = Path.GetDirectoryName(assetPath);

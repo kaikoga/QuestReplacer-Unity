@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Silksprite.QuestReplacer.MaterialsExt.VRCQuestTools
 {
-    public class VRCQuestToolsMaterialDuplicator : ISingleMaterialDuplicator
+    public class VRCQuestToolsMaterialDuplicator : ISingleAssetDuplicator<Material>
     {
         static bool _vrcQuestToolsSupportErrorReported;
 
@@ -25,11 +25,11 @@ namespace Silksprite.QuestReplacer.MaterialsExt.VRCQuestTools
             }
         }
 
-        int ISingleMaterialDuplicator.Priority => 0;
+        int ISingleAssetDuplicator<Material>.Priority => 0;
 
-        bool ISingleMaterialDuplicator.IsTarget(Material original) => true;
+        bool ISingleAssetDuplicator<Material>.IsTarget(Material original) => true;
 
-        Material ISingleMaterialDuplicator.Duplicate(Material original, string bakedAssetDirectoryPath)
+        Material ISingleAssetDuplicator<Material>.Duplicate(Material original, string bakedAssetDirectoryPath)
         {
             return Wrap(original, () =>
             {

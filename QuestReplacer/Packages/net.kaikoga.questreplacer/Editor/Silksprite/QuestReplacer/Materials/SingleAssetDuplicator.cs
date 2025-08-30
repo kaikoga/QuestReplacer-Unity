@@ -1,25 +1,24 @@
-using UnityEditor;
 using UnityEngine;
 
 namespace Silksprite.QuestReplacer.Materials
 {
-    public class SingleMaterialDuplicator : ISingleMaterialDuplicator
+    public class SingleAssetDuplicator : ISingleAssetDuplicator<Material>
     {
         readonly string _pattern;
         readonly Shader _shader;
 
-        public SingleMaterialDuplicator(string pattern, Shader shader)
+        public SingleAssetDuplicator(string pattern, Shader shader)
         {
             _pattern = pattern;
             _shader = shader;
         }
 
 
-        int ISingleMaterialDuplicator.Priority => _pattern.Length;
+        int ISingleAssetDuplicator<Material>.Priority => _pattern.Length;
 
-        bool ISingleMaterialDuplicator.IsTarget(Material original) => original.shader.name.Contains(_pattern);
+        bool ISingleAssetDuplicator<Material>.IsTarget(Material original) => original.shader.name.Contains(_pattern);
 
-        Material ISingleMaterialDuplicator.Duplicate(Material original, string bakedAssetDirectoryPath)
+        Material ISingleAssetDuplicator<Material>.Duplicate(Material original, string bakedAssetDirectoryPath)
         {
             // cannot be material variant because shader is different
             var material = new Material(original)

@@ -281,7 +281,7 @@ namespace Silksprite.QuestReplacer
             RecreateContext();
         }
 
-        void GenerateMaterials(AssetDuplicator duplicator)
+        void GenerateMaterials(AssetDuplicator<Material> duplicator)
         {
             Undo.SetCurrentGroupName("QuestReplacer: Generate Materials");
             Undo.RecordObject(_questReplacer, "QuestReplacer: Generate Materials");

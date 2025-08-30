@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Silksprite.QuestReplacer.Materials;
+using UnityEngine;
 
 namespace Silksprite.QuestReplacer.Extensions
 {
@@ -29,9 +30,9 @@ namespace Silksprite.QuestReplacer.Extensions
             }
         }
 
-        public static AssetDuplicator CreateMaterialAssetDuplicator(this QuestReplacerDatabase database, QuestReplacerMaterialGenerationMode materialGenerationMode)
+        public static AssetDuplicator<Material> CreateMaterialAssetDuplicator(this QuestReplacerDatabase database, QuestReplacerMaterialGenerationMode materialGenerationMode)
         {
-            IEnumerable<ISingleMaterialDuplicator> processors;
+            IEnumerable<ISingleAssetDuplicator<Material>> processors;
             switch (materialGenerationMode)
             {
                 case QuestReplacerMaterialGenerationMode.GenerateVRChatToonLit:
@@ -59,10 +60,10 @@ namespace Silksprite.QuestReplacer.Extensions
                     processors = MaterialDuplicators.MToon10MaterialProcessors(true);
                     break;
                 default:
-                    processors = Enumerable.Empty<ISingleMaterialDuplicator>();
+                    processors = Enumerable.Empty<ISingleAssetDuplicator<Material>>();
                     break;
             }
-            return new AssetDuplicator(database.generatedDirectory,
+            return new AssetDuplicator<Material>(database.generatedDirectory,
                 database.generatedFilePrefix,
                 database.generatedFileSuffix,
                 processors.ToArray());

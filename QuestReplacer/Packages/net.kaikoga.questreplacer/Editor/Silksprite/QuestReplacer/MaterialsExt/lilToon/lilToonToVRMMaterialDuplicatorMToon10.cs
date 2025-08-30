@@ -6,19 +6,19 @@ using UnityEngine;
 namespace Silksprite.QuestReplacer.MaterialsExt.lilToon
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
-    public class lilToonToVRMMaterialDuplicatorMToon10 : ISingleMaterialDuplicator
+    public class lilToonToVRMMaterialDuplicatorMToon10 : ISingleAssetDuplicator<Material>
     {
-        static readonly ISingleMaterialDuplicator _duplicatorMToon = new lilToonToVRMMaterialDuplicator();
-        static readonly ISingleMaterialDuplicator _mToonUpgrader = new MToonUpgrader();
+        static readonly ISingleAssetDuplicator<Material> _duplicatorMToon = new lilToonToVRMMaterialDuplicator();
+        static readonly ISingleAssetDuplicator<Material> _mToonUpgrader = new MToonUpgrader();
 
-        int ISingleMaterialDuplicator.Priority => 10000;
+        int ISingleAssetDuplicator<Material>.Priority => 10000;
 
-        bool ISingleMaterialDuplicator.IsTarget(Material original)
+        bool ISingleAssetDuplicator<Material>.IsTarget(Material original)
         {
             return _duplicatorMToon.IsTarget(original);
         }
 
-        Material ISingleMaterialDuplicator.Duplicate(Material original, string bakedAssetDirectoryPath)
+        Material ISingleAssetDuplicator<Material>.Duplicate(Material original, string bakedAssetDirectoryPath)
         {
             var mtoon = _duplicatorMToon.Duplicate(original, bakedAssetDirectoryPath);
             var material = _mToonUpgrader.Duplicate(mtoon, bakedAssetDirectoryPath);

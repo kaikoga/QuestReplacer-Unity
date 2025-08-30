@@ -11,13 +11,13 @@ using VRM10.MToon10;
 
 namespace Silksprite.QuestReplacer.Materials.VRMShaders
 {
-    public class MToonUpgrader : ISingleMaterialDuplicator
+    public class MToonUpgrader : ISingleAssetDuplicator<Material>
     {
-        int ISingleMaterialDuplicator.Priority => 20000;
+        int ISingleAssetDuplicator<Material>.Priority => 20000;
 
-        bool ISingleMaterialDuplicator.IsTarget(Material original) => original.shader.name == "VRM/MToon";
+        bool ISingleAssetDuplicator<Material>.IsTarget(Material original) => original.shader.name == "VRM/MToon";
 
-        Material ISingleMaterialDuplicator.Duplicate(Material original, string bakedAssetDirectoryPath)
+        Material ISingleAssetDuplicator<Material>.Duplicate(Material original, string bakedAssetDirectoryPath)
         {
             var mtoon = new MToonMaterialAccess(original.ToMaterialAccess());
             var material = new Material(Shaders.VrmMToon10);

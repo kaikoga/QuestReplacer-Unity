@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Silksprite.QuestReplacer.MaterialsExt.lilToon
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
-    public class lilToonToVRMMaterialDuplicator : ISingleMaterialDuplicator
+    public class lilToonToVRMMaterialDuplicator : ISingleAssetDuplicator<Material>
     {
         static bool _lilToonSupportErrorReported;
 
@@ -29,15 +29,15 @@ namespace Silksprite.QuestReplacer.MaterialsExt.lilToon
             }
         }
 
-        int ISingleMaterialDuplicator.Priority => 10000;
+        int ISingleAssetDuplicator<Material>.Priority => 10000;
 
-        bool ISingleMaterialDuplicator.IsTarget(Material original)
+        bool ISingleAssetDuplicator<Material>.IsTarget(Material original)
         {
             var originalShaderName = original.shader.name;
             return originalShaderName.Contains("lilToon") || originalShaderName.StartsWith("Hidden/lts");
         }
 
-        Material ISingleMaterialDuplicator.Duplicate(Material original, string bakedAssetDirectoryPath)
+        Material ISingleAssetDuplicator<Material>.Duplicate(Material original, string bakedAssetDirectoryPath)
         {
             return Wrap(original, () =>
             {
