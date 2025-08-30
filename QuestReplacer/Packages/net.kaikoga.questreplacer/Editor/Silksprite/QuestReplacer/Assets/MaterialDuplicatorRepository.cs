@@ -4,9 +4,11 @@ using UnityEngine;
 
 namespace Silksprite.QuestReplacer.Assets
 {
-    public static class MaterialDuplicators
+    public class MaterialDuplicatorRepository
     {
-        public static bool RegisterExt(QuestReplacerMaterialGenerationMode materialGenerationMode, ISingleAssetDuplicator<Material> duplicator)
+        public static readonly MaterialDuplicatorRepository Instance = new();
+
+        public bool RegisterExt(QuestReplacerMaterialGenerationMode materialGenerationMode, ISingleAssetDuplicator<Material> duplicator)
         {
             if (!Exts.TryGetValue(materialGenerationMode, out var list))
             {
@@ -16,7 +18,7 @@ namespace Silksprite.QuestReplacer.Assets
             return true;
         }
 
-        static readonly Dictionary<QuestReplacerMaterialGenerationMode, SortedSet<ISingleAssetDuplicator<Material>>> Builtins = new Dictionary<QuestReplacerMaterialGenerationMode, SortedSet<ISingleAssetDuplicator<Material>>>
+        readonly Dictionary<QuestReplacerMaterialGenerationMode, SortedSet<ISingleAssetDuplicator<Material>>> Builtins = new Dictionary<QuestReplacerMaterialGenerationMode, SortedSet<ISingleAssetDuplicator<Material>>>
         {
             [QuestReplacerMaterialGenerationMode.GenerateVRChatToonLit] = new SortedSet<ISingleAssetDuplicator<Material>>(SingleMaterialDuplicatorComparer.Instance)
             {
@@ -44,13 +46,15 @@ namespace Silksprite.QuestReplacer.Assets
                 new SingleAssetDuplicator("", Shaders.VrmMToon10)
             },
         };
-        static readonly Dictionary<QuestReplacerMaterialGenerationMode, SortedSet<ISingleAssetDuplicator<Material>>> Exts = new Dictionary<QuestReplacerMaterialGenerationMode, SortedSet<ISingleAssetDuplicator<Material>>>
+
+        readonly Dictionary<QuestReplacerMaterialGenerationMode, SortedSet<ISingleAssetDuplicator<Material>>> Exts = new Dictionary<QuestReplacerMaterialGenerationMode, SortedSet<ISingleAssetDuplicator<Material>>>
         {
             [QuestReplacerMaterialGenerationMode.GenerateMToon10] = new SortedSet<ISingleAssetDuplicator<Material>>(SingleMaterialDuplicatorComparer.Instance),
             [QuestReplacerMaterialGenerationMode.ExtConvertMToon] = new SortedSet<ISingleAssetDuplicator<Material>>(SingleMaterialDuplicatorComparer.Instance),
             [QuestReplacerMaterialGenerationMode.ExtConvertMToon10] = new SortedSet<ISingleAssetDuplicator<Material>>(SingleMaterialDuplicatorComparer.Instance),
             [QuestReplacerMaterialGenerationMode.ExtConvertVRChatToonStandard] = new SortedSet<ISingleAssetDuplicator<Material>>(SingleMaterialDuplicatorComparer.Instance),
         };
+
         class SingleMaterialDuplicatorComparer : IComparer<ISingleAssetDuplicator<Material>>
         {
             public static SingleMaterialDuplicatorComparer Instance => new SingleMaterialDuplicatorComparer();
@@ -61,31 +65,31 @@ namespace Silksprite.QuestReplacer.Assets
             }
         }
 
-        public static IEnumerable<ISingleAssetDuplicator<Material>> VRChatToonLitMaterialProcessors()
+        public IEnumerable<ISingleAssetDuplicator<Material>> VRChatToonLitMaterialProcessors()
         {
             return Builtins[QuestReplacerMaterialGenerationMode.GenerateVRChatToonLit];
         }
 
-        public static IEnumerable<ISingleAssetDuplicator<Material>> MToonMaterialProcessors(bool ext)
+        public IEnumerable<ISingleAssetDuplicator<Material>> MToonMaterialProcessors(bool ext)
         {
             if (ext) foreach (var duplicator in Exts[QuestReplacerMaterialGenerationMode.ExtConvertMToon]) yield return duplicator; 
             foreach (var duplicator in Builtins[QuestReplacerMaterialGenerationMode.GenerateMToon]) yield return duplicator;
         }
 
-        public static IEnumerable<ISingleAssetDuplicator<Material>> MToon10MaterialProcessors(bool ext)
+        public IEnumerable<ISingleAssetDuplicator<Material>> MToon10MaterialProcessors(bool ext)
         {
             if (ext) foreach (var duplicator in Exts[QuestReplacerMaterialGenerationMode.ExtConvertMToon10]) yield return duplicator; 
             if (ext) foreach (var duplicator in Exts[QuestReplacerMaterialGenerationMode.GenerateMToon10]) yield return duplicator;
             foreach (var duplicator in Builtins[QuestReplacerMaterialGenerationMode.GenerateMToon10]) yield return duplicator;
         }
 
-        public static IEnumerable<ISingleAssetDuplicator<Material>> VRChatToonStandardMaterialProcessors(bool ext)
+        public IEnumerable<ISingleAssetDuplicator<Material>> VRChatToonStandardMaterialProcessors(bool ext)
         {
             if (ext) foreach (var duplicator in Exts[QuestReplacerMaterialGenerationMode.ExtConvertVRChatToonStandard]) yield return duplicator; 
             foreach (var duplicator in Builtins[QuestReplacerMaterialGenerationMode.GenerateVRChatToonStandard]) yield return duplicator;
         }
 
-        public static IEnumerable<ISingleAssetDuplicator<Material>> VRChatToonStandardOutlineMaterialProcessors()
+        public IEnumerable<ISingleAssetDuplicator<Material>> VRChatToonStandardOutlineMaterialProcessors()
         {
             return Builtins[QuestReplacerMaterialGenerationMode.GenerateVRChatToonStandardOutline];
         }

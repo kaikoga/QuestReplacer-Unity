@@ -36,28 +36,28 @@ namespace Silksprite.QuestReplacer.Extensions
             switch (materialGenerationMode)
             {
                 case QuestReplacerMaterialGenerationMode.GenerateVRChatToonLit:
-                    processors = MaterialDuplicators.VRChatToonLitMaterialProcessors();
+                    processors = MaterialDuplicatorRepository.Instance.VRChatToonLitMaterialProcessors();
                     break;
                 case QuestReplacerMaterialGenerationMode.GenerateVRChatToonStandard:
-                    processors = MaterialDuplicators.VRChatToonStandardMaterialProcessors(false);
+                    processors = MaterialDuplicatorRepository.Instance.VRChatToonStandardMaterialProcessors(false);
                     break;
                 case QuestReplacerMaterialGenerationMode.GenerateVRChatToonStandardOutline:
-                    processors = MaterialDuplicators.VRChatToonStandardOutlineMaterialProcessors();
+                    processors = MaterialDuplicatorRepository.Instance.VRChatToonStandardOutlineMaterialProcessors();
                     break;
                 case QuestReplacerMaterialGenerationMode.GenerateMToon:
-                    processors = MaterialDuplicators.MToonMaterialProcessors(false);
+                    processors = MaterialDuplicatorRepository.Instance.MToonMaterialProcessors(false);
                     break;
                 case QuestReplacerMaterialGenerationMode.GenerateMToon10:
-                    processors = MaterialDuplicators.MToon10MaterialProcessors(false);
+                    processors = MaterialDuplicatorRepository.Instance.MToon10MaterialProcessors(false);
                     break;
                 case QuestReplacerMaterialGenerationMode.ExtConvertVRChatToonStandard:
-                    processors = MaterialDuplicators.VRChatToonStandardMaterialProcessors(true);
+                    processors = MaterialDuplicatorRepository.Instance.VRChatToonStandardMaterialProcessors(true);
                     break;
                 case QuestReplacerMaterialGenerationMode.ExtConvertMToon:
-                    processors = MaterialDuplicators.MToonMaterialProcessors(true);
+                    processors = MaterialDuplicatorRepository.Instance.MToonMaterialProcessors(true);
                     break;
                 case QuestReplacerMaterialGenerationMode.ExtConvertMToon10:
-                    processors = MaterialDuplicators.MToon10MaterialProcessors(true);
+                    processors = MaterialDuplicatorRepository.Instance.MToon10MaterialProcessors(true);
                     break;
                 default:
                     processors = Enumerable.Empty<ISingleAssetDuplicator<Material>>();
