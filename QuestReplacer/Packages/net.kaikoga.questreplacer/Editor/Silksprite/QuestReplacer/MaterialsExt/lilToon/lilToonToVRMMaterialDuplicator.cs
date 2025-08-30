@@ -29,6 +29,8 @@ namespace Silksprite.QuestReplacer.MaterialsExt.lilToon
             }
         }
 
+        int ISingleMaterialDuplicator.Priority => 10000;
+
         bool ISingleMaterialDuplicator.IsTarget(Material original)
         {
             var originalShaderName = original.shader.name;

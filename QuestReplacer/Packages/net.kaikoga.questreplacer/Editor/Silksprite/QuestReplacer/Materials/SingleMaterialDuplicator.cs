@@ -14,9 +14,12 @@ namespace Silksprite.QuestReplacer.Materials
             _shader = shader;
         }
 
+
+        int ISingleMaterialDuplicator.Priority => _pattern.Length;
+
         bool ISingleMaterialDuplicator.IsTarget(Material original) => original.shader.name.Contains(_pattern);
 
-        public Material Duplicate(Material original, string bakedAssetDirectoryPath)
+        Material ISingleMaterialDuplicator.Duplicate(Material original, string bakedAssetDirectoryPath)
         {
             // cannot be material variant because shader is different
             var material = new Material(original)

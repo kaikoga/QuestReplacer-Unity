@@ -25,6 +25,8 @@ namespace Silksprite.QuestReplacer.MaterialsExt.VRCQuestTools
             }
         }
 
+        int ISingleMaterialDuplicator.Priority => 0;
+
         bool ISingleMaterialDuplicator.IsTarget(Material original) => true;
 
         Material ISingleMaterialDuplicator.Duplicate(Material original, string bakedAssetDirectoryPath)

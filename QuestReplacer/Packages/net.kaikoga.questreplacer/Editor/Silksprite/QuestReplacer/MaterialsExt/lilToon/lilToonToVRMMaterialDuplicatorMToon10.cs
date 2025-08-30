@@ -11,6 +11,8 @@ namespace Silksprite.QuestReplacer.MaterialsExt.lilToon
         static readonly ISingleMaterialDuplicator _duplicatorMToon = new lilToonToVRMMaterialDuplicator();
         static readonly ISingleMaterialDuplicator _mToonUpgrader = new MToonUpgrader();
 
+        int ISingleMaterialDuplicator.Priority => 10000;
+
         bool ISingleMaterialDuplicator.IsTarget(Material original)
         {
             return _duplicatorMToon.IsTarget(original);
