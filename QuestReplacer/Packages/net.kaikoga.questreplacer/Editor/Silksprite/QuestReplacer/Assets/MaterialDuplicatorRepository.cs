@@ -1,69 +1,40 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Silksprite.QuestReplacer.Assets
 {
-    public class MaterialDuplicatorRepository
+    public class MaterialDuplicatorRepository : AssetDuplicatorRepositoryBase<Material>
     {
         public static readonly MaterialDuplicatorRepository Instance = new();
 
-        public bool RegisterExt(QuestReplacerMaterialGenerationMode materialGenerationMode, ISingleAssetDuplicator<Material> duplicator)
-        {
-            if (!Exts.TryGetValue(materialGenerationMode, out var list))
-            {
-                return false;
-            }
-            list.Add(duplicator);
-            return true;
-        }
-
         readonly Dictionary<QuestReplacerMaterialGenerationMode, SortedSet<ISingleAssetDuplicator<Material>>> Builtins = new Dictionary<QuestReplacerMaterialGenerationMode, SortedSet<ISingleAssetDuplicator<Material>>>
         {
-            [QuestReplacerMaterialGenerationMode.GenerateVRChatToonLit] = new SortedSet<ISingleAssetDuplicator<Material>>(SingleMaterialDuplicatorComparer.Instance)
+            [QuestReplacerMaterialGenerationMode.GenerateVRChatToonLit] = new SortedSet<ISingleAssetDuplicator<Material>>(SingleAssetDuplicatorComparer<Material>.Instance)
             {
                 new SingleAssetDuplicator("Standard", Shaders.VrcMobileStandardLite),
                 new SingleAssetDuplicator("", Shaders.VrcMobileToonLit)
             },
-            [QuestReplacerMaterialGenerationMode.GenerateVRChatToonStandard] = new SortedSet<ISingleAssetDuplicator<Material>>(SingleMaterialDuplicatorComparer.Instance)
+            [QuestReplacerMaterialGenerationMode.GenerateVRChatToonStandard] = new SortedSet<ISingleAssetDuplicator<Material>>(SingleAssetDuplicatorComparer<Material>.Instance)
             {
                 new SingleAssetDuplicator("Standard", Shaders.VrcMobileStandardLite),
                 new SingleAssetDuplicator("", Shaders.VrcMobileToonStandard)
             },
-            [QuestReplacerMaterialGenerationMode.GenerateVRChatToonStandardOutline] = new SortedSet<ISingleAssetDuplicator<Material>>(SingleMaterialDuplicatorComparer.Instance)
+            [QuestReplacerMaterialGenerationMode.GenerateVRChatToonStandardOutline] = new SortedSet<ISingleAssetDuplicator<Material>>(SingleAssetDuplicatorComparer<Material>.Instance)
             {
                 new SingleAssetDuplicator("Standard", Shaders.VrcMobileStandardLite),
                 new SingleAssetDuplicator("", Shaders.VrcMobileToonStandardOutline)
             },
-            [QuestReplacerMaterialGenerationMode.GenerateMToon] = new SortedSet<ISingleAssetDuplicator<Material>>(SingleMaterialDuplicatorComparer.Instance)
+            [QuestReplacerMaterialGenerationMode.GenerateMToon] = new SortedSet<ISingleAssetDuplicator<Material>>(SingleAssetDuplicatorComparer<Material>.Instance)
             {
                 new SingleAssetDuplicator("Standard", Shaders.Standard),
                 new SingleAssetDuplicator("", Shaders.VrmMToon)
             },
-            [QuestReplacerMaterialGenerationMode.GenerateMToon10] = new SortedSet<ISingleAssetDuplicator<Material>>(SingleMaterialDuplicatorComparer.Instance)
+            [QuestReplacerMaterialGenerationMode.GenerateMToon10] = new SortedSet<ISingleAssetDuplicator<Material>>(SingleAssetDuplicatorComparer<Material>.Instance)
             {
                 new SingleAssetDuplicator("Standard", Shaders.Standard),
                 new SingleAssetDuplicator("", Shaders.VrmMToon10)
             },
         };
-
-        readonly Dictionary<QuestReplacerMaterialGenerationMode, SortedSet<ISingleAssetDuplicator<Material>>> Exts = new Dictionary<QuestReplacerMaterialGenerationMode, SortedSet<ISingleAssetDuplicator<Material>>>
-        {
-            [QuestReplacerMaterialGenerationMode.GenerateMToon10] = new SortedSet<ISingleAssetDuplicator<Material>>(SingleMaterialDuplicatorComparer.Instance),
-            [QuestReplacerMaterialGenerationMode.ExtConvertMToon] = new SortedSet<ISingleAssetDuplicator<Material>>(SingleMaterialDuplicatorComparer.Instance),
-            [QuestReplacerMaterialGenerationMode.ExtConvertMToon10] = new SortedSet<ISingleAssetDuplicator<Material>>(SingleMaterialDuplicatorComparer.Instance),
-            [QuestReplacerMaterialGenerationMode.ExtConvertVRChatToonStandard] = new SortedSet<ISingleAssetDuplicator<Material>>(SingleMaterialDuplicatorComparer.Instance),
-        };
-
-        class SingleMaterialDuplicatorComparer : IComparer<ISingleAssetDuplicator<Material>>
-        {
-            public static SingleMaterialDuplicatorComparer Instance => new SingleMaterialDuplicatorComparer();
-
-            public int Compare(ISingleAssetDuplicator<Material> x, ISingleAssetDuplicator<Material> y)
-            {
-                return Comparer.Default.Compare(y?.Priority, x?.Priority);
-            }
-        }
 
         public IEnumerable<ISingleAssetDuplicator<Material>> VRChatToonLitMaterialProcessors()
         {
