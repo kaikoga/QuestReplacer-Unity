@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Silksprite.QuestReplacer
+namespace Silksprite.QuestReplacer.Assets
 {
     public enum QuestReplacerMaterialGenerationMode
     {
