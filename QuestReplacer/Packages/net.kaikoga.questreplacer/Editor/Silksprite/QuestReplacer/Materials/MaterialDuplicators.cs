@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Silksprite.QuestReplacer.Assets;
-using Silksprite.QuestReplacer.Materials.VRMShaders;
 using UnityEngine;
 
 namespace Silksprite.QuestReplacer.Materials
@@ -42,13 +41,13 @@ namespace Silksprite.QuestReplacer.Materials
             },
             [QuestReplacerMaterialGenerationMode.GenerateMToon10] = new SortedSet<ISingleAssetDuplicator<Material>>(SingleMaterialDuplicatorComparer.Instance)
             {
-                new MToonUpgrader(),
                 new SingleAssetDuplicator("Standard", Shaders.Standard),
                 new SingleAssetDuplicator("", Shaders.VrmMToon10)
             },
         };
         static readonly Dictionary<QuestReplacerMaterialGenerationMode, SortedSet<ISingleAssetDuplicator<Material>>> Exts = new Dictionary<QuestReplacerMaterialGenerationMode, SortedSet<ISingleAssetDuplicator<Material>>>
         {
+            [QuestReplacerMaterialGenerationMode.GenerateMToon10] = new SortedSet<ISingleAssetDuplicator<Material>>(SingleMaterialDuplicatorComparer.Instance),
             [QuestReplacerMaterialGenerationMode.ExtConvertMToon] = new SortedSet<ISingleAssetDuplicator<Material>>(SingleMaterialDuplicatorComparer.Instance),
             [QuestReplacerMaterialGenerationMode.ExtConvertMToon10] = new SortedSet<ISingleAssetDuplicator<Material>>(SingleMaterialDuplicatorComparer.Instance),
             [QuestReplacerMaterialGenerationMode.ExtConvertVRChatToonStandard] = new SortedSet<ISingleAssetDuplicator<Material>>(SingleMaterialDuplicatorComparer.Instance),
@@ -77,6 +76,7 @@ namespace Silksprite.QuestReplacer.Materials
         public static IEnumerable<ISingleAssetDuplicator<Material>> MToon10MaterialProcessors(bool ext)
         {
             if (ext) foreach (var duplicator in Exts[QuestReplacerMaterialGenerationMode.ExtConvertMToon10]) yield return duplicator; 
+            if (ext) foreach (var duplicator in Exts[QuestReplacerMaterialGenerationMode.GenerateMToon10]) yield return duplicator;
             foreach (var duplicator in Builtins[QuestReplacerMaterialGenerationMode.GenerateMToon10]) yield return duplicator;
         }
 

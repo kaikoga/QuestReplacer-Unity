@@ -1,12 +1,12 @@
 {
-    "name": "QuestReplacer.Editor.MaterialsExt.lilToon",
-    "rootNamespace": "Silksprite.QuestReplacer.MaterialsExt.lilToon",
+    "name": "QuestReplacer.Editor.MaterialsExt.VRMShaders",
+    "rootNamespace": "Silksprite.QuestReplacer.MaterialsExt.VRMShaders",
     "references": [
         "AdLib",
-        "lilToon.Editor",
+        "VRMShaders.VRM10.MToon10.Runtime",
+        "VRM10.MToon10",
         "QuestReplacer",
-        "QuestReplacer.Editor",
-        "QuestReplacer.Editor.MaterialsExt.VRMShaders"
+        "QuestReplacer.Editor"
     ],
     "includePlatforms": [
         "Editor"
@@ -16,13 +16,8 @@
     "overrideReferences": true,
     "precompiledReferences": [],
     "autoReferenced": false,
-    "defineConstraints": ["QUESTREPLACER_LILTOON"],
+    "defineConstraints": ["QUESTREPLACER_VRMSHADERS || QUESTREPLACER_UNIVRM_WITH_SHADERS"],
     "versionDefines": [
-        {
-            "name": "jp.lilxyzw.liltoon",
-            "expression": "[2.0.0,999.0.0)",
-            "define": "QUESTREPLACER_LILTOON"
-        },
         {
             "name": "com.vrmc.vrmshaders",
             "expression": "",

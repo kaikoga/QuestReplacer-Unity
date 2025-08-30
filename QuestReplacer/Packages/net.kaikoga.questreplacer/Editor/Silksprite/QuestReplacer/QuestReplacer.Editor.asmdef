@@ -3,8 +3,6 @@
     "rootNamespace": "Silksprite.QuestReplacer",
     "references": [
         "AdLib",
-        "VRMShaders.VRM10.MToon10.Runtime",
-        "VRM10.MToon10",
         "QuestReplacer",
         "nadena.dev.ndmf.runtime",
         "AdLib.Editor",
@@ -37,16 +35,6 @@
             "name": "com.vrchat.avatars",
             "expression": "[3.0.0,999.0.0)",
             "define": "QUESTREPLACER_VRCSDK3_AVATARS"
-        },
-        {
-            "name": "com.vrmc.vrmshaders",
-            "expression": "",
-            "define": "QUESTREPLACER_VRMSHADERS"
-        },
-        {
-            "name": "com.vrmc.univrm",
-            "expression": "[0.125.0,999.0.0]",
-            "define": "QUESTREPLACER_UNIVRM_WITH_SHADERS"
         }
     ],
     "noEngineReferences": false

@@ -10,7 +10,7 @@ using VRMShaders.VRM10.MToon10.Runtime;
 using VRM10.MToon10;
 #endif
 
-namespace Silksprite.QuestReplacer.Materials.VRMShaders
+namespace Silksprite.QuestReplacer.MaterialsExt.VRMShaders
 {
     public class MToonUpgrader : ISingleAssetDuplicator<Material>
     {
@@ -29,9 +29,7 @@ namespace Silksprite.QuestReplacer.Materials.VRMShaders
             CopyRimLighting(mtoon, mtoon10);
             CopyOutline(mtoon, mtoon10);
             CopyUvAnimation(mtoon, mtoon10);
-#if QUESTREPLACER_VRMSHADERS || QUESTREPLACER_UNIVRM_WITH_SHADERS
             new MToonValidator(material).Validate();
-#endif
             return material;
         }
 
@@ -86,7 +84,6 @@ namespace Silksprite.QuestReplacer.Materials.VRMShaders
             mtoon10.BumpMap.Value = mtoon.BumpMap.Value;
             mtoon10.BumpScale.Value = mtoon.BumpScale.Value;
             
-#if QUESTREPLACER_VRMSHADERS || QUESTREPLACER_UNIVRM_WITH_SHADERS
             mtoon10.ShadingToonyFactor.Value = MToon10Migrator.MigrateToShadingToony(
                 mtoon.ShadeToony.Value, 
                 mtoon.ShadeShift.Value);
@@ -96,7 +93,6 @@ namespace Silksprite.QuestReplacer.Materials.VRMShaders
             
             mtoon10.GiEqualization.Value = MToon10Migrator.MigrateToGiEqualization(
                 mtoon.IndirectLightIntensity.Value);
-#endif
         }
 
         static void CopyEmissionAndMatcap(MToonMaterialAccess mtoon, MToon10MaterialAccess mtoon10)
