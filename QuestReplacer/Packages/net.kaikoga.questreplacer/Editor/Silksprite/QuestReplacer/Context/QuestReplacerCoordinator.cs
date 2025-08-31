@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Silksprite.QuestReplacer.Extensions;
-using UnityEditor.Animations;
-using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace Silksprite.QuestReplacer.Context
@@ -13,12 +11,11 @@ namespace Silksprite.QuestReplacer.Context
         readonly QuestReplacer[] _replacers;
         readonly (QuestReplacerPlatform platform, bool animations, QuestReplacerContext context)[] _contexts;
 
-        public QuestReplacerCoordinator(Transform avatarRootTransform, IEnumerable<AnimatorController> animatorControllers, IEnumerable<QuestReplacer> replacers)
+        public QuestReplacerCoordinator(IEnumerable<QuestReplacer> replacers, bool cloneAnimations)
         {
             _replacers = replacers.ToArray();
-            var animatorControllersArray = animatorControllers.ToArray();
             _contexts = _replacers
-                .Select(replacer => (replacer.Platform, replacer.Config.targetVRChatAnimations, replacer.ToAvatarContext(avatarRootTransform, animatorControllersArray)))
+                .Select(replacer => (replacer.Platform, replacer.Config.targetVRChatAnimations, replacer.ToContext(cloneAnimations)))
                 .ToArray();
         }
 

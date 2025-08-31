@@ -1,5 +1,4 @@
 using System.Linq;
-using nadena.dev.ndmf.runtime;
 using Silksprite.QuestReplacer.Context;
 using Silksprite.QuestReplacer.Assets;
 using Silksprite.QuestReplacer.Extensions;
@@ -7,6 +6,10 @@ using Silksprite.QuestReplacer.Scopes;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
+
+#if QUESTREPLACER_NDMF_SUPPORT
+using nadena.dev.ndmf.runtime;
+#endif
 
 namespace Silksprite.QuestReplacer
 {
@@ -52,11 +55,7 @@ namespace Silksprite.QuestReplacer
         void RecreateContext()
         {
             _context?.Dispose();
-            _context = AvatarRootTransform 
-                ? _questReplacer.ToAvatarContext(
-                    AvatarRootTransform,
-                    AnimatorControllerExtractor.ExtractFrom(AvatarRootTransform, false))
-                : _questReplacer.ToContext();
+            _context = _questReplacer.ToContext(false);
         }
 
         SerializedProperty _serializedConfig;

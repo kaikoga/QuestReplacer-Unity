@@ -7,9 +7,9 @@ namespace Silksprite.QuestReplacer.Ndmf
     {
         public static QuestReplacerCoordinator FromAvatarRoot(Transform avatarRootTransform, bool cloneAnimations)
         {
-            return new QuestReplacerCoordinator(avatarRootTransform,
-                AnimatorControllerExtractor.ExtractFrom(avatarRootTransform, cloneAnimations),
-                avatarRootTransform.GetComponentsInChildren<QuestReplacer>(true));
+            return new QuestReplacerCoordinator(
+                avatarRootTransform.GetComponentsInChildren<QuestReplacer>(true),
+                cloneAnimations);
         }
     }
 }

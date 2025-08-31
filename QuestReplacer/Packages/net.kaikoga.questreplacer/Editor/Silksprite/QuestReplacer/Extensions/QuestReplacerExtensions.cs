@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Silksprite.QuestReplacer.Assets;
 using Silksprite.QuestReplacer.Context;
@@ -7,26 +6,42 @@ using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
 
+#if QUESTREPLACER_NDMF_SUPPORT
+using nadena.dev.ndmf.runtime;
+#endif
+
 namespace Silksprite.QuestReplacer.Extensions
 {
     public static class QuestReplacerExtensions
     {
-        public static QuestReplacerContext ToContext(this QuestReplacer questReplacer)
+        static Transform AvatarRootTransform(this QuestReplacer questReplacer)
         {
-            return new QuestReplacerContext(
-                questReplacer.Targets,
-                Enumerable.Empty<AnimatorController>(),
-                questReplacer.database != null ? questReplacer.database.componentFilters : null,
-                questReplacer.pairs);
+#if QUESTREPLACER_NDMF_SUPPORT
+            return RuntimeUtil.FindAvatarInParents(questReplacer.transform);
+#else
+            return null;
+#endif
         }
 
-        public static QuestReplacerContext ToAvatarContext(this QuestReplacer questReplacer, Transform avatarRootTransform, IEnumerable<AnimatorController> animatorControllers)
+        public static QuestReplacerContext ToContext(this QuestReplacer questReplacer, bool cloneAnimations)
         {
-            return new QuestReplacerContext(
-                avatarRootTransform ? new [] { avatarRootTransform } : Array.Empty<Transform>(),
-                animatorControllers,
-                questReplacer.database != null ? questReplacer.database.componentFilters : null,
-                questReplacer.pairs);
+            var avatarRootTransform = questReplacer.AvatarRootTransform();
+            if (avatarRootTransform)
+            {
+                return new QuestReplacerContext(
+                    new[] { avatarRootTransform },
+                    AnimatorControllerExtractor.ExtractFrom(avatarRootTransform, cloneAnimations),
+                    questReplacer.database != null ? questReplacer.database.componentFilters : null,
+                    questReplacer.pairs);
+            }
+            else
+            {
+                return new QuestReplacerContext(
+                    questReplacer.Targets,
+                    Enumerable.Empty<AnimatorController>(),
+                    questReplacer.database != null ? questReplacer.database.componentFilters : null,
+                    questReplacer.pairs);
+            }
         }
 
         public static QuestReplacerDatabase EnsureDatabase(this QuestReplacer questReplacer, QuestReplacerPlatform? platform)
