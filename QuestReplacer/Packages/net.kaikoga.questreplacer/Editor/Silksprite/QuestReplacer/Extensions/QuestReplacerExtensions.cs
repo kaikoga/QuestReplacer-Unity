@@ -6,18 +6,14 @@ using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
 
-#if QUESTREPLACER_NDMF_SUPPORT
-using nadena.dev.ndmf.runtime;
-#endif
-
 namespace Silksprite.QuestReplacer.Extensions
 {
     public static class QuestReplacerExtensions
     {
-        static Transform AvatarRootTransform(this QuestReplacer questReplacer)
+        public static Transform NdmfAvatarRootTransform(this QuestReplacer questReplacer)
         {
 #if QUESTREPLACER_NDMF_SUPPORT
-            return RuntimeUtil.FindAvatarInParents(questReplacer.transform);
+            return nadena.dev.ndmf.runtime.RuntimeUtil.FindAvatarInParents(questReplacer.transform);
 #else
             return null;
 #endif
@@ -25,7 +21,7 @@ namespace Silksprite.QuestReplacer.Extensions
 
         public static QuestReplacerContext ToContext(this QuestReplacer questReplacer, bool cloneAnimations)
         {
-            var avatarRootTransform = questReplacer.AvatarRootTransform();
+            var avatarRootTransform = questReplacer.NdmfAvatarRootTransform();
             if (avatarRootTransform)
             {
                 return new QuestReplacerContext(

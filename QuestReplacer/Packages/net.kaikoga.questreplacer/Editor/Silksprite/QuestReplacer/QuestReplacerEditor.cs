@@ -7,10 +7,6 @@ using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-#if QUESTREPLACER_NDMF_SUPPORT
-using nadena.dev.ndmf.runtime;
-#endif
-
 namespace Silksprite.QuestReplacer
 {
     [CanEditMultipleObjects]
@@ -22,24 +18,6 @@ namespace Silksprite.QuestReplacer
         Transform _currentAvatarRootTransform;
         bool _force;
 
-#if QUESTREPLACER_NDMF_SUPPORT
-        static bool HasNdmfSupport => true;
-#else
-        static bool HasNdmfSupport => false;
-#endif
-        
-        bool EnableNdmfSupport
-        {
-            get => _currentEnableNdmfSupport;
-            set
-            {
-                if (_currentEnableNdmfSupport == value) return;
-                _currentEnableNdmfSupport = value;
-                RecreateContext();
-            }
-        }
-
-        
         Transform AvatarRootTransform
         {
             get => _currentAvatarRootTransform;
@@ -68,9 +46,7 @@ namespace Silksprite.QuestReplacer
         void OnEnable()
         {
             _questReplacer = (QuestReplacer)target;
-#if QUESTREPLACER_NDMF_SUPPORT
-            AvatarRootTransform = RuntimeUtil.FindAvatarInParents(_questReplacer.transform);
-#endif
+            AvatarRootTransform = _questReplacer.NdmfAvatarRootTransform();
             RecreateContext();
 
             _serializedConfig = serializedObject.FindProperty(nameof(QuestReplacer.config));
@@ -85,14 +61,11 @@ namespace Silksprite.QuestReplacer
         public override void OnInspectorGUI()
         {
             var config = _questReplacer.Config;
-#if QUESTREPLACER_NDMF_SUPPORT
-            AvatarRootTransform = RuntimeUtil.FindAvatarInParents(_questReplacer.transform);
-#endif
-            EnableNdmfSupport = HasNdmfSupport && AvatarRootTransform;
-            var hasTargets = EnableNdmfSupport || _questReplacer.HasTargets;
+            AvatarRootTransform = _questReplacer.NdmfAvatarRootTransform();
+            var hasTargets = AvatarRootTransform || _questReplacer.HasTargets;
             using (var changed = new EditorGUI.ChangeCheckScope())
             {
-                if (!EnableNdmfSupport)
+                if (!AvatarRootTransform)
                 {
                     using (new EditorGUI.DisabledScope(_serializedTargetSceneObjects.boolValue))
                     {
@@ -247,7 +220,7 @@ namespace Silksprite.QuestReplacer
                     requireForce = true;
                 }
                 
-                if (EnableNdmfSupport)
+                if (AvatarRootTransform)
                 {
                     EditorGUILayout.HelpBox("NDMF連携が有効です。置き換えの結果はNDMFプレビューとして表示されるため、手動置き換え操作は不要です。", MessageType.Info);
                     requireForce = true;

@@ -2,11 +2,6 @@ using System.Collections.Generic;
 using UnityEditor.Animations;
 using UnityEngine;
 using System.Linq;
-using nadena.dev.ndmf;
-
-#if QUESTREPLACER_VRCSDK3_AVATARS
-using VRC.SDK3.Avatars.Components;
-#endif
 
 namespace Silksprite.QuestReplacer
 {
@@ -15,7 +10,7 @@ namespace Silksprite.QuestReplacer
         public static IEnumerable<AnimatorController> ExtractFrom(Transform avatarRootTransform, bool cloneAnimations)
         {
 #if QUESTREPLACER_VRCSDK3_AVATARS
-            IEnumerable<AnimatorController> ExtractFromLayers(VRCAvatarDescriptor.CustomAnimLayer[] animationLayers)
+            IEnumerable<AnimatorController> ExtractFromLayers(VRC.SDK3.Avatars.Components.VRCAvatarDescriptor.CustomAnimLayer[] animationLayers)
             {
                 for (var i = 0; i < animationLayers.Length; i++)
                 {
@@ -32,7 +27,7 @@ namespace Silksprite.QuestReplacer
 #if QUESTREPLACER_NDMF_SUPPORT
                             foreach (var (key, value) in mappings)
                             {
-                                ObjectRegistry.ActiveRegistry.RegisterReplacedObject(key, value);
+                                nadena.dev.ndmf.ObjectRegistry.ActiveRegistry.RegisterReplacedObject(key, value);
                             }
 #endif
                         }
@@ -43,7 +38,7 @@ namespace Silksprite.QuestReplacer
                 }
             }
 
-            if (avatarRootTransform.TryGetComponent(out VRCAvatarDescriptor avatarDescriptor)
+            if (avatarRootTransform.TryGetComponent(out VRC.SDK3.Avatars.Components.VRCAvatarDescriptor avatarDescriptor)
                 && avatarDescriptor.customizeAnimationLayers)
             {
                 return ExtractFromLayers(avatarDescriptor.baseAnimationLayers)
