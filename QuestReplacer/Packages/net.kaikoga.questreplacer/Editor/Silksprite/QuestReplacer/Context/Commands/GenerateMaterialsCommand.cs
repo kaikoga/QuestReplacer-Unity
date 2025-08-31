@@ -19,7 +19,7 @@ namespace Silksprite.QuestReplacer.Context.Commands
                 if (pair.left is Material leftMaterial)
                 {
                     var rightMaterial = GetMaterialAssetDuplicator().Duplicate(leftMaterial);
-                    Undo.RegisterCreatedObjectUndo(rightMaterial, "QuestReplacer: Generate Materials");
+                    Undo.RegisterCreatedObjectUndo(rightMaterial, Name);
                     pair.right = rightMaterial; 
                 }
             }

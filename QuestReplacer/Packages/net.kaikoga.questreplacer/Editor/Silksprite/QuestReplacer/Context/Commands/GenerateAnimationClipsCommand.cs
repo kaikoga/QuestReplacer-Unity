@@ -19,7 +19,7 @@ namespace Silksprite.QuestReplacer.Context.Commands
                 if (pair.left is AnimationClip leftAnimationClip)
                 {
                     var rightMaterial = GetAnimationClipAssetDuplicator().Duplicate(leftAnimationClip);
-                    Undo.RegisterCreatedObjectUndo(rightMaterial, "QuestReplacer: Generate AnimationClips");
+                    Undo.RegisterCreatedObjectUndo(rightMaterial, Name);
                     pair.right = rightMaterial; 
                 }
             }
