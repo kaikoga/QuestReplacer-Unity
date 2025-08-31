@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Silksprite.QuestReplacer
+namespace Silksprite.QuestReplacer.Drawers
 {
     [CustomPropertyDrawer(typeof(QuestReplacerConfig))]
     public class QuestReplacerConfigDrawer : PropertyDrawer

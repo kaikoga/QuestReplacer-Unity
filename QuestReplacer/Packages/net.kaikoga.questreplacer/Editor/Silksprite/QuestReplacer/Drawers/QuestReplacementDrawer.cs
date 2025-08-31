@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 
-namespace Silksprite.QuestReplacer
+namespace Silksprite.QuestReplacer.Drawers
 {
     [CustomPropertyDrawer(typeof(QuestReplacement))]
     public class QuestReplacementDrawer : PropertyDrawer
