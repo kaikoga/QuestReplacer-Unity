@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Silksprite.QuestReplacer.Context;
 using Silksprite.QuestReplacer.Context.Commands;
@@ -5,7 +6,6 @@ using Silksprite.QuestReplacer.Extensions;
 using Silksprite.QuestReplacer.Scopes;
 using UnityEditor;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace Silksprite.QuestReplacer
 {
@@ -90,10 +90,7 @@ namespace Silksprite.QuestReplacer
                     using (new EditorGUILayout.HorizontalScope())
                     {
                         EditorGUILayout.LabelField("Quest Material Status", $"{_context.ToQuestStatus<Material>()}");
-                        if (GUILayout.Button("Collect"))
-                        {
-                            Collect<Material>();
-                        }
+                        CommandButton("Collect", () => new CollectCommand<Material>(_questReplacer, _context));
                     }
 
                     if (pairs.Any(pair => pair.LikelyUnset))
@@ -108,10 +105,7 @@ namespace Silksprite.QuestReplacer
                             }
                             using (new EditorGUI.DisabledScope(!hasPlatformSupport))
                             {
-                                if (GUILayout.Button($"{config.materialGenerationMode} Materials"))
-                                {
-                                    GenerateMaterials();
-                                }
+                                CommandButton($"{config.materialGenerationMode} Materials", () => new GenerateMaterialsCommand(_questReplacer, _context));
                             }
                         }
                     }
@@ -122,10 +116,7 @@ namespace Silksprite.QuestReplacer
                     using (new EditorGUILayout.HorizontalScope())
                     {
                         EditorGUILayout.LabelField("Quest Mesh Status", $"{_context.ToQuestStatus<Mesh>()}");
-                        if (GUILayout.Button("Collect"))
-                        {
-                            Collect<Mesh>();
-                        }
+                        CommandButton("Collect",  () => new CollectCommand<Mesh>(_questReplacer, _context));
                     }
                 }
 
@@ -135,28 +126,19 @@ namespace Silksprite.QuestReplacer
                     using (new EditorGUILayout.HorizontalScope())
                     {
                         EditorGUILayout.LabelField("Quest Animation Clip Status", $"{_context.ToQuestStatus<AnimationClip>()}");
-                        if (GUILayout.Button("Collect"))
-                        {
-                            Collect<AnimationClip>();
-                        }
+                        CommandButton("Collect", () => new CollectCommand<AnimationClip>(_questReplacer, _context));
                     }
                     
                     if (pairs.Any(pair => pair.LikelyUnset))
                     {
                         if (_serializedDatabase.objectReferenceValue)
                         {
-                            if (GUILayout.Button("Instantiate Animation Clips"))
-                            {
-                                GenerateAnimationClips();
-                            }
+                            CommandButton("Instantiate Animation Clips", () => new GenerateAnimationClipsCommand(_questReplacer, _context));
                         }
                     }
                 }
 
-                if (GUILayout.Button("Cleanup"))
-                {
-                    CleanupPairs();
-                }
+                CommandButton("Cleanup", () => new CleanupPairsCommand(_questReplacer, _context));
 
                 using (new BoxLayoutScope())
                 {
@@ -165,22 +147,13 @@ namespace Silksprite.QuestReplacer
                     {
                         using (new EditorGUILayout.HorizontalScope())
                         {
-                            if (GUILayout.Button("Load"))
-                            {
-                                LoadFromDatabase();
-                            }
-                            if (GUILayout.Button("Save"))
-                            {
-                                SaveToDatabase();
-                            }
+                            CommandButton("Load", () => new LoadFromDatabaseCommand(_questReplacer, _context));
+                            CommandButton("Save", () => new SaveToDatabaseCommand(_questReplacer, _context));
                         }
                     }
                     else
                     {
-                        if (GUILayout.Button("Create"))
-                        {
-                            CreateDatabase();
-                        }
+                        CommandButton("Create", () => new CreateDatabaseCommand(_questReplacer, _context));
                     }
                 }
                 EditorGUILayout.PropertyField(_serializedOverrideConfig);
@@ -189,10 +162,7 @@ namespace Silksprite.QuestReplacer
                     if (_serializedOverrideConfig.boolValue)
                     {
                         EditorGUILayout.PropertyField(_serializedConfig);
-                        if (GUILayout.Button("Reset"))
-                        {
-                            ResetConfig();
-                        }
+                        CommandButton("Reset", () => new ResetConfigCommand(_questReplacer, _context));
                     }
                     else if (_questReplacer.database)
                     {
@@ -231,72 +201,20 @@ namespace Silksprite.QuestReplacer
                     using (new EditorGUI.DisabledScope(!(hasTargets && pairs.Length > 0)))
                     using (new EditorGUI.DisabledScope(requireForce != _force))
                     {
-                        if (GUILayout.Button("To Left"))
-                        {
-                            Convert(false);
-                        }
-                        if (GUILayout.Button("To Right"))
-                        {
-                            Convert(true);
-                        }
+                        CommandButton("To Left", () => new ConvertCommand(_questReplacer, _context, false));
+                        CommandButton("To Right", () => new ConvertCommand(_questReplacer, _context, true));
                     }
                 }
             }
         }
-        void Collect<T>()
-            where T : Object
-        {
-            new CollectCommand<T>(_questReplacer, _context).Execute();
-            RecreateContext();
-        }
 
-        void CleanupPairs()
+        void CommandButton(string label, Func<CommandBase> command)
         {
-            new CleanupPairsCommand(_questReplacer, _context).Execute();
-            RecreateContext();
+            if (GUILayout.Button(label))
+            {
+                command().Execute();
+                RecreateContext();
+            }
         }
-
-        void CreateDatabase()
-        {
-            new CreateDatabaseCommand(_questReplacer, _context).Execute();
-            RecreateContext();
-        }
-
-        void GenerateMaterials()
-        {
-            new GenerateMaterialsCommand(_questReplacer, _context).Execute();
-            RecreateContext();
-        }
-
-        void GenerateAnimationClips()
-        {
-            new GenerateAnimationClipsCommand(_questReplacer, _context).Execute();
-            RecreateContext();
-        }
-
-        void LoadFromDatabase()
-        {
-            new LoadFromDatabaseCommand(_questReplacer, _context).Execute();
-            RecreateContext();
-        }
-
-        void SaveToDatabase()
-        {
-            new SaveToDatabaseCommand(_questReplacer, _context).Execute();
-            RecreateContext();
-        }
-
-        void Convert(bool toRight)
-        {
-            new ConvertCommand(_questReplacer, _context, toRight).Execute();
-            RecreateContext();
-        }
-
-        void ResetConfig()
-        {
-            new ResetConfigCommand(_questReplacer, _context).Execute();
-            RecreateContext();
-        }
-
     }
 }
