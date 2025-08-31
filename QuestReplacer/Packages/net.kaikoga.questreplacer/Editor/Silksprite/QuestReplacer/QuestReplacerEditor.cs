@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using Silksprite.QuestReplacer.Context;
 using Silksprite.QuestReplacer.Context.Commands;
 using Silksprite.QuestReplacer.Extensions;
@@ -83,10 +82,14 @@ namespace Silksprite.QuestReplacer
                     }
                 }
 
+                CommandButton("Cleanup", () => new CleanupPairsCommand(_questReplacer));
+
                 if (config.manageMaterials)
                 {
-                    QuestReplacerGUILayout.Header("Materials");
-                    EditorGUILayout.LabelField("Quest Status", $"{_context.ToQuestStatus<Material>()}");
+                    using (new BoxLayoutScope())
+                    {
+                        QuestReplacerGUILayout.Header("Materials");
+                        EditorGUILayout.LabelField("Quest Status", $"{_context.ToQuestStatus<Material>()}");
 
                         using (new EditorGUI.DisabledScope(!hasTargets))
                         {
@@ -95,7 +98,7 @@ namespace Silksprite.QuestReplacer
 
                         if (_serializedDatabase.objectReferenceValue && _questReplacer.HasLikelyUnset<Material>())
                         {
-                            var hasPlatformSupport = _questReplacer.EnsureDatabase(null).HasGenerateModeSupport(); 
+                            var hasPlatformSupport = _questReplacer.EnsureDatabase(null).HasGenerateModeSupport();
                             if (!hasPlatformSupport)
                             {
                                 EditorGUILayout.HelpBox("マテリアルの自動変換に必要なライブラリがインポートされてないか、非対応の変換です。", MessageType.Error);
@@ -105,35 +108,40 @@ namespace Silksprite.QuestReplacer
                                 CommandButton($"{config.materialGenerationMode} Materials", () => new GenerateMaterialsCommand(_questReplacer));
                             }
                         }
+                    }
                 }
                 if (config.manageMeshes)
                 {
-                    QuestReplacerGUILayout.Header("Meshes");
-                    EditorGUILayout.LabelField("Quest Status", $"{_context.ToQuestStatus<Mesh>()}");
-
-                    using (new EditorGUI.DisabledScope(!hasTargets))
+                    using (new BoxLayoutScope())
                     {
-                        CommandButton("Collect",  () => new CollectCommand<Mesh>(_questReplacer));
+                        QuestReplacerGUILayout.Header("Meshes");
+                        EditorGUILayout.LabelField("Quest Status", $"{_context.ToQuestStatus<Mesh>()}");
+
+                        using (new EditorGUI.DisabledScope(!hasTargets))
+                        {
+                            CommandButton("Collect", () => new CollectCommand<Mesh>(_questReplacer));
+                        }
                     }
                 }
 
                 if (config.manageAnimationClips)
                 {
-                    QuestReplacerGUILayout.Header("AnimationClips");
-                    EditorGUILayout.LabelField("Quest Status", $"{_context.ToQuestStatus<AnimationClip>()}");
+                    using (new BoxLayoutScope())
+                    {
+                        QuestReplacerGUILayout.Header("AnimationClips");
+                        EditorGUILayout.LabelField("Quest Status", $"{_context.ToQuestStatus<AnimationClip>()}");
 
-                    using (new EditorGUI.DisabledScope(!hasTargets))
-                    {
-                        CommandButton("Collect", () => new CollectCommand<AnimationClip>(_questReplacer));
-                    }
-                
-                    if (_serializedDatabase.objectReferenceValue && _questReplacer.HasLikelyUnset<AnimationClip>())
-                    {
-                        CommandButton("Instantiate Animation Clips", () => new GenerateAnimationClipsCommand(_questReplacer));
+                        using (new EditorGUI.DisabledScope(!hasTargets))
+                        {
+                            CommandButton("Collect", () => new CollectCommand<AnimationClip>(_questReplacer));
+                        }
+
+                        if (_serializedDatabase.objectReferenceValue && _questReplacer.HasLikelyUnset<AnimationClip>())
+                        {
+                            CommandButton("Instantiate Animation Clips", () => new GenerateAnimationClipsCommand(_questReplacer));
+                        }
                     }
                 }
-
-                CommandButton("Cleanup", () => new CleanupPairsCommand(_questReplacer));
 
                 using (new BoxLayoutScope())
                 {
