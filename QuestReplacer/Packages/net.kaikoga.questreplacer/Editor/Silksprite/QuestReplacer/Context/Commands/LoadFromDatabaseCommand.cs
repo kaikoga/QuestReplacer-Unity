@@ -8,15 +8,15 @@ namespace Silksprite.QuestReplacer.Context.Commands
     {
         protected override string Name => "QuestReplacer: Load";
 
-        public LoadFromDatabaseCommand(QuestReplacer questReplacer, QuestReplacerContext context) : base(questReplacer, context)
+        public LoadFromDatabaseCommand(QuestReplacer questReplacer) : base(questReplacer)
         {
         }
 
-        protected override void DoExecute(QuestReplacer questReplacer, QuestReplacerContext context)
+        protected override void DoExecute()
         {
             var db = EnsureDatabase(false);
-            questReplacer.pairs = questReplacer.pairs.Update(db.pairs).ToList();
-            questReplacer.AddEntries(context.DeepCollectReferences<Object>(), db, false);
+            QuestReplacer.pairs = QuestReplacer.pairs.Update(db.pairs).ToList();
+            QuestReplacer.AddEntries(Context.DeepCollectReferences<Object>(), db, false);
         }
     }
 }

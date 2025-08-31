@@ -7,13 +7,13 @@ namespace Silksprite.QuestReplacer.Context.Commands
     {
         protected override string Name => "QuestReplacer: Create Database";
 
-        public CreateDatabaseCommand(QuestReplacer questReplacer, QuestReplacerContext context) : base(questReplacer, context)
+        public CreateDatabaseCommand(QuestReplacer questReplacer) : base(questReplacer)
         {
         }
 
-        protected override void DoExecute(QuestReplacer questReplacer, QuestReplacerContext context)
+        protected override void DoExecute()
         {
-            questReplacer.CreateDatabase(QuestReplacerPlatform.VRChatMobile, QuestReplacerMaterialGenerationMode.GenerateVRChatToonStandard);
+            QuestReplacer.CreateDatabase(QuestReplacerPlatform.VRChatMobile, QuestReplacerMaterialGenerationMode.GenerateVRChatToonStandard);
         }
     }
 }

@@ -6,13 +6,13 @@ namespace Silksprite.QuestReplacer.Context.Commands
     {
         protected override string Name => "QuestReplacer: Cleanup";
 
-        public CleanupPairsCommand(QuestReplacer questReplacer, QuestReplacerContext context) : base(questReplacer, context)
+        public CleanupPairsCommand(QuestReplacer questReplacer) : base(questReplacer)
         {
         }
 
-        protected override void DoExecute(QuestReplacer questReplacer, QuestReplacerContext context)
+        protected override void DoExecute()
         {
-            questReplacer.pairs = questReplacer.pairs.Where(pair => !pair.LikelyUnset).ToList();
+            QuestReplacer.pairs = QuestReplacer.pairs.Where(pair => !pair.LikelyUnset).ToList();
         }
     }
 }

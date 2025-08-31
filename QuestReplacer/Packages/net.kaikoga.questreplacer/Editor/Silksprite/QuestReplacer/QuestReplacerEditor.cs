@@ -90,7 +90,7 @@ namespace Silksprite.QuestReplacer
                     using (new EditorGUILayout.HorizontalScope())
                     {
                         EditorGUILayout.LabelField("Quest Material Status", $"{_context.ToQuestStatus<Material>()}");
-                        CommandButton("Collect", () => new CollectCommand<Material>(_questReplacer, _context));
+                        CommandButton("Collect", () => new CollectCommand<Material>(_questReplacer));
                     }
 
                     if (pairs.Any(pair => pair.LikelyUnset))
@@ -105,7 +105,7 @@ namespace Silksprite.QuestReplacer
                             }
                             using (new EditorGUI.DisabledScope(!hasPlatformSupport))
                             {
-                                CommandButton($"{config.materialGenerationMode} Materials", () => new GenerateMaterialsCommand(_questReplacer, _context));
+                                CommandButton($"{config.materialGenerationMode} Materials", () => new GenerateMaterialsCommand(_questReplacer));
                             }
                         }
                     }
@@ -116,7 +116,7 @@ namespace Silksprite.QuestReplacer
                     using (new EditorGUILayout.HorizontalScope())
                     {
                         EditorGUILayout.LabelField("Quest Mesh Status", $"{_context.ToQuestStatus<Mesh>()}");
-                        CommandButton("Collect",  () => new CollectCommand<Mesh>(_questReplacer, _context));
+                        CommandButton("Collect",  () => new CollectCommand<Mesh>(_questReplacer));
                     }
                 }
 
@@ -126,19 +126,19 @@ namespace Silksprite.QuestReplacer
                     using (new EditorGUILayout.HorizontalScope())
                     {
                         EditorGUILayout.LabelField("Quest Animation Clip Status", $"{_context.ToQuestStatus<AnimationClip>()}");
-                        CommandButton("Collect", () => new CollectCommand<AnimationClip>(_questReplacer, _context));
+                        CommandButton("Collect", () => new CollectCommand<AnimationClip>(_questReplacer));
                     }
                     
                     if (pairs.Any(pair => pair.LikelyUnset))
                     {
                         if (_serializedDatabase.objectReferenceValue)
                         {
-                            CommandButton("Instantiate Animation Clips", () => new GenerateAnimationClipsCommand(_questReplacer, _context));
+                            CommandButton("Instantiate Animation Clips", () => new GenerateAnimationClipsCommand(_questReplacer));
                         }
                     }
                 }
 
-                CommandButton("Cleanup", () => new CleanupPairsCommand(_questReplacer, _context));
+                CommandButton("Cleanup", () => new CleanupPairsCommand(_questReplacer));
 
                 using (new BoxLayoutScope())
                 {
@@ -147,13 +147,13 @@ namespace Silksprite.QuestReplacer
                     {
                         using (new EditorGUILayout.HorizontalScope())
                         {
-                            CommandButton("Load", () => new LoadFromDatabaseCommand(_questReplacer, _context));
-                            CommandButton("Save", () => new SaveToDatabaseCommand(_questReplacer, _context));
+                            CommandButton("Load", () => new LoadFromDatabaseCommand(_questReplacer));
+                            CommandButton("Save", () => new SaveToDatabaseCommand(_questReplacer));
                         }
                     }
                     else
                     {
-                        CommandButton("Create", () => new CreateDatabaseCommand(_questReplacer, _context));
+                        CommandButton("Create", () => new CreateDatabaseCommand(_questReplacer));
                     }
                 }
                 EditorGUILayout.PropertyField(_serializedOverrideConfig);
@@ -162,7 +162,7 @@ namespace Silksprite.QuestReplacer
                     if (_serializedOverrideConfig.boolValue)
                     {
                         EditorGUILayout.PropertyField(_serializedConfig);
-                        CommandButton("Reset", () => new ResetConfigCommand(_questReplacer, _context));
+                        CommandButton("Reset", () => new ResetConfigCommand(_questReplacer));
                     }
                     else if (_questReplacer.database)
                     {
@@ -201,8 +201,8 @@ namespace Silksprite.QuestReplacer
                     using (new EditorGUI.DisabledScope(!(hasTargets && pairs.Length > 0)))
                     using (new EditorGUI.DisabledScope(requireForce != _force))
                     {
-                        CommandButton("To Left", () => new ConvertCommand(_questReplacer, _context, false));
-                        CommandButton("To Right", () => new ConvertCommand(_questReplacer, _context, true));
+                        CommandButton("To Left", () => new ConvertCommand(_questReplacer, false));
+                        CommandButton("To Right", () => new ConvertCommand(_questReplacer, true));
                     }
                 }
             }

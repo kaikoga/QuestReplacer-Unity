@@ -10,15 +10,15 @@ namespace Silksprite.QuestReplacer.Context.Commands
     {
         protected override string Name => "QuestReplacer: Generate AnimationClips";
 
-        public GenerateAnimationClipsCommand(QuestReplacer questReplacer, QuestReplacerContext context) : base(questReplacer, context)
+        public GenerateAnimationClipsCommand(QuestReplacer questReplacer) : base(questReplacer)
         {
         }
 
-        protected override void DoExecute(QuestReplacer questReplacer, QuestReplacerContext context)
+        protected override void DoExecute()
         {
             var duplicator = EnsureDatabase(false)
                 .CreateAnimationClipAssetDuplicator(QuestReplacerAnimationClipGenerationMode.Instantiate);
-            foreach (var pair in questReplacer.pairs.Where(pair => pair.LikelyUnset))
+            foreach (var pair in QuestReplacer.pairs.Where(pair => pair.LikelyUnset))
             {
                 if (pair.left is AnimationClip leftAnimationClip)
                 {

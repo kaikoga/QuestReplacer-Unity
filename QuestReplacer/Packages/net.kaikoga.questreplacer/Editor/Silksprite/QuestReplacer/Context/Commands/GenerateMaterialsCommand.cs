@@ -9,15 +9,15 @@ namespace Silksprite.QuestReplacer.Context.Commands
     {
         protected override string Name => "QuestReplacer: Generate Materials";
 
-        public GenerateMaterialsCommand(QuestReplacer questReplacer, QuestReplacerContext context) : base(questReplacer, context)
+        public GenerateMaterialsCommand(QuestReplacer questReplacer) : base(questReplacer)
         {
         }
 
-        protected override void DoExecute(QuestReplacer questReplacer, QuestReplacerContext context)
+        protected override void DoExecute()
         {
             var duplicator = EnsureDatabase(false)
-                .CreateMaterialAssetDuplicator(questReplacer.Config.materialGenerationMode);
-            foreach (var pair in questReplacer.pairs.Where(pair => pair.LikelyUnset))
+                .CreateMaterialAssetDuplicator(QuestReplacer.Config.materialGenerationMode);
+            foreach (var pair in QuestReplacer.pairs.Where(pair => pair.LikelyUnset))
             {
                 if (pair.left is Material leftMaterial)
                 {

@@ -8,20 +8,22 @@ namespace Silksprite.QuestReplacer.Context.Commands
         protected abstract string Name { get; }
         protected virtual bool InvalidateTypeFilters => true;
 
-        readonly QuestReplacer _questReplacer;
-        readonly QuestReplacerContext _context;
+        protected readonly QuestReplacer QuestReplacer;
+        QuestReplacerContext _context;
         QuestReplacerDatabase _database;
 
-        protected CommandBase(QuestReplacer questReplacer, QuestReplacerContext context)
+        protected QuestReplacerContext Context => _context ??= QuestReplacer.ToContext(false);
+
+        protected CommandBase(QuestReplacer questReplacer)
         {
-            _questReplacer = questReplacer;
-            _context = context;
+            QuestReplacer = questReplacer;
         }
+
 
         protected QuestReplacerDatabase EnsureDatabase(bool forUpdate)
         {
             if (_database) return _database;
-            _database = _questReplacer.EnsureDatabase(null);
+            _database = QuestReplacer.EnsureDatabase(null);
             if (forUpdate) Undo.RecordObject(_database, Name);
             return _database;
 
@@ -30,15 +32,15 @@ namespace Silksprite.QuestReplacer.Context.Commands
         public void Execute()
         {
             Undo.SetCurrentGroupName(Name);
-            Undo.RecordObject(_questReplacer, Name);
-            DoExecute(_questReplacer, _context);
+            Undo.RecordObject(QuestReplacer, Name);
+            DoExecute();
             if (InvalidateTypeFilters)
             {
-                UpdateTypeFilters(_questReplacer, _context);
+                UpdateTypeFilters(QuestReplacer, _context);
             }
         }
 
-        protected abstract void DoExecute(QuestReplacer questReplacer, QuestReplacerContext context);
+        protected abstract void DoExecute();
 
         protected void UpdateTypeFilters(QuestReplacer questReplacer, QuestReplacerContext context)
         {

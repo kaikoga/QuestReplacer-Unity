@@ -7,13 +7,13 @@ namespace Silksprite.QuestReplacer.Context.Commands
     {
         protected override string Name => "QuestReplacer: Collect";
 
-        public CollectCommand(QuestReplacer questReplacer, QuestReplacerContext context) : base(questReplacer, context)
+        public CollectCommand(QuestReplacer questReplacer) : base(questReplacer)
         {
         }
 
-        protected override void DoExecute(QuestReplacer questReplacer, QuestReplacerContext context)
+        protected override void DoExecute()
         {
-            questReplacer.AddEntries(context.DeepCollectReferences<T>(), null, true);
+            QuestReplacer.AddEntries(Context.DeepCollectReferences<T>(), null, true);
         }
     }
 }
