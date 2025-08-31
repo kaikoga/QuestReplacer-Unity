@@ -10,6 +10,14 @@ namespace Silksprite.QuestReplacer.Extensions
 {
     public static class QuestReplacerExtensions
     {
+        public static bool HasLikelyUnset<T>(this QuestReplacer questReplacer)
+            where T : UnityEngine.Object
+        {
+            return questReplacer.pairs
+                .Where(pair => pair.left is T)
+                .Any(pair => pair.LikelyUnset);
+        }
+
         public static Transform NdmfAvatarRootTransform(this QuestReplacer questReplacer)
         {
 #if QUESTREPLACER_NDMF_SUPPORT

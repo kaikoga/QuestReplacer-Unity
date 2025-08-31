@@ -93,9 +93,9 @@ namespace Silksprite.QuestReplacer
                         CommandButton("Collect", () => new CollectCommand<Material>(_questReplacer));
                     }
 
-                    if (pairs.Any(pair => pair.LikelyUnset))
+                    if (_serializedDatabase.objectReferenceValue)
                     {
-                        if (_serializedDatabase.objectReferenceValue)
+                        if (_questReplacer.HasLikelyUnset<Material>())
                         {
                             var db = _questReplacer.EnsureDatabase(null);
                             var hasPlatformSupport = db.HasGenerateModeSupport(); 
@@ -129,9 +129,9 @@ namespace Silksprite.QuestReplacer
                         CommandButton("Collect", () => new CollectCommand<AnimationClip>(_questReplacer));
                     }
                     
-                    if (pairs.Any(pair => pair.LikelyUnset))
+                    if (_serializedDatabase.objectReferenceValue)
                     {
-                        if (_serializedDatabase.objectReferenceValue)
+                        if (_questReplacer.HasLikelyUnset<AnimationClip>())
                         {
                             CommandButton("Instantiate Animation Clips", () => new GenerateAnimationClipsCommand(_questReplacer));
                         }
@@ -164,7 +164,7 @@ namespace Silksprite.QuestReplacer
                         EditorGUILayout.PropertyField(_serializedConfig);
                         CommandButton("Reset", () => new ResetConfigCommand(_questReplacer));
                     }
-                    else if (_questReplacer.database)
+                    else if (_serializedDatabase.objectReferenceValue)
                     {
                         using (new EditorGUI.DisabledScope(true))
                         {
