@@ -83,22 +83,19 @@ namespace Silksprite.QuestReplacer
                     }
                 }
 
-                var pairs = _questReplacer.pairs.ToArray();
                 if (config.manageMaterials)
                 {
-                    using (new EditorGUI.DisabledScope(!hasTargets))
-                    using (new EditorGUILayout.HorizontalScope())
-                    {
-                        EditorGUILayout.LabelField("Quest Material Status", $"{_context.ToQuestStatus<Material>()}");
-                        CommandButton("Collect", () => new CollectCommand<Material>(_questReplacer));
-                    }
+                    QuestReplacerGUILayout.Header("Materials");
+                    EditorGUILayout.LabelField("Quest Status", $"{_context.ToQuestStatus<Material>()}");
 
-                    if (_serializedDatabase.objectReferenceValue)
-                    {
-                        if (_questReplacer.HasLikelyUnset<Material>())
+                        using (new EditorGUI.DisabledScope(!hasTargets))
                         {
-                            var db = _questReplacer.EnsureDatabase(null);
-                            var hasPlatformSupport = db.HasGenerateModeSupport(); 
+                            CommandButton("Collect", () => new CollectCommand<Material>(_questReplacer));
+                        }
+
+                        if (_serializedDatabase.objectReferenceValue && _questReplacer.HasLikelyUnset<Material>())
+                        {
+                            var hasPlatformSupport = _questReplacer.EnsureDatabase(null).HasGenerateModeSupport(); 
                             if (!hasPlatformSupport)
                             {
                                 EditorGUILayout.HelpBox("マテリアルの自動変換に必要なライブラリがインポートされてないか、非対応の変換です。", MessageType.Error);
@@ -108,33 +105,31 @@ namespace Silksprite.QuestReplacer
                                 CommandButton($"{config.materialGenerationMode} Materials", () => new GenerateMaterialsCommand(_questReplacer));
                             }
                         }
-                    }
                 }
                 if (config.manageMeshes)
                 {
+                    QuestReplacerGUILayout.Header("Meshes");
+                    EditorGUILayout.LabelField("Quest Status", $"{_context.ToQuestStatus<Mesh>()}");
+
                     using (new EditorGUI.DisabledScope(!hasTargets))
-                    using (new EditorGUILayout.HorizontalScope())
                     {
-                        EditorGUILayout.LabelField("Quest Mesh Status", $"{_context.ToQuestStatus<Mesh>()}");
                         CommandButton("Collect",  () => new CollectCommand<Mesh>(_questReplacer));
                     }
                 }
 
                 if (config.manageAnimationClips)
                 {
+                    QuestReplacerGUILayout.Header("AnimationClips");
+                    EditorGUILayout.LabelField("Quest Status", $"{_context.ToQuestStatus<AnimationClip>()}");
+
                     using (new EditorGUI.DisabledScope(!hasTargets))
-                    using (new EditorGUILayout.HorizontalScope())
                     {
-                        EditorGUILayout.LabelField("Quest Animation Clip Status", $"{_context.ToQuestStatus<AnimationClip>()}");
                         CommandButton("Collect", () => new CollectCommand<AnimationClip>(_questReplacer));
                     }
-                    
-                    if (_serializedDatabase.objectReferenceValue)
+                
+                    if (_serializedDatabase.objectReferenceValue && _questReplacer.HasLikelyUnset<AnimationClip>())
                     {
-                        if (_questReplacer.HasLikelyUnset<AnimationClip>())
-                        {
-                            CommandButton("Instantiate Animation Clips", () => new GenerateAnimationClipsCommand(_questReplacer));
-                        }
+                        CommandButton("Instantiate Animation Clips", () => new GenerateAnimationClipsCommand(_questReplacer));
                     }
                 }
 
@@ -176,11 +171,18 @@ namespace Silksprite.QuestReplacer
 
                 if (changed.changed)
                 {
+                    serializedObject.ApplyModifiedProperties();
                     RecreateContext();
                 }
-                serializedObject.ApplyModifiedProperties();
+                else
+                {
+                    serializedObject.ApplyModifiedProperties();
+                }
+            }
 
-                var isReversible = pairs.Validate(out var messages);
+            using (new EditorGUILayout.HorizontalScope())
+            {
+                var isReversible = _questReplacer.pairs.Validate(out var messages);
                 var requireForce = false;
                 if (!isReversible)
                 {
@@ -195,15 +197,11 @@ namespace Silksprite.QuestReplacer
                 }
 
                 _force = requireForce && EditorGUILayout.Toggle("確認した", _force);
-
-                using (new EditorGUILayout.HorizontalScope())
+                using (new EditorGUI.DisabledScope(!(hasTargets && _questReplacer.pairs.Count > 0)))
+                using (new EditorGUI.DisabledScope(requireForce != _force))
                 {
-                    using (new EditorGUI.DisabledScope(!(hasTargets && pairs.Length > 0)))
-                    using (new EditorGUI.DisabledScope(requireForce != _force))
-                    {
-                        CommandButton("To Left", () => new ConvertCommand(_questReplacer, false));
-                        CommandButton("To Right", () => new ConvertCommand(_questReplacer, true));
-                    }
+                    CommandButton("To Left", () => new ConvertCommand(_questReplacer, false));
+                    CommandButton("To Right", () => new ConvertCommand(_questReplacer, true));
                 }
             }
         }
