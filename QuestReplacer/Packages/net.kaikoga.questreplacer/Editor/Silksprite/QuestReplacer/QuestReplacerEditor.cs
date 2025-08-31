@@ -188,23 +188,23 @@ namespace Silksprite.QuestReplacer
                 }
             }
 
+            var isReversible = _questReplacer.pairs.Validate(out var messages);
+            var requireForce = false;
+            if (!isReversible)
+            {
+                EditorGUILayout.HelpBox($"置き換え設定を確認してください。\n{string.Join("\n", messages)}", MessageType.Error);
+                requireForce = true;
+            }
+            
+            if (AvatarRootTransform)
+            {
+                EditorGUILayout.HelpBox("NDMF連携が有効です。置き換えの結果はNDMFプレビューとして表示されるため、手動置き換え操作は不要です。", MessageType.Info);
+                requireForce = true;
+            }
+
+            _force = requireForce && EditorGUILayout.Toggle("確認した", _force);
             using (new EditorGUILayout.HorizontalScope())
             {
-                var isReversible = _questReplacer.pairs.Validate(out var messages);
-                var requireForce = false;
-                if (!isReversible)
-                {
-                    EditorGUILayout.HelpBox($"置き換え設定を確認してください。\n{string.Join("\n", messages)}", MessageType.Error);
-                    requireForce = true;
-                }
-                
-                if (AvatarRootTransform)
-                {
-                    EditorGUILayout.HelpBox("NDMF連携が有効です。置き換えの結果はNDMFプレビューとして表示されるため、手動置き換え操作は不要です。", MessageType.Info);
-                    requireForce = true;
-                }
-
-                _force = requireForce && EditorGUILayout.Toggle("確認した", _force);
                 using (new EditorGUI.DisabledScope(!(hasTargets && _questReplacer.pairs.Count > 0)))
                 using (new EditorGUI.DisabledScope(requireForce != _force))
                 {
