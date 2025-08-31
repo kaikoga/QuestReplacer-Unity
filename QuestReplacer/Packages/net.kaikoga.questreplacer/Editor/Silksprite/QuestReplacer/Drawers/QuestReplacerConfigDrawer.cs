@@ -19,6 +19,7 @@ namespace Silksprite.QuestReplacer
             EditorGUI.PropertyField(position, platform);
             position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
             EditorGUI.PropertyField(position, generateMode);
+            EditorGUIUtility.labelWidth += 60f;
             position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
             EditorGUI.PropertyField(position, manageMaterials);
             position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
@@ -29,6 +30,7 @@ namespace Silksprite.QuestReplacer
             position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
             EditorGUI.PropertyField(position, targetVRChatAnimations, new GUIContent("NDMF VRChat Animations"));
 #endif
+            EditorGUIUtility.labelWidth -= 60f;
         }
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
