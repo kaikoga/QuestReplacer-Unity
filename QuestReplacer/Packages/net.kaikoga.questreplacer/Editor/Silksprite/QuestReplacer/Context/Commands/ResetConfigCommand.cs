@@ -2,9 +2,13 @@ using UnityEditor;
 
 namespace Silksprite.QuestReplacer.Context.Commands
 {
-    public static class ResetConfigCommand
+    public class ResetConfigCommand : CommandBase
     {
-        public static void DoResetConfig(QuestReplacer questReplacer)
+        public ResetConfigCommand(QuestReplacer questReplacer, QuestReplacerContext context) : base(questReplacer, context)
+        {
+        }
+
+        protected override void DoExecute(QuestReplacer questReplacer, QuestReplacerContext context)
         {
             Undo.SetCurrentGroupName("QuestReplacer: Reset Config");
             Undo.RecordObject(questReplacer, "QuestReplacer: Reset Config");

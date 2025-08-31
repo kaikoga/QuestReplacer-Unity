@@ -3,13 +3,19 @@ using UnityEngine;
 
 namespace Silksprite.QuestReplacer.Context.Commands
 {
-    public static class ConvertCommand
+    public class ConvertCommand : CommandBase
     {
-        public static void DoConvert(bool toRight, QuestReplacer questReplacer, QuestReplacerContext context)
+        readonly bool _toRight;
+
+        public ConvertCommand(QuestReplacer questReplacer, QuestReplacerContext context, bool toRight) : base(questReplacer, context)
         {
-            Undo.SetCurrentGroupName(toRight ? "QuestReplacer: To Right" : "QuestReplacer: To Left");
-            CommandBase.UpdateTypeFilters(questReplacer, context);
-            context.DeepOverrideReferences<Object>(toRight, withAssets: false);
+            _toRight = toRight;
+        }
+        protected override void DoExecute(QuestReplacer questReplacer, QuestReplacerContext context)
+        {
+            Undo.SetCurrentGroupName(_toRight ? "QuestReplacer: To Right" : "QuestReplacer: To Left");
+            UpdateTypeFilters(questReplacer, context);
+            context.DeepOverrideReferences<Object>(_toRight, withAssets: false);
         }
     }
 }

@@ -1,6 +1,5 @@
 using System.Linq;
 using Silksprite.QuestReplacer.Context;
-using Silksprite.QuestReplacer.Assets;
 using Silksprite.QuestReplacer.Context.Commands;
 using Silksprite.QuestReplacer.Extensions;
 using Silksprite.QuestReplacer.Scopes;
@@ -247,55 +246,55 @@ namespace Silksprite.QuestReplacer
         void Collect<T>()
             where T : Object
         {
-            CollectCommand.DoCollect<T>(_questReplacer, _context);
+            new CollectCommand<T>(_questReplacer, _context).Execute();
             RecreateContext();
         }
 
         void CleanupPairs()
         {
-            CleanupPairsCommand.DoCleanupPairs(_questReplacer, _context);
+            new CleanupPairsCommand(_questReplacer, _context).Execute();
             RecreateContext();
         }
 
         void CreateDatabase()
         {
-            CreateDatabaseCommand.DoCreateDatabase(_questReplacer, _context);
+            new CreateDatabaseCommand(_questReplacer, _context).Execute();
             RecreateContext();
         }
 
         void GenerateMaterials()
         {
-            GenerateMaterialsCommand.DoGenerateMaterials(_questReplacer, _context);
+            new GenerateMaterialsCommand(_questReplacer, _context).Execute();
             RecreateContext();
         }
 
         void GenerateAnimationClips()
         {
-            GenerateAnimationClipsCommand.DoGenerateAnimationClips(_questReplacer, _context);
+            new GenerateAnimationClipsCommand(_questReplacer, _context).Execute();
             RecreateContext();
         }
 
         void LoadFromDatabase()
         {
-            LoadFromDatabaseCommand.DoLoadFromDatabase(_questReplacer, _context);
+            new LoadFromDatabaseCommand(_questReplacer, _context).Execute();
             RecreateContext();
         }
 
         void SaveToDatabase()
         {
-            SaveToDatabaseCommand.DoSaveToDatabase(_questReplacer, _context);
+            new SaveToDatabaseCommand(_questReplacer, _context).Execute();
             RecreateContext();
         }
 
         void Convert(bool toRight)
         {
-            ConvertCommand.DoConvert(toRight, _questReplacer, _context);
+            new ConvertCommand(_questReplacer, _context, toRight).Execute();
             RecreateContext();
         }
 
         void ResetConfig()
         {
-            ResetConfigCommand.DoResetConfig(_questReplacer);
+            new ResetConfigCommand(_questReplacer, _context).Execute();
             RecreateContext();
         }
 

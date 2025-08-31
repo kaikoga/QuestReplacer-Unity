@@ -5,9 +5,13 @@ using UnityEngine;
 
 namespace Silksprite.QuestReplacer.Context.Commands
 {
-    public static class GenerateMaterialsCommand
+    public class GenerateMaterialsCommand : CommandBase
     {
-        public static void DoGenerateMaterials(QuestReplacer questReplacer, QuestReplacerContext context)
+        public GenerateMaterialsCommand(QuestReplacer questReplacer, QuestReplacerContext context) : base(questReplacer, context)
+        {
+        }
+
+        protected override void DoExecute(QuestReplacer questReplacer, QuestReplacerContext context)
         {
             var duplicator = questReplacer.EnsureDatabase(null).CreateMaterialAssetDuplicator(questReplacer.Config.materialGenerationMode);
             Undo.SetCurrentGroupName("QuestReplacer: Generate Materials");
@@ -21,7 +25,7 @@ namespace Silksprite.QuestReplacer.Context.Commands
                     pair.right = rightMaterial; 
                 }
             }
-            CommandBase.UpdateTypeFilters(questReplacer, context);
+            UpdateTypeFilters(questReplacer, context);
         }
     }
 }

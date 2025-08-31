@@ -6,9 +6,13 @@ using UnityEngine;
 
 namespace Silksprite.QuestReplacer.Context.Commands
 {
-    public static class GenerateAnimationClipsCommand
+    public class GenerateAnimationClipsCommand : CommandBase
     {
-        public static void DoGenerateAnimationClips(QuestReplacer questReplacer, QuestReplacerContext context)
+        public GenerateAnimationClipsCommand(QuestReplacer questReplacer, QuestReplacerContext context) : base(questReplacer, context)
+        {
+        }
+
+        protected override void DoExecute(QuestReplacer questReplacer, QuestReplacerContext context)
         {
             var duplicator = questReplacer
                 .EnsureDatabase(null)
@@ -24,7 +28,7 @@ namespace Silksprite.QuestReplacer.Context.Commands
                     pair.right = rightMaterial; 
                 }
             }
-            CommandBase.UpdateTypeFilters(questReplacer, context);
+            UpdateTypeFilters(questReplacer, context);
         }
     }
 }
