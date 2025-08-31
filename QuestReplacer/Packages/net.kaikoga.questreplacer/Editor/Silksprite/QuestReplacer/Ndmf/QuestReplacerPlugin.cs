@@ -10,6 +10,8 @@ using Object = UnityEngine.Object;
 
 namespace Silksprite.QuestReplacer.Ndmf
 {
+    // runs independently of NDMF platform
+    [RunsOnAllPlatforms]
     class QuestReplacerPlugin : Plugin<QuestReplacerPlugin>
     {
         public override string QualifiedName => "net.kaikoga.questreplacer";
