@@ -76,9 +76,9 @@ namespace Silksprite.QuestReplacer
                 using (var duplicateButton = new ShowDuplicateButtonScope())
                 {
                     _reorderablePairs.DoLayoutList();
-                    if (duplicateButton.DuplicateButtonClicked(out var propertyPath))
+                    if (duplicateButton.DuplicateButtonClicked(out var index))
                     {
-                        Debug.LogError(serializedObject.FindProperty(propertyPath));
+                        new GenerateSingleCommand(_questReplacer, index).Execute();
                     }
                 }
 

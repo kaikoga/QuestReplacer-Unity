@@ -1,4 +1,5 @@
 using System;
+using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 
@@ -8,19 +9,21 @@ namespace Silksprite.QuestReplacer
     public class QuestReplacementDrawer : PropertyDrawer
     {
         static bool _showDuplicateButton;
-        static string _duplicateButtonClickedPath;
+        static string _duplicateButtonClickedPath = "";
 
         public static void BeginShowDuplicateButton() => _showDuplicateButton = true;
         public static void EndShowDuplicateButton()
         {
-            _duplicateButtonClickedPath = null;
+            _duplicateButtonClickedPath = "";
             _showDuplicateButton = false;
         }
 
-        public static bool DuplicateButtonClicked(out string propertyPath)
+        static readonly Regex ArrayPattern = new Regex(@"^(?:[a-zA-Z0-9_]*)\.Array\.data\[([0-9]*)\]$");
+        public static bool DuplicateButtonClicked(out int index)
         {
-            propertyPath = _duplicateButtonClickedPath;
-            return propertyPath != null;
+            index = -1;
+            var match = ArrayPattern.Match(_duplicateButtonClickedPath);
+            return match.Success && int.TryParse(match.Groups[1].Value, out index);
         }
         
         static bool LikelyUnset(SerializedProperty serializedLeft, SerializedProperty serializedRight)
@@ -50,7 +53,7 @@ namespace Silksprite.QuestReplacer
                 right.width = 18f;
                 if (GUI.Button(right, "+"))
                 {
-                    Debug.Log(property.propertyPath);
+                    _duplicateButtonClickedPath = property.propertyPath;
                 }
             }
             else
@@ -65,7 +68,7 @@ namespace Silksprite.QuestReplacer
     public class ShowDuplicateButtonScope : IDisposable
     {
         public ShowDuplicateButtonScope() => QuestReplacementDrawer.BeginShowDuplicateButton();
-        public bool DuplicateButtonClicked(out string propertyPath) => QuestReplacementDrawer.DuplicateButtonClicked(out propertyPath);
+        public bool DuplicateButtonClicked(out int index) => QuestReplacementDrawer.DuplicateButtonClicked(out index);
         void IDisposable.Dispose() => QuestReplacementDrawer.EndShowDuplicateButton();
     }
 }

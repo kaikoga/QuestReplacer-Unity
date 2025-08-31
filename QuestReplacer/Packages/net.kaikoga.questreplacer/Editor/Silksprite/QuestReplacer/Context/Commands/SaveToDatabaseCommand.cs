@@ -13,7 +13,7 @@ namespace Silksprite.QuestReplacer.Context.Commands
 
         protected override void DoExecute()
         {
-            var db = EnsureDatabase(true);
+            var db = EnsureDatabase();
             db.pairs = db.pairs.Merge(QuestReplacer.pairs.Where(pair => !pair.LikelyUnset)).ToList();
             AssetDatabase.SaveAssetIfDirty(db);
         }

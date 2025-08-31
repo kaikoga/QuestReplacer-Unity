@@ -1,5 +1,7 @@
+using Silksprite.QuestReplacer.Assets;
 using Silksprite.QuestReplacer.Extensions;
 using UnityEditor;
+using UnityEngine;
 
 namespace Silksprite.QuestReplacer.Context.Commands
 {
@@ -11,6 +13,8 @@ namespace Silksprite.QuestReplacer.Context.Commands
         protected readonly QuestReplacer QuestReplacer;
         QuestReplacerContext _context;
         QuestReplacerDatabase _database;
+        AssetDuplicator<AnimationClip> _animationClipDuplicator;
+        AssetDuplicator<Material> _materialDuplicator;
 
         protected QuestReplacerContext Context => _context ??= QuestReplacer.ToContext(false);
 
@@ -19,14 +23,24 @@ namespace Silksprite.QuestReplacer.Context.Commands
             QuestReplacer = questReplacer;
         }
 
-
-        protected QuestReplacerDatabase EnsureDatabase(bool forUpdate)
+        protected QuestReplacerDatabase EnsureDatabase()
         {
             if (_database) return _database;
             _database = QuestReplacer.EnsureDatabase(null);
-            if (forUpdate) Undo.RecordObject(_database, Name);
+            Undo.RecordObject(_database, Name);
             return _database;
+        }
 
+        protected AssetDuplicator<AnimationClip> GetAnimationClipAssetDuplicator()
+        {
+            return _animationClipDuplicator ??= EnsureDatabase()
+                .CreateAnimationClipAssetDuplicator(QuestReplacerAnimationClipGenerationMode.Instantiate);
+        }
+
+        protected AssetDuplicator<Material> GetMaterialAssetDuplicator()
+        {
+            return _materialDuplicator ??= EnsureDatabase()
+                .CreateMaterialAssetDuplicator(QuestReplacer.Config.materialGenerationMode);
         }
 
         public void Execute()

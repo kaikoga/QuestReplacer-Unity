@@ -14,7 +14,7 @@ namespace Silksprite.QuestReplacer.Context.Commands
 
         protected override void DoExecute()
         {
-            var db = EnsureDatabase(false);
+            var db = EnsureDatabase();
             QuestReplacer.pairs = QuestReplacer.pairs.Update(db.pairs).ToList();
             QuestReplacer.AddEntries(Context.DeepCollectReferences<Object>(), db, false);
         }
