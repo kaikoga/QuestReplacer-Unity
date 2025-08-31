@@ -110,7 +110,7 @@ namespace Silksprite.QuestReplacer
                             {
                                 if (GUILayout.Button($"{config.materialGenerationMode} Materials"))
                                 {
-                                    GenerateMaterials(db.CreateMaterialAssetDuplicator(config.materialGenerationMode));
+                                    GenerateMaterials();
                                 }
                             }
                         }
@@ -147,9 +147,7 @@ namespace Silksprite.QuestReplacer
                         {
                             if (GUILayout.Button("Instantiate Animation Clips"))
                             {
-                                GenerateAnimationClips(_questReplacer
-                                    .EnsureDatabase(null)
-                                    .CreateAnimationClipAssetDuplicator(QuestReplacerAnimationClipGenerationMode.Instantiate));
+                                GenerateAnimationClips();
                             }
                         }
                     }
@@ -248,35 +246,57 @@ namespace Silksprite.QuestReplacer
         void Collect<T>()
             where T : Object
         {
-            Undo.SetCurrentGroupName("QuestReplacer: Collect");
-            Undo.RecordObject(_questReplacer, "QuestReplacer: Collect");
-            _questReplacer.AddEntries(_context.DeepCollectReferences<T>(), null, true);
-            UpdateTypeFilters();
+            DoCollect<T>(_questReplacer, _context);
             RecreateContext();
+        }
+
+        static void DoCollect<T>(QuestReplacer questReplacer, QuestReplacerContext context) where T : Object
+        {
+            Undo.SetCurrentGroupName("QuestReplacer: Collect");
+            Undo.RecordObject(questReplacer, "QuestReplacer: Collect");
+            questReplacer.AddEntries(context.DeepCollectReferences<T>(), null, true);
+            UpdateTypeFilters(questReplacer, context);
         }
 
         void CleanupPairs()
         {
-            Undo.SetCurrentGroupName("QuestReplacer: Cleanup");
-            Undo.RecordObject(_questReplacer, "QuestReplacer: Cleanup");
-            _questReplacer.pairs = _questReplacer.pairs.Where(pair => !pair.LikelyUnset).ToList();
-            UpdateTypeFilters();
+            DoCleanupPairs(_questReplacer, _context);
             RecreateContext();
+        }
+
+        static void DoCleanupPairs(QuestReplacer questReplacer, QuestReplacerContext context)
+        {
+            Undo.SetCurrentGroupName("QuestReplacer: Cleanup");
+            Undo.RecordObject(questReplacer, "QuestReplacer: Cleanup");
+            questReplacer.pairs = questReplacer.pairs.Where(pair => !pair.LikelyUnset).ToList();
+            UpdateTypeFilters(questReplacer, context);
         }
 
         void CreateDatabase()
         {
-            Undo.SetCurrentGroupName("QuestReplacer: Create Database");
-            _questReplacer.CreateDatabase(QuestReplacerPlatform.VRChatMobile, QuestReplacerMaterialGenerationMode.GenerateVRChatToonStandard);
-            UpdateTypeFilters();
+            DoCreateDatabase(_questReplacer, _context);
             RecreateContext();
         }
 
-        void GenerateMaterials(AssetDuplicator<Material> duplicator)
+        static void DoCreateDatabase(QuestReplacer questReplacer, QuestReplacerContext context)
         {
+            Undo.SetCurrentGroupName("QuestReplacer: Create Database");
+            questReplacer.CreateDatabase(QuestReplacerPlatform.VRChatMobile, QuestReplacerMaterialGenerationMode.GenerateVRChatToonStandard);
+            UpdateTypeFilters(questReplacer, context);
+        }
+
+        void GenerateMaterials()
+        {
+            DoGenerateMaterials(_questReplacer, _context);
+            RecreateContext();
+        }
+
+        static void DoGenerateMaterials(QuestReplacer questReplacer, QuestReplacerContext context)
+        {
+            var duplicator = questReplacer.EnsureDatabase(null).CreateMaterialAssetDuplicator(questReplacer.Config.materialGenerationMode);
             Undo.SetCurrentGroupName("QuestReplacer: Generate Materials");
-            Undo.RecordObject(_questReplacer, "QuestReplacer: Generate Materials");
-            foreach (var pair in _questReplacer.pairs.Where(pair => pair.LikelyUnset))
+            Undo.RecordObject(questReplacer, "QuestReplacer: Generate Materials");
+            foreach (var pair in questReplacer.pairs.Where(pair => pair.LikelyUnset))
             {
                 if (pair.left is Material leftMaterial)
                 {
@@ -285,15 +305,23 @@ namespace Silksprite.QuestReplacer
                     pair.right = rightMaterial; 
                 }
             }
-            UpdateTypeFilters();
+            UpdateTypeFilters(questReplacer, context);
+        }
+
+        void GenerateAnimationClips()
+        {
+            DoGenerateAnimationClips(_questReplacer, _context);
             RecreateContext();
         }
 
-        void GenerateAnimationClips(AssetDuplicator<AnimationClip> duplicator)
+        static void DoGenerateAnimationClips(QuestReplacer questReplacer, QuestReplacerContext context)
         {
+            var duplicator = questReplacer
+                .EnsureDatabase(null)
+                .CreateAnimationClipAssetDuplicator(QuestReplacerAnimationClipGenerationMode.Instantiate);
             Undo.SetCurrentGroupName("QuestReplacer: Generate AnimationClips");
-            Undo.RecordObject(_questReplacer, "QuestReplacer: Generate AnimationClips");
-            foreach (var pair in _questReplacer.pairs.Where(pair => pair.LikelyUnset))
+            Undo.RecordObject(questReplacer, "QuestReplacer: Generate AnimationClips");
+            foreach (var pair in questReplacer.pairs.Where(pair => pair.LikelyUnset))
             {
                 if (pair.left is AnimationClip leftAnimationClip)
                 {
@@ -302,56 +330,76 @@ namespace Silksprite.QuestReplacer
                     pair.right = rightMaterial; 
                 }
             }
-            UpdateTypeFilters();
-            RecreateContext();
+            UpdateTypeFilters(questReplacer, context);
         }
 
         void LoadFromDatabase()
         {
-            Undo.SetCurrentGroupName("QuestReplacer: Load");
-            Undo.RecordObject(_questReplacer, "QuestReplacer: Load");
-            var db = _questReplacer.EnsureDatabase(null);
-            _questReplacer.pairs = _questReplacer.pairs.Update(db.pairs).ToList();
-            _questReplacer.AddEntries(_context.DeepCollectReferences<Object>(), db, false);
-            UpdateTypeFilters();
+            DoLoadFromDatabase(_questReplacer, _context);
             RecreateContext();
+        }
+
+        static void DoLoadFromDatabase(QuestReplacer questReplacer, QuestReplacerContext context)
+        {
+            Undo.SetCurrentGroupName("QuestReplacer: Load");
+            Undo.RecordObject(questReplacer, "QuestReplacer: Load");
+            var db = questReplacer.EnsureDatabase(null);
+            questReplacer.pairs = questReplacer.pairs.Update(db.pairs).ToList();
+            questReplacer.AddEntries(context.DeepCollectReferences<Object>(), db, false);
+            UpdateTypeFilters(questReplacer, context);
         }
 
         void SaveToDatabase()
         {
-            Undo.SetCurrentGroupName("QuestReplacer: Save");
-            var db = _questReplacer.EnsureDatabase(null);
-            Undo.RecordObject(db, "QuestReplacer: Save");
-            db.pairs = db.pairs.Merge(_questReplacer.pairs.Where(pair => !pair.LikelyUnset)).ToList();
-            AssetDatabase.SaveAssetIfDirty(db);
-            UpdateTypeFilters();
+            DoSaveToDatabase(_questReplacer, _context);
             RecreateContext();
+        }
+
+        static void DoSaveToDatabase(QuestReplacer questReplacer, QuestReplacerContext context)
+        {
+            Undo.SetCurrentGroupName("QuestReplacer: Save");
+            var db = questReplacer.EnsureDatabase(null);
+            Undo.RecordObject(db, "QuestReplacer: Save");
+            db.pairs = db.pairs.Merge(questReplacer.pairs.Where(pair => !pair.LikelyUnset)).ToList();
+            AssetDatabase.SaveAssetIfDirty(db);
+            UpdateTypeFilters(questReplacer, context);
         }
 
         void Convert(bool toRight)
         {
-            Undo.SetCurrentGroupName(toRight ? "QuestReplacer: To Right" : "QuestReplacer: To Left");
-            UpdateTypeFilters();
-            _context.DeepOverrideReferences<Object>(toRight, withAssets: false);
+            DoConvert(toRight, _questReplacer, _context);
             RecreateContext();
         }
-        
-        void UpdateTypeFilters()
+
+        static void DoConvert(bool toRight, QuestReplacer questReplacer, QuestReplacerContext context)
         {
-            var db = _questReplacer.database;
+            Undo.SetCurrentGroupName(toRight ? "QuestReplacer: To Right" : "QuestReplacer: To Left");
+            UpdateTypeFilters(questReplacer, context);
+            context.DeepOverrideReferences<Object>(toRight, withAssets: false);
+        }
+
+        static void UpdateTypeFilters(QuestReplacer questReplacer, QuestReplacerContext context)
+        {
+            var db = questReplacer.database;
             if (db)
             {
                 Undo.RecordObject(db, "QuestReplacer: Update Type Filters");
-                db.RegisterTypeFilters(_context.DeepCollectComponentTypes());
+                db.RegisterTypeFilters(context.DeepCollectComponentTypes());
             }
         }
         
         void ResetConfig()
         {
-            Undo.SetCurrentGroupName("QuestReplacer: Reset Config");
-            Undo.RecordObject(_questReplacer, "QuestReplacer: Reset Config");
-            EditorJsonUtility.FromJsonOverwrite(EditorJsonUtility.ToJson(_questReplacer.database.config), _questReplacer.config);
+            DoResetConfig(_questReplacer);
             RecreateContext();
+        }
+
+        static void DoResetConfig(QuestReplacer questReplacer)
+        {
+
+            Undo.SetCurrentGroupName("QuestReplacer: Reset Config");
+            Undo.RecordObject(questReplacer, "QuestReplacer: Reset Config");
+            EditorJsonUtility.FromJsonOverwrite(EditorJsonUtility.ToJson(questReplacer.database.config), questReplacer.config);
         }
     }
 }
