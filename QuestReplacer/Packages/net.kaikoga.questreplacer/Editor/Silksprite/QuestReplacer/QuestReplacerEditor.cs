@@ -102,7 +102,14 @@ namespace Silksprite.QuestReplacer
                     EditorGUILayout.PropertyField(_serializedTargetSceneObjects);
                 }
 
-                _reorderablePairs.DoLayoutList();
+                using (var duplicateButton = new ShowDuplicateButtonScope())
+                {
+                    _reorderablePairs.DoLayoutList();
+                    if (duplicateButton.DuplicateButtonClicked(out var propertyPath))
+                    {
+                        Debug.LogError(serializedObject.FindProperty(propertyPath));
+                    }
+                }
 
                 var pairs = _questReplacer.pairs.ToArray();
                 if (config.manageMaterials)
