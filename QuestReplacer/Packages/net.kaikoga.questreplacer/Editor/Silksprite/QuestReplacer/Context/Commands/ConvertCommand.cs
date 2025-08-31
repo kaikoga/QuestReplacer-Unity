@@ -16,7 +16,6 @@ namespace Silksprite.QuestReplacer.Context.Commands
         protected override void DoExecute()
         {
             QuestReplacerContext context = Context;
-            UpdateTypeFilters(QuestReplacer, context);
             context.DeepOverrideReferences<Object>(_toRight, withAssets: false);
         }
     }

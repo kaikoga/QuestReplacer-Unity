@@ -36,19 +36,18 @@ namespace Silksprite.QuestReplacer.Context.Commands
             DoExecute();
             if (InvalidateTypeFilters)
             {
-                UpdateTypeFilters(QuestReplacer, _context);
+                UpdateTypeFilters();
             }
         }
 
         protected abstract void DoExecute();
 
-        protected void UpdateTypeFilters(QuestReplacer questReplacer, QuestReplacerContext context)
+        void UpdateTypeFilters()
         {
-            var db = questReplacer.database;
-            if (db)
+            if (QuestReplacer.database is QuestReplacerDatabase database)
             {
-                Undo.RecordObject(db, Name);
-                db.RegisterTypeFilters(context.DeepCollectComponentTypes());
+                Undo.RecordObject(database, Name);
+                database.RegisterTypeFilters(Context.DeepCollectComponentTypes());
             }
         }
     }
