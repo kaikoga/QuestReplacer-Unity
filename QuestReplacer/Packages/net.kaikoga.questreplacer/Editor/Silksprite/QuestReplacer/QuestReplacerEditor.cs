@@ -126,9 +126,10 @@ namespace Silksprite.QuestReplacer
 
                     if (pairs.Any(pair => pair.LikelyUnset))
                     {
-                        if (_questReplacer.database is QuestReplacerDatabase database)
+                        if (_serializedDatabase.objectReferenceValue)
                         {
-                            var hasPlatformSupport = database.HasGenerateModeSupport(); 
+                            var db = _questReplacer.EnsureDatabase(null);
+                            var hasPlatformSupport = db.HasGenerateModeSupport(); 
                             if (!hasPlatformSupport)
                             {
                                 EditorGUILayout.HelpBox("マテリアルの自動変換に必要なライブラリがインポートされてないか、非対応の変換です。", MessageType.Error);
@@ -137,9 +138,7 @@ namespace Silksprite.QuestReplacer
                             {
                                 if (GUILayout.Button($"{config.materialGenerationMode} Materials"))
                                 {
-                                    GenerateMaterials(_questReplacer
-                                        .EnsureDatabase(QuestReplacerPlatform.VRChatMobile)
-                                        .CreateMaterialAssetDuplicator(config.materialGenerationMode));
+                                    GenerateMaterials(db.CreateMaterialAssetDuplicator(config.materialGenerationMode));
                                 }
                             }
                         }
@@ -172,12 +171,12 @@ namespace Silksprite.QuestReplacer
                     
                     if (pairs.Any(pair => pair.LikelyUnset))
                     {
-                        if (_questReplacer.database is QuestReplacerDatabase database)
+                        if (_serializedDatabase.objectReferenceValue)
                         {
                             if (GUILayout.Button("Instantiate Animation Clips"))
                             {
                                 GenerateAnimationClips(_questReplacer
-                                    .EnsureDatabase(QuestReplacerPlatform.VRChatMobile)
+                                    .EnsureDatabase(null)
                                     .CreateAnimationClipAssetDuplicator(QuestReplacerAnimationClipGenerationMode.Instantiate));
                             }
                         }
