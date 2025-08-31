@@ -8,17 +8,16 @@ namespace Silksprite.QuestReplacer.Context.Commands
 {
     public class GenerateAnimationClipsCommand : CommandBase
     {
+        protected override string Name => "QuestReplacer: Generate AnimationClips";
+
         public GenerateAnimationClipsCommand(QuestReplacer questReplacer, QuestReplacerContext context) : base(questReplacer, context)
         {
         }
 
         protected override void DoExecute(QuestReplacer questReplacer, QuestReplacerContext context)
         {
-            var duplicator = questReplacer
-                .EnsureDatabase(null)
+            var duplicator = EnsureDatabase(false)
                 .CreateAnimationClipAssetDuplicator(QuestReplacerAnimationClipGenerationMode.Instantiate);
-            Undo.SetCurrentGroupName("QuestReplacer: Generate AnimationClips");
-            Undo.RecordObject(questReplacer, "QuestReplacer: Generate AnimationClips");
             foreach (var pair in questReplacer.pairs.Where(pair => pair.LikelyUnset))
             {
                 if (pair.left is AnimationClip leftAnimationClip)
@@ -28,7 +27,6 @@ namespace Silksprite.QuestReplacer.Context.Commands
                     pair.right = rightMaterial; 
                 }
             }
-            UpdateTypeFilters(questReplacer, context);
         }
     }
 }
