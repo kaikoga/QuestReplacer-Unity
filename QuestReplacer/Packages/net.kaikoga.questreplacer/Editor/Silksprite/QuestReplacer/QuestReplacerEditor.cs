@@ -37,6 +37,7 @@ namespace Silksprite.QuestReplacer
         }
 
         SerializedProperty _serializedConfig;
+        SerializedProperty _serializedHasOverrideConfig;
         SerializedProperty _serializedOverrideConfig;
         SerializedProperty _serializedDatabase;
         SerializedProperty _serializedTargets;
@@ -50,6 +51,7 @@ namespace Silksprite.QuestReplacer
             RecreateContext();
 
             _serializedConfig = serializedObject.FindProperty(nameof(QuestReplacer.config));
+            _serializedHasOverrideConfig = serializedObject.FindProperty(nameof(QuestReplacer.hasOverrideConfig));
             _serializedOverrideConfig = serializedObject.FindProperty(nameof(QuestReplacer.overrideConfig));
             _serializedDatabase = serializedObject.FindProperty(nameof(QuestReplacer.database));
             _serializedTargets = serializedObject.FindProperty(nameof(QuestReplacer.targets));
@@ -80,6 +82,7 @@ namespace Silksprite.QuestReplacer
                     if (duplicateButton.DuplicateButtonClicked(out var index))
                     {
                         new GenerateSingleCommand(_questReplacer, index).Execute();
+                        RecreateContext();
                     }
                 }
 
@@ -149,6 +152,11 @@ namespace Silksprite.QuestReplacer
                     EditorGUILayout.PropertyField(_serializedDatabase);
                     if (_serializedDatabase.objectReferenceValue)
                     {
+                        if (_serializedDatabase.objectReferenceValue != _questReplacer.database)
+                        {
+                            _serializedHasOverrideConfig.boolValue = false;
+                            // FIXME: we need a RecreateContext() here, maybe defer commands
+                        }
                         using (new EditorGUILayout.HorizontalScope())
                         {
                             CommandButton("Load", () => new LoadFromDatabaseCommand(_questReplacer));
@@ -161,6 +169,11 @@ namespace Silksprite.QuestReplacer
                     }
                 }
                 EditorGUILayout.PropertyField(_serializedOverrideConfig);
+                if (_serializedOverrideConfig.boolValue && !_serializedHasOverrideConfig.boolValue)
+                {
+                    new ResetConfigCommand(_questReplacer).Execute();
+                    RecreateContext();
+                }
                 using (new BoxLayoutScope())
                 {
                     if (_serializedOverrideConfig.boolValue)

@@ -19,6 +19,7 @@ namespace Silksprite.QuestReplacer
         public QuestReplacerPlatform Platform => Config.platform;
 
         [SerializeField] internal QuestReplacerConfig config = new QuestReplacerConfig();
+        [SerializeField] internal bool hasOverrideConfig;
         [SerializeField] internal bool overrideConfig;
 
         public QuestReplacerConfig Config => overrideConfig ? config : database?.config ?? config;

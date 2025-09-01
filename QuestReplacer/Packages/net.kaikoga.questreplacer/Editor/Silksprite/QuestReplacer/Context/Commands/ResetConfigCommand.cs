@@ -14,6 +14,7 @@ namespace Silksprite.QuestReplacer.Context.Commands
         protected override void DoExecute()
         {
             EditorJsonUtility.FromJsonOverwrite(EditorJsonUtility.ToJson(QuestReplacer.database.config), QuestReplacer.config);
+            QuestReplacer.hasOverrideConfig = true;
         }
     }
 }
