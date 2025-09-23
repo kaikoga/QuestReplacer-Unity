@@ -4,10 +4,9 @@
     "references": [
         "nadena.dev.ndmf",
         "nadena.dev.ndmf.runtime",
-        "VRM",
-        "VRM10",
         "QuestReplacer",
-        "QuestReplacer.Editor"
+        "QuestReplacer.Editor",
+        "QuestReplacer.Editor.Platform"
     ],
     "includePlatforms": [
         "Editor"
@@ -16,8 +15,6 @@
     "allowUnsafeCode": false,
     "overrideReferences": true,
     "precompiledReferences": [
-        "VRCSDKBase.dll",
-        "VRCSDK3A.dll",
         "System.Collections.Immutable.dll"
     ],
     "autoReferenced": false,
@@ -35,21 +32,6 @@
             "name": "nadena.dev.ndmf",
             "expression": "[1.3.0,999.0.0)",
             "define": "QUESTREPLACER_NDMF_SUPPORT"
-        },
-        {
-            "name": "com.vrchat.avatars",
-            "expression": "[3.0.0,999.0.0)",
-            "define": "QUESTREPLACER_VRCSDK3_AVATARS"
-        },
-        {
-            "name": "com.vrmc.univrm",
-            "expression": "[0.0.0,1.0.0)",
-            "define": "QUESTREPLACER_VRM0"
-        },
-        {
-            "name": "com.vrmc.vrm",
-            "expression": "[0.0.0,1.0.0)",
-            "define": "QUESTREPLACER_VRM1"
         }
     ],
     "noEngineReferences": false

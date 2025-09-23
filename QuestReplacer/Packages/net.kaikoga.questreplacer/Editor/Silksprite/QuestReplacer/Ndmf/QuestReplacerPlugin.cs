@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Linq;
 using nadena.dev.ndmf;
-using Silksprite.QuestReplacer.Extensions;
 using Silksprite.QuestReplacer.Ndmf;
+using Silksprite.QuestReplacer.Platform;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 [assembly: ExportsPlugin(typeof(QuestReplacerPlugin))]
 

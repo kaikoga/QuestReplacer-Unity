@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using nadena.dev.ndmf;
 using nadena.dev.ndmf.preview;
 using nadena.dev.ndmf.runtime;
+using Silksprite.QuestReplacer.Platform;
 using UnityEngine;
 
 namespace Silksprite.QuestReplacer.Ndmf

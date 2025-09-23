@@ -1,13 +1,14 @@
 {
-    "name": "QuestReplacer.Editor",
-    "rootNamespace": "Silksprite.QuestReplacer",
+    "name": "QuestReplacer.Editor.Platform",
+    "rootNamespace": "Silksprite.QuestReplacer.Platform",
     "references": [
         "AdLib",
         "AdLib.Editor",
         "nadena.dev.ndmf",
         "nadena.dev.ndmf.runtime",
-        "QuestReplacer",
-        "QuestReplacer.Editor.Platform"
+        "VRM",
+        "VRM10",
+        "QuestReplacer"
     ],
     "includePlatforms": [
         "Editor"
@@ -36,6 +37,16 @@
             "name": "com.vrchat.avatars",
             "expression": "[3.0.0,999.0.0)",
             "define": "QUESTREPLACER_VRCSDK3_AVATARS"
+        },
+        {
+          "name": "com.vrmc.univrm",
+          "expression": "[0.0.0,1.0.0)",
+          "define": "QUESTREPLACER_VRM0"
+        },
+        {
+          "name": "com.vrmc.vrm",
+          "expression": "[0.0.0,1.0.0)",
+          "define": "QUESTREPLACER_VRM1"
         }
     ],
     "noEngineReferences": false
