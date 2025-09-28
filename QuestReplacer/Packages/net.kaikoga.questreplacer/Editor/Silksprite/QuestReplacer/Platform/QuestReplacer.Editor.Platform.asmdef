@@ -2,8 +2,6 @@
     "name": "QuestReplacer.Editor.Platform",
     "rootNamespace": "Silksprite.QuestReplacer.Platform",
     "references": [
-        "AdLib",
-        "AdLib.Editor",
         "nadena.dev.ndmf",
         "nadena.dev.ndmf.runtime",
         "VRM",
@@ -23,11 +21,6 @@
     "autoReferenced": false,
     "defineConstraints": [],
     "versionDefines": [
-        {
-            "name": "net.kaikoga.adlib",
-            "expression": "[0.3.0,999.0.0)",
-            "define": "QUESTREPLACER_ADLIB"
-        },
         {
             "name": "nadena.dev.ndmf",
             "expression": "",

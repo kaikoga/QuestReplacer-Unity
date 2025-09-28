@@ -16,12 +16,20 @@
     "overrideReferences": true,
     "precompiledReferences": [],
     "autoReferenced": false,
-    "defineConstraints": ["QUESTREPLACER_VRMSHADERS || QUESTREPLACER_UNIVRM_WITH_SHADERS"],
+    "defineConstraints": [
+        "QUESTREPLACER_ADLIB",
+        "QUESTREPLACER_VRMSHADERS || QUESTREPLACER_UNIVRM_WITH_SHADERS"
+    ],
     "versionDefines": [
         {
-            "name": "com.vrmc.vrmshaders",
-            "expression": "",
-            "define": "QUESTREPLACER_VRMSHADERS"
+          "name": "net.kaikoga.adlib",
+          "expression": "[0.3.0,999.0.0)",
+          "define": "QUESTREPLACER_ADLIB"
+        },
+        {
+          "name": "com.vrmc.vrmshaders",
+          "expression": "",
+          "define": "QUESTREPLACER_VRMSHADERS"
         },
         {
             "name": "com.vrmc.univrm",

@@ -16,12 +16,20 @@
     "overrideReferences": true,
     "precompiledReferences": [],
     "autoReferenced": false,
-    "defineConstraints": ["QUESTREPLACER_LILTOON"],
+    "defineConstraints": [
+        "QUESTREPLACER_ADLIB",
+        "QUESTREPLACER_LILTOON"
+    ],
     "versionDefines": [
         {
-            "name": "jp.lilxyzw.liltoon",
-            "expression": "[2.0.0,999.0.0)",
-            "define": "QUESTREPLACER_LILTOON"
+          "name": "net.kaikoga.adlib",
+          "expression": "[0.3.0,999.0.0)",
+          "define": "QUESTREPLACER_ADLIB"
+        },
+        {
+          "name": "jp.lilxyzw.liltoon",
+          "expression": "[2.0.0,999.0.0)",
+          "define": "QUESTREPLACER_LILTOON"
         },
         {
             "name": "com.vrmc.vrmshaders",
