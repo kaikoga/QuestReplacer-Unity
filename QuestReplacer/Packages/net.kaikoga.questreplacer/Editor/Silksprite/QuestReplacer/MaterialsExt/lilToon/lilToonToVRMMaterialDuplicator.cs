@@ -12,20 +12,23 @@ namespace Silksprite.QuestReplacer.MaterialsExt.lilToon
     {
         static bool _lilToonSupportErrorReported;
 
-        static T Wrap<T>(T original, Func<T> func)
+        static bool Wrap<T>(T original, Func<T> func, out T result)
         {
             try
             {
-                return func();
+                result = func();
+                return true;
             }
             catch (Exception e)
             {
-                if (_lilToonSupportErrorReported) return original;
-
-                _lilToonSupportErrorReported = true;
-                Debug.LogException(e);
-                Debug.LogError("Something was wrong in lilToon support of QuestReplacer.");
-                return original;
+                if (!_lilToonSupportErrorReported)
+                {
+                    _lilToonSupportErrorReported = true;
+                    Debug.LogException(e);
+                    Debug.LogError("Something was wrong in lilToon support of QuestReplacer.");
+                }
+                result = original;
+                return false;
             }
         }
 
@@ -37,7 +40,7 @@ namespace Silksprite.QuestReplacer.MaterialsExt.lilToon
             return originalShaderName.Contains("lilToon") || originalShaderName.StartsWith("Hidden/lts");
         }
 
-        Material ISingleAssetDuplicator<Material>.Duplicate(Material original, string bakedAssetDirectoryPath)
+        bool ISingleAssetDuplicator<Material>.TryDuplicate(Material original, string bakedAssetDirectoryPath, out Material result)
         {
             return Wrap(original, () =>
             {
@@ -55,7 +58,7 @@ namespace Silksprite.QuestReplacer.MaterialsExt.lilToon
                 CopyUvAnimationProperties(lilToonAccess, mtoonAccess);
 
                 return mtoonMaterial;
-            });
+            }, out result);
         }
 
         static void CopyBasicProperties(LilToonMaterialAccess lilToon, MToonMaterialAccess mtoon)

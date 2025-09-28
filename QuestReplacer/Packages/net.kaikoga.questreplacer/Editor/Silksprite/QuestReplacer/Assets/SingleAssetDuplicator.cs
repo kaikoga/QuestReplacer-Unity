@@ -9,9 +9,10 @@ namespace Silksprite.QuestReplacer.Assets
 
         bool ISingleAssetDuplicator<T>.IsTarget(T original) => true;
 
-        T ISingleAssetDuplicator<T>.Duplicate(T original, string bakedAssetDirectoryPath)
+        bool ISingleAssetDuplicator<T>.TryDuplicate(T original, string bakedAssetDirectoryPath, out T result)
         {
-            return Object.Instantiate(original);
+            result = Object.Instantiate(original);
+            return true;
         }
     }
 }

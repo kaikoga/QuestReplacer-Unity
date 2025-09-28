@@ -18,19 +18,19 @@ namespace Silksprite.QuestReplacer.MaterialsExt.VRMShaders
 
         bool ISingleAssetDuplicator<Material>.IsTarget(Material original) => original.shader.name == "VRM/MToon";
 
-        Material ISingleAssetDuplicator<Material>.Duplicate(Material original, string bakedAssetDirectoryPath)
+        bool ISingleAssetDuplicator<Material>.TryDuplicate(Material original, string bakedAssetDirectoryPath, out Material result)
         {
             var mtoon = new MToonMaterialAccess(original.ToMaterialAccess());
-            var material = new Material(Shaders.VrmMToon10);
-            var mtoon10 = new MToon10MaterialAccess(material.ToMaterialAccess());
+            result = new Material(Shaders.VrmMToon10);
+            var mtoon10 = new MToon10MaterialAccess(result.ToMaterialAccess());
             CopyRendering(mtoon, mtoon10);
             CopyMainTex(mtoon, mtoon10);
             CopyEmissionAndMatcap(mtoon, mtoon10);
             CopyRimLighting(mtoon, mtoon10);
             CopyOutline(mtoon, mtoon10);
             CopyUvAnimation(mtoon, mtoon10);
-            new MToonValidator(material).Validate();
-            return material;
+            new MToonValidator(result).Validate();
+            return true;
         }
 
         static void CopyRendering(MToonMaterialAccess mtoon, MToon10MaterialAccess mtoon10)

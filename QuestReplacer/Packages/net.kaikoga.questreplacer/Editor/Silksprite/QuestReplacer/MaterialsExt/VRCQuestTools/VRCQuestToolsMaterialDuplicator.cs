@@ -8,20 +8,23 @@ namespace Silksprite.QuestReplacer.MaterialsExt.VRCQuestTools
     {
         static bool _vrcQuestToolsSupportErrorReported;
 
-        static T Wrap<T>(T original, Func<T> func)
+        static bool Wrap<T>(T original, Func<T> func, out T result)
         {
             try
             {
-                return func();
+                result = func();
+                return true;
             }
             catch (Exception e)
             {
-                if (_vrcQuestToolsSupportErrorReported) return original;
-
-                _vrcQuestToolsSupportErrorReported = true;
-                Debug.LogException(e);
-                Debug.LogError("Something was wrong in VRCQuestTools support of QuestReplacer.");
-                return original;
+                if (!_vrcQuestToolsSupportErrorReported)
+                {
+                    _vrcQuestToolsSupportErrorReported = true;
+                    Debug.LogException(e);
+                    Debug.LogError("Something was wrong in VRCQuestTools support of QuestReplacer.");
+                }
+                result = original;
+                return false;
             }
         }
 
@@ -29,13 +32,13 @@ namespace Silksprite.QuestReplacer.MaterialsExt.VRCQuestTools
 
         bool ISingleAssetDuplicator<Material>.IsTarget(Material original) => true;
 
-        Material ISingleAssetDuplicator<Material>.Duplicate(Material original, string bakedAssetDirectoryPath)
+        bool ISingleAssetDuplicator<Material>.TryDuplicate(Material original, string bakedAssetDirectoryPath, out Material result)
         {
             return Wrap(original, () =>
             {
                 var material = VRCQuestToolsSupport.ConvertSingleMaterial(original, bakedAssetDirectoryPath);
                 return material;
-            });
+            }, out result);
         }
     }
 }

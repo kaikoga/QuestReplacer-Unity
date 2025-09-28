@@ -33,13 +33,16 @@ namespace Silksprite.QuestReplacer.Assets
             if (existingMaterial) return existingMaterial;
 
             var bakedAssetDirectoryPath = Path.GetDirectoryName(assetPath);
-            var material = _processors.First(processor => processor.IsTarget(original))
-                .Duplicate(original, bakedAssetDirectoryPath);
-            if (material != original)
+            foreach (var processor in _processors.Where(processor => processor.IsTarget(original)))
             {
-                AssetDatabase.CreateAsset(material, assetPath);
+                if (!processor.TryDuplicate(original, bakedAssetDirectoryPath, out var result))
+                {
+                    continue;
+                }
+                AssetDatabase.CreateAsset(result, assetPath);
+                return result;
             }
-            return material;
+            return original;
         }
         
         static void EnsureDirectory(string path)

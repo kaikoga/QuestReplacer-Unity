@@ -24,9 +24,14 @@ namespace Silksprite.QuestReplacer.MaterialsExt.lilToon
             return originalShaderName.Contains("lilToon") || originalShaderName.StartsWith("Hidden/lts");
         }
 
-        Material ISingleAssetDuplicator<Material>.Duplicate(Material original, string bakedAssetDirectoryPath)
+        bool ISingleAssetDuplicator<Material>.TryDuplicate(Material original, string bakedAssetDirectoryPath, out Material result)
         {
-            return _duplicators.Aggregate(original, (material, duplicator) => duplicator.Duplicate(material, bakedAssetDirectoryPath));
+            result = _duplicators.Aggregate(original, (material, duplicator) =>
+            {
+                duplicator.TryDuplicate(material, bakedAssetDirectoryPath, out var r);
+                return r;
+            });
+            return true;
         }
     }
 }

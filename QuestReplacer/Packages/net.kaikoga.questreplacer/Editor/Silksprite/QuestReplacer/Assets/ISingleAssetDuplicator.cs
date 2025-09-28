@@ -7,6 +7,6 @@ namespace Silksprite.QuestReplacer.Assets
     {
         int Priority { get; }
         bool IsTarget(T original);
-        T Duplicate(T original, string bakedAssetDirectoryPath);
+        bool TryDuplicate(T original, string bakedAssetDirectoryPath, out T result);
     }
 }
