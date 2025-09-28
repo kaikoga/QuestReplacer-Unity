@@ -181,11 +181,11 @@ namespace Silksprite.QuestReplacer
                         EditorGUILayout.PropertyField(_serializedConfig);
                         CommandButton("Reset", () => new ResetConfigCommand(_questReplacer));
                     }
-                    else if (_serializedDatabase.objectReferenceValue)
+                    else if (_serializedDatabase.objectReferenceValue is QuestReplacerDatabase database)
                     {
                         using (new EditorGUI.DisabledScope(true))
                         {
-                            using var serializedDatabase = new SerializedObject(_questReplacer.database);
+                            using var serializedDatabase = new SerializedObject(database);
                             EditorGUILayout.PropertyField(serializedDatabase.FindProperty(nameof(QuestReplacerDatabase.config)));
                         }
                     }
