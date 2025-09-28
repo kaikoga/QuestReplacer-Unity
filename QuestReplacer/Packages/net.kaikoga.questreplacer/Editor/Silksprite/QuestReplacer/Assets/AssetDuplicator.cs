@@ -22,8 +22,18 @@ namespace Silksprite.QuestReplacer.Assets
             _processors = processors;
         }
 
+        bool IsValidOutput()
+        {
+            return string.IsNullOrEmpty(_directory) || string.IsNullOrEmpty(_filePrefix) || string.IsNullOrEmpty(_fileSuffix);
+        }
+
         public T Duplicate(T original)
         {
+            if (!IsValidOutput())
+            {
+                return original;
+            }
+
             var originalAssetPath = AssetDatabase.GetAssetPath(original);
             var assetDirectory = _directory.StartsWith("Assets/") ? _directory : Path.Combine(Path.GetDirectoryName(originalAssetPath) ?? string.Empty, _directory);
             EnsureDirectory(assetDirectory);
