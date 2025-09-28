@@ -39,7 +39,7 @@ namespace Silksprite.QuestReplacer.Context
         where T : Object
         {
 #if QUESTREPLACER_NDMF_SUPPORT
-            fromValue = nadena.dev.ndmf.ObjectRegistry.GetReference(fromValue).Object as T;
+            fromValue = nadena.dev.ndmf.ObjectRegistry.GetReference(fromValue)?.Object as T;
 #endif
             return _replacements.Query(fromValue, toRight, out toValue);
         }
