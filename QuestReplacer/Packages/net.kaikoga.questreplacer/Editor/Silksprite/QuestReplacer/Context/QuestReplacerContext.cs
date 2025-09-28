@@ -38,6 +38,9 @@ namespace Silksprite.QuestReplacer.Context
         public bool Query<T>(T fromValue, bool toRight, out T toValue)
         where T : Object
         {
+#if QUESTREPLACER_NDMF_SUPPORT
+            fromValue = nadena.dev.ndmf.ObjectRegistry.GetReference(fromValue).Object as T;
+#endif
             return _replacements.Query(fromValue, toRight, out toValue);
         }
 
@@ -59,7 +62,11 @@ namespace Silksprite.QuestReplacer.Context
             foreach (var prop in DeepCollectProperties<T>(withAssets))
             {
                 // T might be Object, so do all replacements but ignore unregistered components
-                if (!Query(prop.objectReferenceValue, toRight, out var toValue)) continue;
+                var fromValue = prop.objectReferenceValue; 
+                if (!Query(fromValue, toRight, out var toValue)) continue;
+#if QUESTREPLACER_NDMF_SUPPORT
+                nadena.dev.ndmf.ObjectRegistry.RegisterReplacedObject(fromValue, toValue);
+#endif
                 prop.objectReferenceValue = toValue;
                 serializedObjects.Add(prop.serializedObject);
             }
