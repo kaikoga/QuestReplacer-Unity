@@ -55,14 +55,20 @@ namespace Silksprite.QuestReplacer.Platform
             var ndmfPlatform = nadena.dev.ndmf.platform.AmbientPlatform.CurrentPlatform;
             switch (ndmfPlatform.AvatarRootComponentType?.Name)
             {
+#if QUESTREPLACER_VRCSDK3_AVATARS
                 case nameof(VRC.SDK3.Avatars.Components.VRCAvatarDescriptor):
                     return TryGetVRChatPlatform(out platform);
+#endif
+#if QUESTREPLACER_VRM0
                 case nameof(VRM.VRMMeta):
                     platform = QuestReplacerBuildPlatform.VRM0;
                     return true;
+#endif
+#if QUESTREPLACER_VRM1
                 case nameof(UniVRM10.Vrm10Instance):
                     platform = QuestReplacerBuildPlatform.VRM1;
                     return true;
+#endif
             }
 #endif
             
