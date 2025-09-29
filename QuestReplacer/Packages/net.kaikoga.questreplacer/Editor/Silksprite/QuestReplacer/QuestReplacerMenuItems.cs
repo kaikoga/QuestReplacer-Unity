@@ -35,10 +35,29 @@ namespace Silksprite.QuestReplacer
         {
             var avatarRoot = Selection.activeGameObject;
 
-            var gameObject = new GameObject(avatarRoot ? $"{platform}Replacer_{avatarRoot.name}" : $"{platform}Replacer");
+#if QUESTREPLACER_NDMF_SUPPORT
+            if (avatarRoot)
+            {
+                CreateQuestReplacerNdmf(avatarRoot, platform);
+                return;
+            }
+#endif
+            CreateQuestReplacerNonNdmf(avatarRoot, platform);
+        }
+        
+        static void CreateQuestReplacerNdmf(GameObject avatarRoot, QuestReplacerPlatform platform)
+        {
+            var gameObject = new GameObject($"QuestReplacer {platform}");
+            gameObject.transform.SetParent(avatarRoot.transform, false);
+            var config = gameObject.AddComponent<QuestReplacer>();
+            config.EnsureDatabase(platform);
+        }
+
+        static void CreateQuestReplacerNonNdmf(GameObject avatarRoot, QuestReplacerPlatform platform)
+        {
+            var gameObject = new GameObject(avatarRoot ? $"QuestReplacer_{avatarRoot.name} {platform}" : $"QuestReplacer {platform}");
             var config = gameObject.AddComponent<QuestReplacer>();
             config.Target = avatarRoot ? avatarRoot.transform : null;
-
             config.EnsureDatabase(platform);
         }
     }
