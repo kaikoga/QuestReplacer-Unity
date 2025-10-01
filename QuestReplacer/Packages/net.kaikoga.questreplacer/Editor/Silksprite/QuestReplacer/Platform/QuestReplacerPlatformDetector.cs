@@ -7,13 +7,13 @@ namespace Silksprite.QuestReplacer.Platform
     public static class QuestReplacerPlatformDetector
     {
 
-#if QUESTREPLACER_VRM0
+#if QUESTREPLACER_VRM0 || ATIV_DETECTED_VRM0
         static bool IsVrm0(Transform avatarRootTransform) => avatarRootTransform.GetComponent<VRM.VRMMeta>();
 #else
         static bool IsVrm0(Transform avatarRootTransform) => false;
 #endif
 
-#if QUESTREPLACER_VRM1
+#if QUESTREPLACER_VRM1 || ATIV_DETECTED_VRM1
         static bool IsVrm1(Transform avatarRootTransform) => avatarRootTransform.GetComponent<UniVRM10.Vrm10Instance>();
 #else
         static bool IsVrm1(Transform avatarRootTransform) => false;
@@ -59,12 +59,12 @@ namespace Silksprite.QuestReplacer.Platform
                 case nameof(VRC.SDK3.Avatars.Components.VRCAvatarDescriptor):
                     return TryGetVRChatPlatform(out platform);
 #endif
-#if QUESTREPLACER_VRM0
+#if QUESTREPLACER_VRM0 || ATIV_DETECTED_VRM0
                 case nameof(VRM.VRMMeta):
                     platform = QuestReplacerBuildPlatform.VRM0;
                     return true;
 #endif
-#if QUESTREPLACER_VRM1
+#if QUESTREPLACER_VRM1 || ATIV_DETECTED_VRM1
                 case nameof(UniVRM10.Vrm10Instance):
                     platform = QuestReplacerBuildPlatform.VRM1;
                     return true;
