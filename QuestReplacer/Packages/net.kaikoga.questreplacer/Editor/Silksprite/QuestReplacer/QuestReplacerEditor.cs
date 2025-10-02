@@ -77,29 +77,6 @@ namespace Silksprite.QuestReplacer
                     EditorGUILayout.PropertyField(_serializedTargetSceneObjects);
                 }
 
-                if (_serializedDatabase.objectReferenceValue)
-                {
-                    using (new EditorGUI.DisabledScope(!hasTargets))
-                    {
-                        CommandButton("Sync and Generate", () => new SyncCommand(_questReplacer));
-                    }
-                    using (var duplicateButton = new ShowDuplicateButtonScope())
-                    {
-                        _reorderablePairs.DoLayoutList();
-                        if (duplicateButton.DuplicateButtonClicked(out var index))
-                        {
-                            new GenerateSingleCommand(_questReplacer, index).Execute();
-                            RecreateContext();
-                        }
-                    }
-                }
-                else
-                {
-                    _reorderablePairs.DoLayoutList();
-                }
-
-                CommandButton("Cleanup", () => new CleanupPairsCommand(_questReplacer));
-
                 QuestReplacerGUILayout.Header("Database");
                 using (new BoxLayoutScope())
                 {
@@ -122,6 +99,7 @@ namespace Silksprite.QuestReplacer
                         CommandButton("Create", () => new CreateDatabaseCommand(_questReplacer));
                     }
                 }
+
                 QuestReplacerGUILayout.Header("Config");
                 EditorGUILayout.PropertyField(_serializedOverrideConfig);
                 if (_serializedOverrideConfig.boolValue && !_serializedHasOverrideConfig.boolValue)
@@ -145,6 +123,31 @@ namespace Silksprite.QuestReplacer
                         }
                     }
                 }
+
+                if (_serializedDatabase.objectReferenceValue)
+                {
+                    using (new EditorGUI.DisabledScope(!hasTargets))
+                    {
+                        CommandButton("Sync and Generate", () => new SyncCommand(_questReplacer));
+                    }
+                    EditorGUILayout.Separator();
+                    using (var duplicateButton = new ShowDuplicateButtonScope())
+                    {
+                        _reorderablePairs.DoLayoutList();
+                        if (duplicateButton.DuplicateButtonClicked(out var index))
+                        {
+                            new GenerateSingleCommand(_questReplacer, index).Execute();
+                            RecreateContext();
+                        }
+                    }
+                }
+                else
+                {
+                    EditorGUILayout.Separator();
+                    _reorderablePairs.DoLayoutList();
+                }
+
+                CommandButton("Cleanup", () => new CleanupPairsCommand(_questReplacer));
 
                 QuestReplacerGUILayout.Header("Assets");
                 if (config.manageMaterials)

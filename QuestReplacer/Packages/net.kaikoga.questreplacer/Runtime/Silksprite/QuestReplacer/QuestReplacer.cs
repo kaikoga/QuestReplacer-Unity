@@ -48,7 +48,7 @@ namespace Silksprite.QuestReplacer
         }
         
 
-        public bool HasTargets => targets.Count > 0 || targetSceneObjects;
+        public bool HasTargets => targets.Any(target => target) || targetSceneObjects;
         
         public List<QuestReplacement> pairs = new List<QuestReplacement>();
         
