@@ -5,6 +5,7 @@ using Silksprite.QuestReplacer.Drawers;
 using Silksprite.QuestReplacer.Extensions;
 using Silksprite.QuestReplacer.Scopes;
 using UnityEditor;
+using UnityEditorInternal;
 using UnityEngine;
 
 namespace Silksprite.QuestReplacer
@@ -76,18 +77,76 @@ namespace Silksprite.QuestReplacer
                     EditorGUILayout.PropertyField(_serializedTargetSceneObjects);
                 }
 
-                using (var duplicateButton = new ShowDuplicateButtonScope())
+                if (_serializedDatabase.objectReferenceValue)
+                {
+                    using (new EditorGUI.DisabledScope(!hasTargets))
+                    {
+                        CommandButton("Sync and Generate", () => new SyncCommand(_questReplacer));
+                    }
+                    using (var duplicateButton = new ShowDuplicateButtonScope())
+                    {
+                        _reorderablePairs.DoLayoutList();
+                        if (duplicateButton.DuplicateButtonClicked(out var index))
+                        {
+                            new GenerateSingleCommand(_questReplacer, index).Execute();
+                            RecreateContext();
+                        }
+                    }
+                }
+                else
                 {
                     _reorderablePairs.DoLayoutList();
-                    if (duplicateButton.DuplicateButtonClicked(out var index))
-                    {
-                        new GenerateSingleCommand(_questReplacer, index).Execute();
-                        RecreateContext();
-                    }
                 }
 
                 CommandButton("Cleanup", () => new CleanupPairsCommand(_questReplacer));
 
+                QuestReplacerGUILayout.Header("Database");
+                using (new BoxLayoutScope())
+                {
+                    EditorGUILayout.PropertyField(_serializedDatabase);
+                    if (_serializedDatabase.objectReferenceValue)
+                    {
+                        if (_serializedDatabase.objectReferenceValue != _questReplacer.database)
+                        {
+                            _serializedHasOverrideConfig.boolValue = false;
+                            // FIXME: we need a RecreateContext() here, maybe defer commands
+                        }
+                        using (new EditorGUILayout.HorizontalScope())
+                        {
+                            CommandButton("Load", () => new LoadFromDatabaseCommand(_questReplacer));
+                            CommandButton("Save", () => new SaveToDatabaseCommand(_questReplacer));
+                        }
+                    }
+                    else
+                    {
+                        CommandButton("Create", () => new CreateDatabaseCommand(_questReplacer));
+                    }
+                }
+                QuestReplacerGUILayout.Header("Config");
+                EditorGUILayout.PropertyField(_serializedOverrideConfig);
+                if (_serializedOverrideConfig.boolValue && !_serializedHasOverrideConfig.boolValue)
+                {
+                    new ResetConfigCommand(_questReplacer).Execute();
+                    RecreateContext();
+                }
+                using (new BoxLayoutScope())
+                {
+                    if (_serializedOverrideConfig.boolValue)
+                    {
+                        EditorGUILayout.PropertyField(_serializedConfig);
+                        CommandButton("Reset", () => new ResetConfigCommand(_questReplacer));
+                    }
+                    else if (_serializedDatabase.objectReferenceValue is QuestReplacerDatabase database)
+                    {
+                        using (new EditorGUI.DisabledScope(true))
+                        {
+                            using var serializedDatabase = new SerializedObject(database);
+                            EditorGUILayout.PropertyField(serializedDatabase.FindProperty(nameof(QuestReplacerDatabase.config)));
+                        }
+                    }
+                }
+
+                QuestReplacerGUILayout.Header("Assets");
                 if (config.manageMaterials)
                 {
                     using (new BoxLayoutScope())
@@ -143,50 +202,6 @@ namespace Silksprite.QuestReplacer
                         if (_serializedDatabase.objectReferenceValue && _questReplacer.HasLikelyUnset<AnimationClip>())
                         {
                             CommandButton("Instantiate Animation Clips", () => new GenerateAnimationClipsCommand(_questReplacer));
-                        }
-                    }
-                }
-
-                using (new BoxLayoutScope())
-                {
-                    EditorGUILayout.PropertyField(_serializedDatabase);
-                    if (_serializedDatabase.objectReferenceValue)
-                    {
-                        if (_serializedDatabase.objectReferenceValue != _questReplacer.database)
-                        {
-                            _serializedHasOverrideConfig.boolValue = false;
-                            // FIXME: we need a RecreateContext() here, maybe defer commands
-                        }
-                        using (new EditorGUILayout.HorizontalScope())
-                        {
-                            CommandButton("Load", () => new LoadFromDatabaseCommand(_questReplacer));
-                            CommandButton("Save", () => new SaveToDatabaseCommand(_questReplacer));
-                        }
-                    }
-                    else
-                    {
-                        CommandButton("Create", () => new CreateDatabaseCommand(_questReplacer));
-                    }
-                }
-                EditorGUILayout.PropertyField(_serializedOverrideConfig);
-                if (_serializedOverrideConfig.boolValue && !_serializedHasOverrideConfig.boolValue)
-                {
-                    new ResetConfigCommand(_questReplacer).Execute();
-                    RecreateContext();
-                }
-                using (new BoxLayoutScope())
-                {
-                    if (_serializedOverrideConfig.boolValue)
-                    {
-                        EditorGUILayout.PropertyField(_serializedConfig);
-                        CommandButton("Reset", () => new ResetConfigCommand(_questReplacer));
-                    }
-                    else if (_serializedDatabase.objectReferenceValue is QuestReplacerDatabase database)
-                    {
-                        using (new EditorGUI.DisabledScope(true))
-                        {
-                            using var serializedDatabase = new SerializedObject(database);
-                            EditorGUILayout.PropertyField(serializedDatabase.FindProperty(nameof(QuestReplacerDatabase.config)));
                         }
                     }
                 }

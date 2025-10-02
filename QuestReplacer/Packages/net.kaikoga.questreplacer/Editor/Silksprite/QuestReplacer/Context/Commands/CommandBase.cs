@@ -54,6 +54,11 @@ namespace Silksprite.QuestReplacer.Context.Commands
             }
         }
 
+        internal void ExecuteWithoutUndo()
+        {
+            DoExecute();
+        }
+
         protected abstract void DoExecute();
 
         void UpdateTypeFilters()

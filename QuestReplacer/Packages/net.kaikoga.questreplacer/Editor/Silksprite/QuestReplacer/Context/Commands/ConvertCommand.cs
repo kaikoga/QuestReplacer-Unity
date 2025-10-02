@@ -13,10 +13,10 @@ namespace Silksprite.QuestReplacer.Context.Commands
         {
             _toRight = toRight;
         }
+
         protected override void DoExecute()
         {
-            QuestReplacerContext context = Context;
-            context.DeepOverrideReferences<Object>(_toRight, withAssets: false);
+            Context.DeepOverrideReferences<Object>(_toRight, withAssets: false);
         }
     }
 }

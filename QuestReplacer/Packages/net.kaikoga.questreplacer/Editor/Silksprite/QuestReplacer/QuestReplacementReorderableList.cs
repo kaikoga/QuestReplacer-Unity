@@ -12,7 +12,7 @@ namespace Silksprite.QuestReplacer
             drawHeaderCallback = rect =>
             {
                 var left = new Rect(rect.x, rect.y, rect.width - 50f, rect.height);
-                GUI.Label(left, serializedProperty.displayName);
+                QuestReplacerGUI.Header(left, serializedProperty.displayName);
                 var right = new Rect(rect.xMax - 50f, rect.y, 50f, rect.height);
                 using (var changed = new EditorGUI.ChangeCheckScope())
                 {

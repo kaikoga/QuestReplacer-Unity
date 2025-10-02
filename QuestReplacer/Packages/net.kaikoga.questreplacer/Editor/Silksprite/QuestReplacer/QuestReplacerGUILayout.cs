@@ -3,15 +3,20 @@ using UnityEngine;
 
 namespace Silksprite.QuestReplacer
 {
-    public static class QuestReplacerGUILayout
+    public static class QuestReplacerGUI
     {
-        static readonly GUIStyle HeaderStyle = new GUIStyle
+        internal static readonly GUIStyle HeaderStyle = new GUIStyle
         {
             fontStyle = FontStyle.Bold,
             alignment = TextAnchor.MiddleLeft,
             padding = new RectOffset(-4, 0, 4, 0)
         };
 
-        public static void Header(string content) => EditorGUILayout.LabelField(content, HeaderStyle);
+        public static void Header(Rect position, string content) => EditorGUI.LabelField(position, content, HeaderStyle);
+    }
+
+    public static class QuestReplacerGUILayout
+    {
+        public static void Header(string content) => EditorGUILayout.LabelField(content, QuestReplacerGUI.HeaderStyle);
     }
 }
