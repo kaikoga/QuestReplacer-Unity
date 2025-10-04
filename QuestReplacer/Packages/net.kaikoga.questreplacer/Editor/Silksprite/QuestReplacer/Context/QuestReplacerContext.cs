@@ -65,7 +65,7 @@ namespace Silksprite.QuestReplacer.Context
                 var fromValue = prop.objectReferenceValue; 
                 if (!Query(fromValue, toRight, out var toValue)) continue;
 #if QUESTREPLACER_NDMF_SUPPORT
-                nadena.dev.ndmf.ObjectRegistry.RegisterReplacedObject(fromValue, toValue);
+                nadena.dev.ndmf.ObjectRegistry.TryRegisterReplacedObject(nadena.dev.ndmf.ObjectRegistry.GetReference(fromValue), toValue);
 #endif
                 prop.objectReferenceValue = toValue;
                 serializedObjects.Add(prop.serializedObject);
