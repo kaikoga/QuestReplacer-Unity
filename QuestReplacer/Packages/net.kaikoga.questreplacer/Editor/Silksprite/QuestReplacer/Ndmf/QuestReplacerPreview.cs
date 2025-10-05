@@ -61,7 +61,7 @@ namespace Silksprite.QuestReplacer.Ndmf
             {
                 foreach (var (original, _) in proxyPairs)
                 {
-                    foreach (var material in original.sharedMaterials)
+                    foreach (var material in original.sharedMaterials.Where(material => material))
                     {
                         if (!_reusableCoordinatorRef.Query(material, _platform, out var toValue))
                         {
