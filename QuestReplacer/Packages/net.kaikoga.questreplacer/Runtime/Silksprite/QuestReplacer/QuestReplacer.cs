@@ -6,6 +6,7 @@ using Object = UnityEngine.Object;
 
 namespace Silksprite.QuestReplacer
 {
+    [HelpURL("https://docs.kaikoga.net/questreplacer/config")]
     public class QuestReplacer : MonoBehaviour
 #if QUESTREPLACER_VRCSDK3_AVATARS
         , VRC.SDKBase.IEditorOnly

@@ -7,6 +7,7 @@ using UnityEngine;
 namespace Silksprite.QuestReplacer
 {
     [CreateAssetMenu(fileName = "Quest Replacer Database", menuName = "Silksprite/Quest Replacer Database", order = 0)]
+    [HelpURL("https://docs.kaikoga.net/questreplacer/database")]
     public class QuestReplacerDatabase : ScriptableObject
     {
         public List<QuestTypeFilter> componentFilters = new List<QuestTypeFilter>();
