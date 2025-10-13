@@ -67,6 +67,10 @@ namespace Silksprite.QuestReplacer.Ndmf
                         {
                             continue;
                         }
+                        if (_tmpMaterials.TryGetValue(material, out _))
+                        {
+                            continue;
+                        }
                         var toMaterial = new Material(toValue);
                         _tmpMaterials.Add(material, toMaterial);
                         ObjectRegistry.RegisterReplacedObject(material, toMaterial);
