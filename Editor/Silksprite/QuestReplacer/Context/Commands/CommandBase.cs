@@ -46,6 +46,7 @@ namespace Silksprite.QuestReplacer.Context.Commands
         public void Execute()
         {
             Undo.SetCurrentGroupName(Name);
+            Undo.RecordObject(QuestReplacer, Name);
             DoExecute();
             if (InvalidateTypeFilters)
             {
@@ -55,7 +56,6 @@ namespace Silksprite.QuestReplacer.Context.Commands
 
         internal void ExecuteWithoutUndo()
         {
-            Undo.RecordObject(QuestReplacer, Name);
             DoExecute();
         }
 
