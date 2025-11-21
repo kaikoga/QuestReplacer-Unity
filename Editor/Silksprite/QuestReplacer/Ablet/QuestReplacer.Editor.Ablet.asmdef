@@ -1,13 +1,14 @@
 {
-    "name": "QuestReplacer.Editor.Ndmf",
-    "rootNamespace": "Silksprite.QuestReplacer.Ndmf",
+    "name": "QuestReplacer.Editor.Ablet",
+    "rootNamespace": "Silksprite.QuestReplacer.Ablet",
     "references": [
-        "nadena.dev.ndmf",
-        "nadena.dev.ndmf.runtime",
+        "Ablet",
         "Ablet.API",
+        "Ablet.Builtin",
         "QuestReplacer",
         "QuestReplacer.Editor.Platform",
-        "QuestReplacer.Editor"
+        "QuestReplacer.Editor",
+        "Ablet.Querying"
     ],
     "includePlatforms": [
         "Editor"
@@ -21,14 +22,9 @@
     "autoReferenced": false,
     "defineConstraints": [
         "QUESTREPLACER_ADLIB",
-        "QUESTREPLACER_NDMF_SUPPORT"
+        "QUESTREPLACER_ABLET_SUPPORT"
     ],
     "versionDefines": [
-        {
-            "name": "nadena.dev.ndmf",
-            "expression": "[1.3.0,999.0.0)",
-            "define": "QUESTREPLACER_NDMF_SUPPORT"
-        },
         {
             "name": "net.kaikoga.ablet",
             "expression": "[0.1.0,999.0.0)",

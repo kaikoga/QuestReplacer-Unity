@@ -1,4 +1,5 @@
 ﻿using System;
+using Ablet.API;
 using nadena.dev.ndmf;
 using Silksprite.QuestReplacer.Ndmf;
 using Silksprite.QuestReplacer.Platform;
@@ -32,12 +33,15 @@ namespace Silksprite.QuestReplacer.Ndmf
     {
         protected override void Execute(BuildContext buildContext)
         {
+#if QUESTREPLACER_ABLET_SUPPORT
+            if (AbletSymbols.PreferAblet) return;
+#endif
             if (QuestReplacerPlatformDetector.TryGetPlatformForAvatar(buildContext.AvatarRootTransform, out var platform))
             {
                 DoExecute(buildContext, platform);
             }
         }
-        
+
         void DoExecute(BuildContext buildContext, QuestReplacerBuildPlatform platform)
         {
             using var coordinator = QuestReplacerCoordinatorFactory.FromAvatarRoot(buildContext.AvatarRootTransform, true);
