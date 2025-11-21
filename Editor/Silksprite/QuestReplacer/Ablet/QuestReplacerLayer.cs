@@ -18,17 +18,15 @@ namespace Silksprite.QuestReplacer.Ablet
         {
             config.AddDependency<TransformingPhase>();
         }
-        public IAbletProcedure ToProcedure(IBuildArgument argument)
+        public AbletProcedure ToProcedure(IBuildArgument argument)
         {
             return AbletSymbols.PreferAblet ? new QuestReplacerProcedure() : null;
         }
     }
 
-    class QuestReplacerProcedure : IAbletObservableProcedure
+    class QuestReplacerProcedure : AbletObservableProcedure
     {
-        public void Process(IBuildContext context) => DoObserve(context);
-
-        public void Observe(IObserveContext context) => DoObserve(context);
+        public override void Observe(IObserveContext context) => DoObserve(context);
 
         void DoObserve(IObserveContext context)
         {
