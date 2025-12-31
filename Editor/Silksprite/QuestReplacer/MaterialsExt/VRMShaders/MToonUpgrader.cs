@@ -4,9 +4,7 @@ using Silksprite.AdLib.Material.Impl;
 using Silksprite.QuestReplacer.Assets;
 using UnityEngine;
 
-#if QUESTREPLACER_VRMSHADERS
-using VRMShaders.VRM10.MToon10.Runtime;
-#elif QUESTREPLACER_UNIVRM_WITH_SHADERS
+#if QUESTREPLACER_UNIVRM_VRM1
 using VRM10.MToon10;
 #endif
 

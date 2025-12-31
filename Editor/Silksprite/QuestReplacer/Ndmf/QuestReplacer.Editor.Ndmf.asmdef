@@ -31,7 +31,7 @@
         },
         {
             "name": "net.kaikoga.ablet",
-            "expression": "[0.1.0,999.0.0)",
+            "expression": "[1.0.0,2.0.0)",
             "define": "QUESTREPLACER_ABLET_SUPPORT"
         },
         {
