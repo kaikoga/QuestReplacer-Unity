@@ -11,7 +11,7 @@ namespace Silksprite.QuestReplacer.Ablet
     [AbletLayer]
     class QuestReplacerLayer : IAbletLayer
     {
-        public string Id => "net.kaikoga.questreplacer";
+        public string Id => "Silksprite.QuestReplacer";
         public string DisplayName => "QuestReplacer";
 
         public void Configure(IDependencyConfigurator config)
