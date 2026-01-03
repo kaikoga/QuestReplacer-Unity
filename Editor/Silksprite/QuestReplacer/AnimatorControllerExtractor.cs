@@ -27,7 +27,7 @@ namespace Silksprite.QuestReplacer
 #if QUESTREPLACER_NDMF_SUPPORT
                             foreach (var (key, value) in mappings)
                             {
-                                nadena.dev.ndmf.ObjectRegistry.ActiveRegistry.RegisterReplacedObject(key, value);
+                                nadena.dev.ndmf.ObjectRegistry.ActiveRegistry?.RegisterReplacedObject(key, value);
                             }
 #endif
                         }
