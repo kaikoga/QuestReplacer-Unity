@@ -1,9 +1,12 @@
 ﻿using System;
-using Ablet.API;
 using nadena.dev.ndmf;
 using Silksprite.QuestReplacer.Ndmf;
 using Silksprite.QuestReplacer.Platform;
 using UnityEngine;
+
+#if QUESTREPLACER_ABLET_SUPPORT
+using Ablet.API;
+#endif
 
 [assembly: ExportsPlugin(typeof(QuestReplacerPlugin))]
 
