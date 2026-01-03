@@ -23,7 +23,7 @@
     "versionDefines": [
         {
           "name": "net.kaikoga.adlib",
-          "expression": "[0.3.0,999.0.0)",
+          "expression": "[2.0.0,3.0.0)",
           "define": "QUESTREPLACER_ADLIB"
         },
         {
