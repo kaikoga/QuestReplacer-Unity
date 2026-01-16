@@ -11,7 +11,7 @@ namespace Silksprite.QuestReplacer.MaterialsExt.lilToon
         static readonly ISingleAssetDuplicator<Material>[] _duplicators =
         {
             new lilToonToVRMMaterialDuplicator(),
-#if QUESTREPLACER_UNIVRM_VRM1
+#if QUESTREPLACER_VRMSHADERS || QUESTREPLACER_UNIVRM_WITH_SHADERS
             new VRMShaders.MToonUpgrader(),
 #endif
         };

@@ -32,9 +32,14 @@
           "define": "QUESTREPLACER_LILTOON"
         },
         {
-            "name": "com.vrmc.vrm",
-            "expression": "0.131.0",
-            "define": "QUESTREPLACER_UNIVRM_VRM1"
+            "name": "com.vrmc.vrmshaders",
+            "expression": "",
+            "define": "QUESTREPLACER_VRMSHADERS"
+        },
+        {
+            "name": "com.vrmc.univrm",
+            "expression": "[0.125.0,999.0.0]",
+            "define": "QUESTREPLACER_UNIVRM_WITH_SHADERS"
         }
     ],
     "noEngineReferences": false

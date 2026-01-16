@@ -3,6 +3,7 @@
     "rootNamespace": "Silksprite.QuestReplacer.MaterialsExt.VRMShaders",
     "references": [
         "AdLib",
+        "VRMShaders.VRM10.MToon10.Runtime",
         "VRM10.MToon10",
         "QuestReplacer",
         "QuestReplacer.Editor"
@@ -17,7 +18,7 @@
     "autoReferenced": false,
     "defineConstraints": [
         "QUESTREPLACER_ADLIB",
-        "QUESTREPLACER_UNIVRM_VRM1"
+        "QUESTREPLACER_VRMSHADERS || QUESTREPLACER_UNIVRM_WITH_SHADERS"
     ],
     "versionDefines": [
         {
@@ -26,9 +27,14 @@
           "define": "QUESTREPLACER_ADLIB"
         },
         {
-            "name": "com.vrmc.vrm",
-            "expression": "0.131.0",
-            "define": "QUESTREPLACER_UNIVRM_VRM1"
+          "name": "com.vrmc.vrmshaders",
+          "expression": "",
+          "define": "QUESTREPLACER_VRMSHADERS"
+        },
+        {
+            "name": "com.vrmc.univrm",
+            "expression": "[0.125.0,999.0.0]",
+            "define": "QUESTREPLACER_UNIVRM_WITH_SHADERS"
         }
     ],
     "noEngineReferences": false
