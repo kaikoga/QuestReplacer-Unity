@@ -1,7 +1,9 @@
-﻿using Ablet.API;
+﻿using System;
+using Ablet.API;
 using Ablet.API.V1;
 using Ablet.API.V1.Attributes;
 using Ablet.API.V1.Building;
+using Ablet.API.V1.Extensions.Layer;
 using Ablet.Builtin;
 using Silksprite.QuestReplacer.Platform;
 using UnityEngine;
@@ -19,6 +21,17 @@ namespace Silksprite.QuestReplacer.Ablet
             config.AddDependency<TransformingPhase>();
         }
         public AbletProcedure ToProcedure(IBuildArgument argument)
+        {
+            return AbletSymbols.PreferAblet ? new QuestReplacerProcedure() : null;
+        }
+    }
+
+    [AbletExtension]
+    class QuestReplacerLayerExtension : IInplacePreviewSupportExtension
+    {
+        Type IAbletExtension.ForType => typeof(QuestReplacerLayer);
+
+        public AbletObservableProcedure ToProcedure(IBuildArgument argument)
         {
             return AbletSymbols.PreferAblet ? new QuestReplacerProcedure() : null;
         }
