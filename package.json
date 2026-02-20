@@ -7,7 +7,8 @@
   "description": "Pseudo-non-destructive replace material and texture.",
   "gitDependencies": {},
   "vpmDependencies": {
-    "net.kaikoga.adlib": "^2.0.0"
+    "net.kaikoga.adlib": "^2.0.0",
+    "net.kaikoga.loch": "^2.0.0"
   },
   "author": {
     "name": "kaikoga",

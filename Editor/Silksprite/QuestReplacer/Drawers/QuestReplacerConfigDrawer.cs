@@ -1,5 +1,8 @@
+using Silksprite.Loch.Extensions;
+using Silksprite.Loch.IMGUI;
 using UnityEditor;
 using UnityEngine;
+using static Silksprite.Loch.Tools.LochTool;
 
 namespace Silksprite.QuestReplacer.Drawers
 {
@@ -8,27 +11,27 @@ namespace Silksprite.QuestReplacer.Drawers
     {
         public override void OnGUI(Rect position, SerializedProperty serializedProperty, GUIContent label)
         {
-            var platform = serializedProperty.FindPropertyRelative(nameof(QuestReplacerConfig.platform));
-            var generateMode = serializedProperty.FindPropertyRelative(nameof(QuestReplacerConfig.materialGenerationMode));
-            var manageMaterials = serializedProperty.FindPropertyRelative(nameof(QuestReplacerConfig.manageMaterials));
-            var manageMeshes = serializedProperty.FindPropertyRelative(nameof(QuestReplacerConfig.manageMeshes));
-            var manageAnimationClips = serializedProperty.FindPropertyRelative(nameof(QuestReplacerConfig.manageAnimationClips));
-            var targetVRChatAnimations = serializedProperty.FindPropertyRelative(nameof(QuestReplacerConfig.targetVRChatAnimations));
+            var platform = serializedProperty.Lop(nameof(QuestReplacerConfig.platform), Loc("QuestReplacerConfig::platform"));
+            var generateMode = serializedProperty.Lop(nameof(QuestReplacerConfig.materialGenerationMode), Loc("QuestReplacerConfig::materialGenerationMode"));
+            var manageMaterials = serializedProperty.Lop(nameof(QuestReplacerConfig.manageMaterials), Loc("QuestReplacerConfig::manageMaterials"));
+            var manageMeshes = serializedProperty.Lop(nameof(QuestReplacerConfig.manageMeshes), Loc("QuestReplacerConfig::manageMeshes"));
+            var manageAnimationClips = serializedProperty.Lop(nameof(QuestReplacerConfig.manageAnimationClips), Loc("QuestReplacerConfig::manageAnimationClips"));
+            var targetVRChatAnimations = serializedProperty.Lop(nameof(QuestReplacerConfig.targetVRChatAnimations), Loc("QuestReplacerConfig::targetVRChatAnimations"));
             
             position.height = EditorGUIUtility.singleLineHeight;
-            EditorGUI.PropertyField(position, platform);
+            LEditorGUI.Prop(position, platform);
             position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-            EditorGUI.PropertyField(position, generateMode);
+            LEditorGUI.Prop(position, generateMode);
             EditorGUIUtility.labelWidth += 60f;
             position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-            EditorGUI.PropertyField(position, manageMaterials);
+            LEditorGUI.Prop(position, manageMaterials);
             position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-            EditorGUI.PropertyField(position, manageMeshes);
+            LEditorGUI.Prop(position, manageMeshes);
             position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-            EditorGUI.PropertyField(position, manageAnimationClips);
+            LEditorGUI.Prop(position, manageAnimationClips);
 #if QUESTREPLACER_NDMF_SUPPORT
             position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-            EditorGUI.PropertyField(position, targetVRChatAnimations, new GUIContent("NDMF VRChat Animations"));
+            LEditorGUI.Prop(position, targetVRChatAnimations);
 #endif
             EditorGUIUtility.labelWidth -= 60f;
         }

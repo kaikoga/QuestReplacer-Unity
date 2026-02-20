@@ -7,7 +7,9 @@
         "nadena.dev.ndmf",
         "nadena.dev.ndmf.runtime",
         "QuestReplacer",
-        "QuestReplacer.Editor.Platform"
+        "QuestReplacer.Editor.Platform",
+        "Loch.Editor",
+        "Loch"
     ],
     "includePlatforms": [
         "Editor"

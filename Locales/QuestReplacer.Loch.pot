@@ -1,0 +1,192 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2026-02-21 02:23+0900\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loch\n"
+
+#: Runtime/Silksprite/QuestReplacer/QuestReplacementsValidator.cs:67
+msgid "QuestReplacementsValidator::DuplicateEither."
+msgstr "DuplicateEither."
+
+#: Runtime/Silksprite/QuestReplacer/QuestReplacementsValidator.cs:56
+msgid "QuestReplacementsValidator::DuplicateLeft."
+msgstr "DuplicateLeft."
+
+#: Runtime/Silksprite/QuestReplacer/QuestReplacementsValidator.cs:58
+msgid "QuestReplacementsValidator::DuplicateRight."
+msgstr "DuplicateRight."
+
+#: Runtime/Silksprite/QuestReplacer/QuestReplacementsValidator.cs:53
+msgid "QuestReplacementsValidator::LoosePairs."
+msgstr "LoosePairs."
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:253
+msgid "QuestReplacer.ToLeft"
+msgstr "QuestReplacer.ToLeft"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:254
+msgid "QuestReplacer.ToRight"
+msgstr "QuestReplacer.ToRight"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:207
+msgid "QuestReplacer::animationClips"
+msgstr "animationClips"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:157
+msgid "QuestReplacer::assets"
+msgstr "assets"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:155
+msgid "QuestReplacer::Cleanup"
+msgstr "Cleanup"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:167
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:198
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:212
+msgid "QuestReplacer::Collect"
+msgstr "Collect"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:57
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:108
+msgid "QuestReplacer::config"
+msgstr "config"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:237
+msgid "QuestReplacer::ConfirmSettings."
+msgstr "ConfirmSettings."
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:104
+msgid "QuestReplacer::Create"
+msgstr "Create"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:60
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:85
+msgid "QuestReplacer::database"
+msgstr "database"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:247
+msgid "QuestReplacer::force"
+msgstr "force"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:179
+msgid "QuestReplacer::GenerateMaterials"
+msgstr "GenerateMaterials"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:58
+msgid "QuestReplacer::hasOverrideConfig"
+msgstr "hasOverrideConfig"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:217
+msgid "QuestReplacer::InstantiateAnimationClips"
+msgstr "InstantiateAnimationClips"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:98
+msgid "QuestReplacer::Load"
+msgstr "Load"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:162
+msgid "QuestReplacer::materials"
+msgstr "materials"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:193
+msgid "QuestReplacer::meshes"
+msgstr "meshes"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:243
+msgid "QuestReplacer::NdmfEnabled."
+msgstr "NdmfEnabled."
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:59
+msgid "QuestReplacer::overrideConfig"
+msgstr "overrideConfig"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:64
+msgid "QuestReplacer::Pairs"
+msgstr "Pairs"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:163
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:194
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:208
+msgid "QuestReplacer::questStatus"
+msgstr "questStatus"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:120
+msgid "QuestReplacer::Reset"
+msgstr "Reset"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:99
+msgid "QuestReplacer::Save"
+msgstr "Save"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:136
+msgid "QuestReplacer::SyncAndGenerate"
+msgstr "SyncAndGenerate"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:61
+msgid "QuestReplacer::targets"
+msgstr "targets"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:62
+msgid "QuestReplacer::targetSceneObjects"
+msgstr "targetSceneObjects"
+
+#: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:18
+msgid "QuestReplacerConfig::manageAnimationClips"
+msgstr "manageAnimationClips"
+
+#: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:16
+msgid "QuestReplacerConfig::manageMaterials"
+msgstr "manageMaterials"
+
+#: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:17
+msgid "QuestReplacerConfig::manageMeshes"
+msgstr "manageMeshes"
+
+#: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:15
+msgid "QuestReplacerConfig::materialGenerationMode"
+msgstr "materialGenerationMode"
+
+#: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:14
+msgid "QuestReplacerConfig::platform"
+msgstr "platform"
+
+#: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:19
+msgid "QuestReplacerConfig::targetVRChatAnimations"
+msgstr "targetVRChatAnimations"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerDatabaseEditor.cs:28
+msgid "QuestReplacerDatabase::componentFilters"
+msgstr "componentFilters"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerDatabaseEditor.cs:26
+msgid "QuestReplacerDatabase::config"
+msgstr "config"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerDatabaseEditor.cs:31
+msgid "QuestReplacerDatabase::generatedDirectory"
+msgstr "generatedDirectory"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerDatabaseEditor.cs:32
+msgid "QuestReplacerDatabase::generatedFilePrefix"
+msgstr "generatedFilePrefix"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerDatabaseEditor.cs:33
+msgid "QuestReplacerDatabase::generatedFileSuffix"
+msgstr "generatedFileSuffix"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerDatabaseEditor.cs:30
+msgid "QuestReplacerDatabase::pairs"
+msgstr "pairs"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerDatabaseEditor.cs:45
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:175
+msgid "QuestReplacerDatabase::PlatformSupportNotFound."
+msgstr "PlatformSupportNotFound."
+

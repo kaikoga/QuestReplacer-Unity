@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Silksprite.Loch;
+using static Silksprite.Loch.Tools.LochTool;
 
 namespace Silksprite.QuestReplacer
 {
@@ -27,19 +29,19 @@ namespace Silksprite.QuestReplacer
             _messages.Add(message);
         }
 
-        void MessageIfAny<T>(string header, IEnumerable<T> entries, Func<T, string> messageSelector)
+        void MessageIfAny<T>(LocalizedContent loc, IEnumerable<T> entries, Func<T, string> messageSelector)
         {
             var array = entries.ToArray();
             if (array.Length == 0) return;
 
-            Message(header);
+            Message(loc.Tr);
             foreach (var entry in array)
             {
                 Message(messageSelector(entry));
             }
         }
 
-        void MessageIfAny(string header, IEnumerable<UnityEngine.Object> entries) => MessageIfAny(header, entries, o => o ? $"- {o.name}" : "- None");
+        void MessageIfAny(LocalizedContent loc, IEnumerable<UnityEngine.Object> entries) => MessageIfAny(loc, entries, o => o ? $"- {o.name}" : "- None");
 
         public bool DoValidate(out IEnumerable<string> messages)
         {
@@ -48,12 +50,12 @@ namespace Silksprite.QuestReplacer
             var loosePairs = _replacements.Where(v => v.left && !v.right).Select(v => v.left)
                 .Concat(_replacements.Where(v => v.right && !v.left).Select(v => v.right))
                 .ToArray();
-            MessageIfAny("ペアの項目が未設定です。", loosePairs.Distinct());
+            MessageIfAny(Loc("QuestReplacementsValidator::LoosePairs."), loosePairs.Distinct());
 
             var duplicatesLeft = _replacements.Select(r => r.left).Where(o => o != null).Duplicate().ToArray();
-            MessageIfAny("ペアの左側の項目が重複しています。", duplicatesLeft);
+            MessageIfAny(Loc("QuestReplacementsValidator::DuplicateLeft."), duplicatesLeft);
             var duplicatesRight = _replacements.Select(r => r.right).Where(o => o != null).Duplicate().ToArray();
-            MessageIfAny("ペアの右側の項目が重複しています。", duplicatesRight);
+            MessageIfAny(Loc("QuestReplacementsValidator::DuplicateRight."), duplicatesRight);
 
             var duplicatesEither = _effectiveReplacements.Select(r => r.left)
                 .Join(_effectiveReplacements.Select(r => r.right),
@@ -62,7 +64,7 @@ namespace Silksprite.QuestReplacer
                     (a, b) => a)
                 .Distinct()
                 .ToArray();
-            MessageIfAny("項目がペアの左右両方に存在します。", duplicatesEither);
+            MessageIfAny(Loc("QuestReplacementsValidator::DuplicateEither."), duplicatesEither);
 
             messages = _messages;
             return messages == null;

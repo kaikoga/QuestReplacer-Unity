@@ -1,7 +1,7 @@
 {
     "name": "QuestReplacer",
     "rootNamespace": "Silksprite.QuestReplacer",
-    "references": [],
+    "references": ["GUID:5ec6fed4df994a579c795b90dca1676e"],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
