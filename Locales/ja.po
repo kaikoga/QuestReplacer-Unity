@@ -1,0 +1,199 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2026-02-21 02:23+0900\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.8\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: Tr;Loc\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: Runtime/Silksprite/QuestReplacer/QuestReplacementsValidator.cs:67
+msgid "QuestReplacementsValidator::DuplicateEither."
+msgstr "項目がペアの左右両方に存在します。"
+
+#: Runtime/Silksprite/QuestReplacer/QuestReplacementsValidator.cs:56
+msgid "QuestReplacementsValidator::DuplicateLeft."
+msgstr "ペアの左側の項目が重複しています。"
+
+#: Runtime/Silksprite/QuestReplacer/QuestReplacementsValidator.cs:58
+msgid "QuestReplacementsValidator::DuplicateRight."
+msgstr "ペアの右側の項目が重複しています。"
+
+#: Runtime/Silksprite/QuestReplacer/QuestReplacementsValidator.cs:53
+msgid "QuestReplacementsValidator::LoosePairs."
+msgstr "ペアの項目が未設定です。"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:253
+msgid "QuestReplacer.ToLeft"
+msgstr "To Left"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:254
+msgid "QuestReplacer.ToRight"
+msgstr "To Right"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:207
+msgid "QuestReplacer::animationClips"
+msgstr "Animation Clips"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:157
+msgid "QuestReplacer::assets"
+msgstr "Assets"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:155
+msgid "QuestReplacer::Cleanup"
+msgstr "Cleanup"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:167
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:198
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:212
+msgid "QuestReplacer::Collect"
+msgstr "Collect"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:57
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:108
+msgid "QuestReplacer::config"
+msgstr "Config"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:237
+msgid "QuestReplacer::ConfirmSettings."
+msgstr "置き換え設定を確認してください。"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:104
+msgid "QuestReplacer::Create"
+msgstr "Create"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:60
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:85
+msgid "QuestReplacer::database"
+msgstr "Database"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:247
+msgid "QuestReplacer::force"
+msgstr "確認した"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:179
+msgid "QuestReplacer::GenerateMaterials"
+msgstr "{materialGenerationMode} Materials"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:58
+msgid "QuestReplacer::hasOverrideConfig"
+msgstr "Has Override Config"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:217
+msgid "QuestReplacer::InstantiateAnimationClips"
+msgstr "Instantiate Animation Clips"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:98
+msgid "QuestReplacer::Load"
+msgstr "Load"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:162
+msgid "QuestReplacer::materials"
+msgstr "Materials"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:193
+msgid "QuestReplacer::meshes"
+msgstr "Meshes"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:243
+msgid "QuestReplacer::NdmfEnabled."
+msgstr ""
+"NDMF連携が有効です。置き換えの結果はNDMFプレビューと"
+"して表示されるため、手動置き換え操作は不要です。"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:59
+msgid "QuestReplacer::overrideConfig"
+msgstr "Override Config"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:64
+msgid "QuestReplacer::Pairs"
+msgstr "Pairs"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:163
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:194
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:208
+msgid "QuestReplacer::questStatus"
+msgstr "Quest Status"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:120
+msgid "QuestReplacer::Reset"
+msgstr "Reset"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:99
+msgid "QuestReplacer::Save"
+msgstr "Save"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:136
+msgid "QuestReplacer::SyncAndGenerate"
+msgstr "Sync And Generate"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:61
+msgid "QuestReplacer::targets"
+msgstr "Targets"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:62
+msgid "QuestReplacer::targetSceneObjects"
+msgstr "Target Scene Objects"
+
+#: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:18
+msgid "QuestReplacerConfig::manageAnimationClips"
+msgstr "Manage Animation Clips"
+
+#: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:16
+msgid "QuestReplacerConfig::manageMaterials"
+msgstr "Manage Materials"
+
+#: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:17
+msgid "QuestReplacerConfig::manageMeshes"
+msgstr "Manage Meshes"
+
+#: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:15
+msgid "QuestReplacerConfig::materialGenerationMode"
+msgstr "Material Generation Mode"
+
+#: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:14
+msgid "QuestReplacerConfig::platform"
+msgstr "Platform"
+
+#: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:19
+msgid "QuestReplacerConfig::targetVRChatAnimations"
+msgstr "NDMF VRChat Animations"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerDatabaseEditor.cs:28
+msgid "QuestReplacerDatabase::componentFilters"
+msgstr "Component Filters"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerDatabaseEditor.cs:26
+msgid "QuestReplacerDatabase::config"
+msgstr "Config"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerDatabaseEditor.cs:31
+msgid "QuestReplacerDatabase::generatedDirectory"
+msgstr "Generated Directory"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerDatabaseEditor.cs:32
+msgid "QuestReplacerDatabase::generatedFilePrefix"
+msgstr "Generated File Prefix"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerDatabaseEditor.cs:33
+msgid "QuestReplacerDatabase::generatedFileSuffix"
+msgstr "Generated File Suffix"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerDatabaseEditor.cs:30
+msgid "QuestReplacerDatabase::pairs"
+msgstr "Pairs"
+
+#: Editor/Silksprite/QuestReplacer/QuestReplacerDatabaseEditor.cs:45
+#: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:175
+msgid "QuestReplacerDatabase::PlatformSupportNotFound."
+msgstr ""
+"マテリアルの自動変換に必要なライブラリがインポートさ"
+"れてないか、非対応の変換です。"
