@@ -14,7 +14,7 @@ namespace Silksprite.QuestReplacer
             drawHeaderCallback = rect =>
             {
                 var left = new Rect(rect.x, rect.y, rect.width - 50f, rect.height);
-                LGUI.Header(left, lop.Loc);
+                LGUI.Heading(left, lop.Loc);
                 var right = new Rect(rect.xMax - 50f, rect.y, 50f, rect.height);
                 using (var changed = new EditorGUI.ChangeCheckScope())
                 {

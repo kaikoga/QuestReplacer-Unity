@@ -35,7 +35,7 @@ namespace Silksprite.QuestReplacer
 
         public override void OnInspectorGUI()
         {
-            LEditorGUILayout.LanguageSelector();
+            LEditorGUILayout.LocaleSelector();
             LEditorGUILayout.Prop(_config);
             _reorderablePairs.DoLayoutList();
             _reorderableComponentFilters.DoLayoutList();

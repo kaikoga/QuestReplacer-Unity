@@ -67,7 +67,7 @@ namespace Silksprite.QuestReplacer
 
         public override void OnInspectorGUI()
         {
-            LEditorGUILayout.LanguageSelector();
+            LEditorGUILayout.LocaleSelector();
             var config = _questReplacer.Config;
             AvatarRootTransform = _questReplacer.NdmfAvatarRootTransform();
             var hasTargets = AvatarRootTransform || _questReplacer.HasTargets;
@@ -82,7 +82,7 @@ namespace Silksprite.QuestReplacer
                     LEditorGUILayout.Prop(_targetSceneObjects);
                 }
 
-                LGUILayout.Header(Loc("QuestReplacer::database"));
+                LGUILayout.Heading(Loc("QuestReplacer::database"));
                 using (new BoxLayoutScope())
                 {
                     LEditorGUILayout.Prop(_database);
@@ -105,7 +105,7 @@ namespace Silksprite.QuestReplacer
                     }
                 }
 
-                LGUILayout.Header(Loc("QuestReplacer::config"));
+                LGUILayout.Heading(Loc("QuestReplacer::config"));
                 LEditorGUILayout.Prop(_overrideConfig);
                 if (_overrideConfig.Property.boolValue && !_hasOverrideConfig.Property.boolValue)
                 {
@@ -154,12 +154,12 @@ namespace Silksprite.QuestReplacer
 
                 CommandButton(Loc("QuestReplacer::Cleanup"), () => new CleanupPairsCommand(_questReplacer));
 
-                LGUILayout.Header(Loc("QuestReplacer::assets"));
+                LGUILayout.Heading(Loc("QuestReplacer::assets"));
                 if (config.manageMaterials)
                 {
                     using (new BoxLayoutScope())
                     {
-                        LGUILayout.Header(Loc("QuestReplacer::materials"));
+                        LGUILayout.Heading(Loc("QuestReplacer::materials"));
                         LEditorGUILayout.LabelField(Loc("QuestReplacer::questStatus"), $"{_context.ToQuestStatus<Material>()}");
 
                         using (new EditorGUI.DisabledScope(!hasTargets))
@@ -190,7 +190,7 @@ namespace Silksprite.QuestReplacer
                 {
                     using (new BoxLayoutScope())
                     {
-                        LGUILayout.Header(Loc("QuestReplacer::meshes"));
+                        LGUILayout.Heading(Loc("QuestReplacer::meshes"));
                         LEditorGUILayout.LabelField(Loc("QuestReplacer::questStatus"), $"{_context.ToQuestStatus<Mesh>()}");
 
                         using (new EditorGUI.DisabledScope(!hasTargets))
@@ -204,7 +204,7 @@ namespace Silksprite.QuestReplacer
                 {
                     using (new BoxLayoutScope())
                     {
-                        LGUILayout.Header(Loc("QuestReplacer::animationClips"));
+                        LGUILayout.Heading(Loc("QuestReplacer::animationClips"));
                         LEditorGUILayout.LabelField(Loc("QuestReplacer::questStatus"), $"{_context.ToQuestStatus<AnimationClip>()}");
 
                         using (new EditorGUI.DisabledScope(!hasTargets))
