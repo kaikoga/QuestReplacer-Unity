@@ -1,5 +1,6 @@
 using Silksprite.Loch.Extensions;
 using Silksprite.Loch.IMGUI;
+using Silksprite.QuestReplacer.Assets;
 using UnityEditor;
 using UnityEngine;
 using static Silksprite.Loch.Tools.LochTool;
@@ -19,9 +20,9 @@ namespace Silksprite.QuestReplacer.Drawers
             var targetVRChatAnimations = serializedProperty.Lop(nameof(QuestReplacerConfig.targetVRChatAnimations), Loc("QuestReplacerConfig::targetVRChatAnimations"));
             
             position.height = EditorGUIUtility.singleLineHeight;
-            LEditorGUI.Prop(position, platform);
+            LEditorGUI.PropAsEnumPopup<QuestReplacerPlatform>(position, platform);
             position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-            LEditorGUI.Prop(position, generateMode);
+            LEditorGUI.PropAsEnumPopup<QuestReplacerMaterialGenerationMode>(position, generateMode);
             EditorGUIUtility.labelWidth += 60f;
             position.y += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
             LEditorGUI.Prop(position, manageMaterials);

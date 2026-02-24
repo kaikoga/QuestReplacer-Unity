@@ -1,7 +1,9 @@
+using Silksprite.Loch.Attributes;
 using UnityEngine;
 
 namespace Silksprite.QuestReplacer.Assets
 {
+    [LEnum]
     public enum QuestReplacerMaterialGenerationMode
     {
         [InspectorName("Generate VRChat ToonLit")]

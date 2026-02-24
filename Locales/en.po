@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2026-02-21 02:23+0900\n"
+"POT-Creation-Date: 2026-02-25 01:48+0900\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -17,9 +17,7 @@ msgstr ""
 
 #: Runtime/Silksprite/QuestReplacer/QuestReplacementsValidator.cs:67
 msgid "QuestReplacementsValidator::DuplicateEither."
-msgstr ""
-"Duplicate entry exists in Left and Right of the "
-"pairs."
+msgstr "Duplicate entry exists in Left and Right of the pairs."
 
 #: Runtime/Silksprite/QuestReplacer/QuestReplacementsValidator.cs:56
 msgid "QuestReplacementsValidator::DuplicateLeft."
@@ -108,9 +106,8 @@ msgstr "Meshes"
 #: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:243
 msgid "QuestReplacer::NdmfEnabled."
 msgstr ""
-"NDMF support is enabled. The replacement result is "
-"visible as NDMF Preview, so manual replacement is "
-"not needed."
+"NDMF support is enabled. The replacement result is visible as NDMF Preview, "
+"so manual replacement is not needed."
 
 #: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:59
 msgid "QuestReplacer::overrideConfig"
@@ -146,27 +143,27 @@ msgstr "Targets"
 msgid "QuestReplacer::targetSceneObjects"
 msgstr "Target Scene Objects"
 
-#: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:18
+#: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:19
 msgid "QuestReplacerConfig::manageAnimationClips"
 msgstr "Manage Animation Clips"
 
-#: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:16
+#: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:17
 msgid "QuestReplacerConfig::manageMaterials"
 msgstr "Manage Materials"
 
-#: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:17
+#: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:18
 msgid "QuestReplacerConfig::manageMeshes"
 msgstr "Manage Meshes"
 
-#: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:15
+#: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:16
 msgid "QuestReplacerConfig::materialGenerationMode"
 msgstr "Material Generation Mode"
 
-#: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:14
+#: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:15
 msgid "QuestReplacerConfig::platform"
 msgstr "Platform"
 
-#: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:19
+#: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:20
 msgid "QuestReplacerConfig::targetVRChatAnimations"
 msgstr "NDMF VRChat Animations"
 
@@ -198,5 +195,53 @@ msgstr "Pairs"
 #: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:175
 msgid "QuestReplacerDatabase::PlatformSupportNotFound."
 msgstr ""
-"Some libraries required for converting Materials are "
-"not imported, or conversion is not supported."
+"Some libraries required for converting Materials are not imported, or "
+"conversion is not supported."
+
+msgid "QuestReplacerMaterialGenerationMode::ExtConvertMToon"
+msgstr "Ext Convert MToon"
+
+msgid "QuestReplacerMaterialGenerationMode::ExtConvertMToon10"
+msgstr "Ext Convert MToon10"
+
+msgid "QuestReplacerMaterialGenerationMode::ExtConvertVRChatToonStandard"
+msgstr "Ext Convert VRChat Toon Standard"
+
+msgid "QuestReplacerMaterialGenerationMode::GenerateMToon"
+msgstr "Generate MToon"
+
+msgid "QuestReplacerMaterialGenerationMode::GenerateMToon10"
+msgstr "Generate MToon 10"
+
+msgid "QuestReplacerMaterialGenerationMode::GenerateVRChatToonLit"
+msgstr "Generate VRChat ToonLit"
+
+msgid "QuestReplacerMaterialGenerationMode::GenerateVRChatToonStandard"
+msgstr "Generate VRChat Toon Standard"
+
+msgid "QuestReplacerMaterialGenerationMode::GenerateVRChatToonStandardOutline"
+msgstr "Generate VRChat Toon Standard (Outline)"
+
+msgid "QuestReplacerPlatform::Any"
+msgstr "Any"
+
+msgid "QuestReplacerPlatform::Generic"
+msgstr "Generic"
+
+msgid "QuestReplacerPlatform::VRChatAndroid"
+msgstr "VRChat Android"
+
+msgid "QuestReplacerPlatform::VRChatIos"
+msgstr "VRChat iOS"
+
+msgid "QuestReplacerPlatform::VRChatMobile"
+msgstr "VRChat Mobile"
+
+msgid "QuestReplacerPlatform::VRChatPC"
+msgstr "VRChat PC"
+
+msgid "QuestReplacerPlatform::VRM0"
+msgstr "VRM 0.x"
+
+msgid "QuestReplacerPlatform::VRM1"
+msgstr "VRM 1.0"

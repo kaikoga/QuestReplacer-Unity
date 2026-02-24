@@ -179,7 +179,7 @@ namespace Silksprite.QuestReplacer
                                 CommandButton(Loc("QuestReplacer::GenerateMaterials"),
                                     new Substitution
                                     {
-                                        ["materialGenerationMode"] = config.materialGenerationMode.ToString()
+                                        ["materialGenerationMode"] = TrEnum(config.materialGenerationMode)
                                     },
                                     () => new GenerateMaterialsCommand(_questReplacer));
                             }

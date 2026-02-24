@@ -1,7 +1,9 @@
+using Silksprite.Loch.Attributes;
 using UnityEngine;
 
 namespace Silksprite.QuestReplacer
 {
+    [LEnum]
     public enum QuestReplacerPlatform
     {
         Generic = 0x00,

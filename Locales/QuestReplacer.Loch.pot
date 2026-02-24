@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2026-02-21 07:59+0900\n"
+"POT-Creation-Date: 2026-02-25 01:48+0900\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -137,27 +137,27 @@ msgstr ""
 msgid "QuestReplacer::targetSceneObjects"
 msgstr ""
 
-#: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:18
+#: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:19
 msgid "QuestReplacerConfig::manageAnimationClips"
 msgstr ""
 
-#: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:16
+#: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:17
 msgid "QuestReplacerConfig::manageMaterials"
 msgstr ""
 
-#: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:17
+#: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:18
 msgid "QuestReplacerConfig::manageMeshes"
 msgstr ""
 
-#: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:15
+#: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:16
 msgid "QuestReplacerConfig::materialGenerationMode"
 msgstr ""
 
-#: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:14
+#: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:15
 msgid "QuestReplacerConfig::platform"
 msgstr ""
 
-#: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:19
+#: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:20
 msgid "QuestReplacerConfig::targetVRChatAnimations"
 msgstr ""
 
@@ -188,5 +188,69 @@ msgstr ""
 #: Editor/Silksprite/QuestReplacer/QuestReplacerDatabaseEditor.cs:45
 #: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:175
 msgid "QuestReplacerDatabase::PlatformSupportNotFound."
+msgstr ""
+
+#: 
+msgid "QuestReplacerMaterialGenerationMode::ExtConvertMToon"
+msgstr ""
+
+#: 
+msgid "QuestReplacerMaterialGenerationMode::ExtConvertMToon10"
+msgstr ""
+
+#: 
+msgid "QuestReplacerMaterialGenerationMode::ExtConvertVRChatToonStandard"
+msgstr ""
+
+#: 
+msgid "QuestReplacerMaterialGenerationMode::GenerateMToon"
+msgstr ""
+
+#: 
+msgid "QuestReplacerMaterialGenerationMode::GenerateMToon10"
+msgstr ""
+
+#: 
+msgid "QuestReplacerMaterialGenerationMode::GenerateVRChatToonLit"
+msgstr ""
+
+#: 
+msgid "QuestReplacerMaterialGenerationMode::GenerateVRChatToonStandard"
+msgstr ""
+
+#: 
+msgid "QuestReplacerMaterialGenerationMode::GenerateVRChatToonStandardOutline"
+msgstr ""
+
+#: 
+msgid "QuestReplacerPlatform::Any"
+msgstr ""
+
+#: 
+msgid "QuestReplacerPlatform::Generic"
+msgstr ""
+
+#: 
+msgid "QuestReplacerPlatform::VRChatAndroid"
+msgstr ""
+
+#: 
+msgid "QuestReplacerPlatform::VRChatIos"
+msgstr ""
+
+#: 
+msgid "QuestReplacerPlatform::VRChatMobile"
+msgstr ""
+
+#: 
+msgid "QuestReplacerPlatform::VRChatPC"
+msgstr ""
+
+#: 
+msgid "QuestReplacerPlatform::VRM0"
+msgstr ""
+
+#: 
+msgid "QuestReplacerPlatform::VRM1"
 msgstr ""
 

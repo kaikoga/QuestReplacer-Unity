@@ -23,6 +23,7 @@ MonoBehaviour:
   - QuestReplacer.Editor.Ndmf
   - QuestReplacer.Editor.Platform
   - QuestReplacer.Locales
+  assemblyPrefixes: []
   po:
   - {fileID: 9010515335742159986, guid: 9dac7828d17dd4f07a9600edc4369442, type: 3}
   - {fileID: 9010515335742159986, guid: e7afdd77a8ba1478fb71e6fc8a965c48, type: 3}
