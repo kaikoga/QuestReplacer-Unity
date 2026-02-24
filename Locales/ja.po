@@ -33,34 +33,34 @@ msgstr "ペアの項目が未設定です。"
 
 #: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:253
 msgid "QuestReplacer.ToLeft"
-msgstr "To Left"
+msgstr "Left へ"
 
 #: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:254
 msgid "QuestReplacer.ToRight"
-msgstr "To Right"
+msgstr "Right へ"
 
 #: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:207
 msgid "QuestReplacer::animationClips"
-msgstr "Animation Clips"
+msgstr "アニメーションクリップ"
 
 #: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:157
 msgid "QuestReplacer::assets"
-msgstr "Assets"
+msgstr "アセット"
 
 #: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:155
 msgid "QuestReplacer::Cleanup"
-msgstr "Cleanup"
+msgstr "クリーンアップ"
 
 #: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:167
 #: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:198
 #: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:212
 msgid "QuestReplacer::Collect"
-msgstr "Collect"
+msgstr "収集"
 
 #: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:57
 #: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:108
 msgid "QuestReplacer::config"
-msgstr "Config"
+msgstr "コンフィグ"
 
 #: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:237
 msgid "QuestReplacer::ConfirmSettings."
@@ -68,12 +68,12 @@ msgstr "置き換え設定を確認してください。"
 
 #: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:104
 msgid "QuestReplacer::Create"
-msgstr "Create"
+msgstr "作成"
 
 #: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:60
 #: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:85
 msgid "QuestReplacer::database"
-msgstr "Database"
+msgstr "データベース"
 
 #: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:247
 msgid "QuestReplacer::force"
@@ -81,7 +81,7 @@ msgstr "確認した"
 
 #: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:179
 msgid "QuestReplacer::GenerateMaterials"
-msgstr "{materialGenerationMode} Materials"
+msgstr "{materialGenerationMode} でマテリアルを変換"
 
 #: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:58
 msgid "QuestReplacer::hasOverrideConfig"
@@ -89,19 +89,19 @@ msgstr "Has Override Config"
 
 #: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:217
 msgid "QuestReplacer::InstantiateAnimationClips"
-msgstr "Instantiate Animation Clips"
+msgstr "アニメーションクリップを複製"
 
 #: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:98
 msgid "QuestReplacer::Load"
-msgstr "Load"
+msgstr "読み込み"
 
 #: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:162
 msgid "QuestReplacer::materials"
-msgstr "Materials"
+msgstr "マテリアル"
 
 #: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:193
 msgid "QuestReplacer::meshes"
-msgstr "Meshes"
+msgstr "メッシュ"
 
 #: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:243
 msgid "QuestReplacer::NdmfEnabled."
@@ -111,85 +111,85 @@ msgstr ""
 
 #: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:59
 msgid "QuestReplacer::overrideConfig"
-msgstr "Override Config"
+msgstr "コンフィグを上書き"
 
 #: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:64
 msgid "QuestReplacer::Pairs"
-msgstr "Pairs"
+msgstr "ペア"
 
 #: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:163
 #: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:194
 #: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:208
 msgid "QuestReplacer::questStatus"
-msgstr "Quest Status"
+msgstr "Quest ステータス"
 
 #: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:120
 msgid "QuestReplacer::Reset"
-msgstr "Reset"
+msgstr "リセット"
 
 #: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:99
 msgid "QuestReplacer::Save"
-msgstr "Save"
+msgstr "書き出し"
 
 #: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:136
 msgid "QuestReplacer::SyncAndGenerate"
-msgstr "Sync And Generate"
+msgstr "生成して同期"
 
 #: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:61
 msgid "QuestReplacer::targets"
-msgstr "Targets"
+msgstr "ターゲット"
 
 #: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:62
 msgid "QuestReplacer::targetSceneObjects"
-msgstr "Target Scene Objects"
+msgstr "シーンのオブジェクトをターゲット"
 
 #: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:19
 msgid "QuestReplacerConfig::manageAnimationClips"
-msgstr "Manage Animation Clips"
+msgstr "アニメーションクリップを管理"
 
 #: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:17
 msgid "QuestReplacerConfig::manageMaterials"
-msgstr "Manage Materials"
+msgstr "マテリアルを管理"
 
 #: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:18
 msgid "QuestReplacerConfig::manageMeshes"
-msgstr "Manage Meshes"
+msgstr "メッシュを管理"
 
 #: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:16
 msgid "QuestReplacerConfig::materialGenerationMode"
-msgstr "Material Generation Mode"
+msgstr "マテリアル生成モード"
 
 #: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:15
 msgid "QuestReplacerConfig::platform"
-msgstr "Platform"
+msgstr "プラットフォーム"
 
 #: Editor/Silksprite/QuestReplacer/Drawers/QuestReplacerConfigDrawer.cs:20
 msgid "QuestReplacerConfig::targetVRChatAnimations"
-msgstr "NDMF VRChat Animations"
+msgstr "NDMF VRChat アニメーション"
 
 #: Editor/Silksprite/QuestReplacer/QuestReplacerDatabaseEditor.cs:28
 msgid "QuestReplacerDatabase::componentFilters"
-msgstr "Component Filters"
+msgstr "コンポーネントフィルタ"
 
 #: Editor/Silksprite/QuestReplacer/QuestReplacerDatabaseEditor.cs:26
 msgid "QuestReplacerDatabase::config"
-msgstr "Config"
+msgstr "コンフィグ"
 
 #: Editor/Silksprite/QuestReplacer/QuestReplacerDatabaseEditor.cs:31
 msgid "QuestReplacerDatabase::generatedDirectory"
-msgstr "Generated Directory"
+msgstr "生成先ディレクトリ"
 
 #: Editor/Silksprite/QuestReplacer/QuestReplacerDatabaseEditor.cs:32
 msgid "QuestReplacerDatabase::generatedFilePrefix"
-msgstr "Generated File Prefix"
+msgstr "生成ファイルプレフィクス"
 
 #: Editor/Silksprite/QuestReplacer/QuestReplacerDatabaseEditor.cs:33
 msgid "QuestReplacerDatabase::generatedFileSuffix"
-msgstr "Generated File Suffix"
+msgstr "生成ファイルサフィックス"
 
 #: Editor/Silksprite/QuestReplacer/QuestReplacerDatabaseEditor.cs:30
 msgid "QuestReplacerDatabase::pairs"
-msgstr "Pairs"
+msgstr "ペア"
 
 #: Editor/Silksprite/QuestReplacer/QuestReplacerDatabaseEditor.cs:45
 #: Editor/Silksprite/QuestReplacer/QuestReplacerEditor.cs:175
