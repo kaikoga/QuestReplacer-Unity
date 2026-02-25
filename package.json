@@ -1,14 +1,14 @@
 {
   "name": "net.kaikoga.questreplacer",
-  "url": "https://vpm.kaikoga.net/net.kaikoga.questreplacer/net.kaikoga.questreplacer-2.0.0.zip",
+  "url": "https://vpm.kaikoga.net/net.kaikoga.questreplacer/net.kaikoga.questreplacer-2.1.0.zip",
   "displayName": "QuestReplacer",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "unity": "2019.4",
   "description": "Pseudo-non-destructive replace material and texture.",
   "gitDependencies": {},
   "vpmDependencies": {
-    "net.kaikoga.adlib": "^2.0.0",
-    "net.kaikoga.loch": "^2.0.0"
+    "net.kaikoga.adlib": "^2.1.0",
+    "net.kaikoga.loch": "^2.1.0"
   },
   "author": {
     "name": "kaikoga",

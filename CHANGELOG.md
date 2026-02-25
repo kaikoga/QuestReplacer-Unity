@@ -6,6 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.0] - 2026-02-26
+
+### Added
+
+- Added i18n support with Loch as a dependency.
+
+## [2.0.0] - 2026-01-17
+
+### Added
+
+- Added Ablet support.
+ 
 ## [1.0.1] - 2025-10-13
 
 ### Fixed
