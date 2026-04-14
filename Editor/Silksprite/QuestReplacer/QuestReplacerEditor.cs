@@ -176,11 +176,10 @@ namespace Silksprite.QuestReplacer
                             }
                             using (new EditorGUI.DisabledScope(!hasPlatformSupport))
                             {
-                                CommandButton(Loc("QuestReplacer::GenerateMaterials"),
-                                    new Substitution
+                                CommandButton(Loc("QuestReplacer::GenerateMaterials").Format(new Substitution
                                     {
                                         ["materialGenerationMode"] = TrEnum(config.materialGenerationMode)
-                                    },
+                                    }),
                                     () => new GenerateMaterialsCommand(_questReplacer));
                             }
                         }
@@ -259,15 +258,6 @@ namespace Silksprite.QuestReplacer
         void CommandButton(LocalizedContent loc, Func<CommandBase> command)
         {
             if (LGUILayout.Button(loc))
-            {
-                command().Execute();
-                RecreateContext();
-            }
-        }
-
-        void CommandButton(LocalizedContent loc, Substitution sub, Func<CommandBase> command)
-        {
-            if (LGUILayout.Button(loc, sub))
             {
                 command().Execute();
                 RecreateContext();
