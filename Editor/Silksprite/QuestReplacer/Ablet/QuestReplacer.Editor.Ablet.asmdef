@@ -27,12 +27,12 @@
     "versionDefines": [
         {
             "name": "net.kaikoga.ablet",
-            "expression": "[2.0.0,3.0.0)",
+            "expression": "[3.0.0,4.0.0)",
             "define": "QUESTREPLACER_ABLET_SUPPORT"
         },
         {
             "name": "net.kaikoga.adlib",
-            "expression": "[2.0.0,3.0.0)",
+            "expression": "[3.0.0,4.0.0)",
             "define": "QUESTREPLACER_ADLIB"
         }
     ],
